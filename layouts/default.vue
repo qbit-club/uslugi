@@ -3,6 +3,14 @@ const router = useRouter()
 
 let navigationDrawer = ref<boolean>(false)
 
+const routes = [
+  {
+    value: '/hall/create',
+    title: "Создать зал",
+    icon: "mdi-table-chair"
+  }
+]
+
 function navigateTo(route: any) {  
   router.push(route.id)
 }
@@ -26,7 +34,7 @@ function navigateTo(route: any) {
       <ClientOnly>
         <v-navigation-drawer :model-value="navigationDrawer" location="right" temporary>
           <v-list nav @click:select="navigateTo">
-            <v-list-item prepend-icon="mdi-table-chair" title="Создать зал" value="/hall/create"></v-list-item>
+            <v-list-item v-for="route of routes" :prepend-icon="route.icon" :title="route.title" :value="route.value"></v-list-item>
           </v-list>
         </v-navigation-drawer>
       </ClientOnly>
