@@ -14,7 +14,7 @@ const hallStore = useHall()
 const router = useRouter()
 
 let loading = ref(false)
-let tablePage = ref(0)
+let tablePage = ref(1)
 
 const tablesHeaders = [
   { title: 'Номер места', key: 'number' },
@@ -109,7 +109,12 @@ const submit = handleSubmit(async values => {
             {{ table.floor }}
           </v-col>
         </v-row> -->
-          <v-data-table :items="tables" :headers="tablesHeaders" :items-per-page="5"no-data-text="Нет столиков" v-model:page="tablePage">
+          <v-data-table :items="tables" :headers="tablesHeaders" :items-per-page="5" v-model:page="tablePage">
+            <template v-slot:no-data>
+              <b class="text-red cursor-pointer" @click="addTable">
+                Добавьте столики
+              </b>
+            </template>
             <template v-slot:item.number="{ item }">
               <v-text-field variant="plain" type="number" v-model="item.number" :min="0"></v-text-field>
             </template>
@@ -135,7 +140,7 @@ const submit = handleSubmit(async values => {
               <v-pagination v-model="tablePage" :length="Math.ceil(tables.length / 5)"></v-pagination>
             </template>
           </v-data-table>
-          <v-btn class="ma-auto mt-4" variant="tonal" type="submit" :loading="loading" :disabled="!meta.valid">
+          <v-btn class="ma-auto mt-4" variant="tonal" type="submit" :loading="loading" :disabled="!meta.valid || tables.length == 0">
             Отправить
           </v-btn>
         </v-form>
