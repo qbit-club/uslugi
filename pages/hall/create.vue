@@ -29,7 +29,7 @@ let title = useField<string>('title')
 
 const submit = handleSubmit(async values => {
   loading.value = true
-
+  console.log(values);
   loading.value = false
 })
 </script>
@@ -39,9 +39,14 @@ const submit = handleSubmit(async values => {
       <v-form @submit.prevent="submit"
         class="global-box d-flex flex-column align-center w-100 h-100 pt-4 pr-6 pb-4 pl-6">
         <div class="font-weight-bold" style="font-size: 20px;">Создать</div>
+        
         <v-text-field v-model="title.value.value" :error-messages="title.errorMessage.value" placeholder="Заголовок"
-        variant="outlined" density="compact" class="mt-3 w-100" />
+          variant="outlined" density="compact" class="mt-3 w-100" />
 
+        <v-btn class="ma-auto bg-blue mt-4" variant="tonal" type="submit" :loading="loading"
+          :disabled="!meta.valid">
+          Отправить
+        </v-btn>
       </v-form>
     </v-col>
   </v-row>
