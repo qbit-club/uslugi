@@ -117,7 +117,7 @@ const submit = handleSubmit(async values => {
             <template v-slot:item.seatsNumber="{ item, index }">
               <div class="d-flex justify-space-between align-center">
                 <v-text-field variant="plain" type="number" v-model="item.seatsNumber" :min="1"></v-text-field>
-                <v-tooltip text="Удалить" location="top" :offset="-5">
+                <v-tooltip text="Удалить" location="top" :offset="-6">
                   <template v-slot:activator="{ props }">
                     <v-btn v-bind="props" icon="mdi-delete-outline" variant="plain" color="red"
                       @click="tables.splice(index, 1)">
