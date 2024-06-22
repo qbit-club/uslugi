@@ -93,23 +93,14 @@ const submit = handleSubmit(async values => {
           <h3 class="w-100">Главная информация</h3>
           <v-text-field v-model="title.value.value" :error-messages="title.errorMessage.value"
             placeholder="Название ресторана" variant="outlined" density="compact" class="mt-3 w-100" />
-          <h3 class="w-100 d-flex align-center">Столики<v-btn @click="addTable">добавить</v-btn></h3>
-          <div class="w-100">
 
-          </div>
-
-          <!-- <v-row v-for="table of tables" class="pa-0 d-flex justify-space-between">
-          <v-col class="pa-0" :cols="4">
-            {{ table.number }}
-          </v-col>
-          <v-col class="pa-0" :cols="4">
-            {{ table.seatsNumber }}
-          </v-col>
-          <v-col class="pa-0" :cols="4">
-            {{ table.floor }}
-          </v-col>
-        </v-row> -->
           <v-data-table :items="tables" :headers="tablesHeaders" :items-per-page="5" v-model:page="tablePage">
+            <template v-slot:top>
+              <div class="d-flex justify-space-between w-100">
+                <h3 class="">Столики</h3>
+                <v-btn @click="addTable" variant="tonal" prepend-icon="mdi-plus">добавить</v-btn>
+              </div>
+            </template>
             <template v-slot:no-data>
               <b class="text-red cursor-pointer" @click="addTable">
                 Добавьте столики
@@ -126,7 +117,7 @@ const submit = handleSubmit(async values => {
             <template v-slot:item.seatsNumber="{ item, index }">
               <div class="d-flex justify-space-between align-center">
                 <v-text-field variant="plain" type="number" v-model="item.seatsNumber" :min="1"></v-text-field>
-                <v-tooltip text="Удалить" location="top">
+                <v-tooltip text="Удалить" location="top" :offset="-5">
                   <template v-slot:activator="{ props }">
                     <v-btn v-bind="props" icon="mdi-delete-outline" variant="plain" color="red"
                       @click="tables.splice(index, 1)">
