@@ -21,8 +21,8 @@ let halls = ref(data.value)
           </v-col>
         </v-row>
       </v-col>
-      <v-col :cols="3">
-        position: sticky; фильтры карточкой
+      <v-col :cols="3" >
+        <HallFilters />
       </v-col>
     </v-row>
   </v-container>
