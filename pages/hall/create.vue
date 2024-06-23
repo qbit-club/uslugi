@@ -61,7 +61,7 @@ function addTable() {
     let prevTable = tables.value[tables.value.length - 1]
     // добавляем новый столик на таком же этаже, что и предыдущий
     tables.value.push({
-      floor: prevTable.floor,
+      floor: Number(prevTable.floor),
       number: Number(prevTable.number) + 1,
       seatsNumber: prevTable.seatsNumber
     })
@@ -73,10 +73,20 @@ function addTable() {
     })
   }
 }
+function ensureNumberType() {
+  tables.value = tables.value.map((e) => {
+    return { number: Number(e.number), seatsNumber: Number(e.seatsNumber), floor: Number(e.floor) }
+  })
+}
 
 const submit = handleSubmit(async values => {
   loading.value = true
-  let res = await hallStore.create(values)
+  let toSend = {
+    ...values,
+    tables: tables.value
+  }
+
+  let res = await hallStore.create(toSend)
   if (res.status.value == 'success') {
     loading.value = false
     router.push('/')
@@ -107,16 +117,16 @@ const submit = handleSubmit(async values => {
               </b>
             </template>
             <template v-slot:item.number="{ item }">
-              <v-text-field variant="plain" type="number" v-model="item.number" :min="0"></v-text-field>
+              <v-text-field @change="ensureNumberType" variant="plain" type="number" v-model="item.number" :min="0"></v-text-field>
             </template>
 
             <template v-slot:item.floor="{ item }">
-              <v-text-field variant="plain" type="number" v-model="item.floor"></v-text-field>
+              <v-text-field @change="ensureNumberType" variant="plain" type="number" v-model="item.floor"></v-text-field>
             </template>
-            
+
             <template v-slot:item.seatsNumber="{ item, index }">
               <div class="d-flex justify-space-between align-center">
-                <v-text-field variant="plain" type="number" v-model="item.seatsNumber" :min="1"></v-text-field>
+                <v-text-field @change="ensureNumberType" variant="plain" type="number" v-model="item.seatsNumber" :min="1"></v-text-field>
                 <v-tooltip text="Удалить" location="top" :offset="-6">
                   <template v-slot:activator="{ props }">
                     <v-btn v-bind="props" icon="mdi-delete-outline" variant="plain" color="red"
@@ -131,7 +141,8 @@ const submit = handleSubmit(async values => {
               <v-pagination v-model="tablePage" :length="Math.ceil(tables.length / 5)"></v-pagination>
             </template>
           </v-data-table>
-          <v-btn class="ma-auto mt-4" variant="tonal" type="submit" :loading="loading" :disabled="!meta.valid || tables.length == 0">
+          <v-btn class="ma-auto mt-4" variant="tonal" type="submit" :loading="loading"
+            :disabled="!meta.valid || tables.length == 0">
             Отправить
           </v-btn>
         </v-form>
