@@ -9,5 +9,8 @@ export default {
    */
   create(hall: Hall): Promise<any> {
     return useApiFetch('/hall', { method: 'POST', body: { hall } })
+  },
+  get(): Promise<any> {
+    return useApiFetch('/hall/all', { method: 'GET' })
   }
 }

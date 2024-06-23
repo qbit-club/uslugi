@@ -3,15 +3,29 @@ useHead({
   title: 'Рестик'
 })
 
+const hallStore = useHall()
 const router = useRouter()
+
+let { data } = await hallStore.get()
+
+let halls = ref(data.value)
 </script>
 
 <template>
-  <v-row>
-    <v-col :cols="12">
-      <v-btn block @click="router.push('/hall/create')" class="ma-6 bg-blue h-200">создать зал</v-btn>
-    </v-col>
-  </v-row>
+  <v-container>
+    <v-row>
+      <v-col :cols="9">
+        <v-row>
+          <v-col :cols="6" v-for="hall of halls">
+            <HallCard :hall="hall" />
+          </v-col>
+        </v-row>
+      </v-col>
+      <v-col :cols="3">
+        position: sticky; фильтры карточкой
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <style scoped></style>
