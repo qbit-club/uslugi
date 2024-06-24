@@ -14,14 +14,14 @@ let halls = ref(data.value)
 <template>
   <v-container>
     <v-row>
-      <v-col :cols="9">
+      <v-col :cols="12" :md="8" :lg="9">
         <v-row>
-          <v-col :cols="6" v-for="hall of halls">
+          <v-col :cols="12" :lg="6" v-for="hall of halls">
             <HallCard :hall="hall" />
           </v-col>
         </v-row>
       </v-col>
-      <v-col :cols="3" >
+      <v-col :cols="0" :md="4" :lg="3" class="d-none d-md-flex">
         <HallFilters />
       </v-col>
     </v-row>

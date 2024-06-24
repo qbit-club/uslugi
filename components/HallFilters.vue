@@ -21,7 +21,21 @@ let filters = ref({
 
   position: fixed;
   top: 76px;
-  width: 400px;
   z-index: 100;
+}
+@media (min-width: 1920px) {
+  .card {
+    width: 470px;
+  }
+}
+@media (min-width: 1280px) {
+  .card {
+    width: 350px;
+  }
+}
+@media (max-width: 1280px) {
+  .card {
+    width: 270px;
+  }
 }
 </style>
