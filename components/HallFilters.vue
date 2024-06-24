@@ -7,7 +7,7 @@ let filters = ref({
 <template>
   <div class="card">
     <b>Название</b>
-    <v-text-field placeholder="Кубит.Пиво" v-model="filters.title" density="compact" class="w-100" hide-details />
+    <v-text-field placeholder="Кубит.Мегаресторан" v-model="filters.title" density="compact" class="w-100" hide-details />
   </div>
 </template>
 <style lang="scss" scoped>
