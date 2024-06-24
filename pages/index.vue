@@ -27,5 +27,3 @@ let halls = ref(data.value)
     </v-row>
   </v-container>
 </template>
-
-<style scoped></style>
