@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { useWindowSize } from '@vueuse/core'
-
 const { width } = useWindowSize()
 
 const router = useRouter()
@@ -8,11 +7,16 @@ const router = useRouter()
 let navigationDrawer = ref<boolean>(false)
 
 const routes = [
+{
+    value: '/cabinet',
+    title: "Я",
+    icon: "mdi-account-outline"
+  },
   {
     value: '/hall/create',
     title: "Создать зал",
     icon: "mdi-table-chair"
-  }
+  },
 ]
 
 function navigateTo(route: any) {
@@ -53,11 +57,12 @@ function ensureCanClick() {
         </template>
 
         <v-btn key="2" @click="router.push('/')" icon="mdi-home-outline"></v-btn>
+        <v-btn key="2" @click="router.push('/cabinet')" icon="mdi-account-outline"></v-btn>
         <v-btn key="1" @click="router.push('/hall/create')" icon="mdi-table-chair"></v-btn>
       </v-speed-dial>
 
       <ClientOnly>
-        <!-- только на экранах md и больше, потому что на телефоне можно свайпнуть и оно появится -->
+        <!-- только на экранах md и больше, потому что на телефоне можно свайпнуть и navigation-drawer появится -->
         <v-navigation-drawer v-if="width > 960" :model-value="navigationDrawer" location="right" temporary>
           <v-list nav @click:select="navigateTo">
             <v-list-item v-for="route of routes" :prepend-icon="route.icon" :title="route.title"
