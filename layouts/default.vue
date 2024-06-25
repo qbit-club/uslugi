@@ -13,7 +13,7 @@ const routes = [
     icon: "mdi-account-outline"
   },
   {
-    value: '/hall/create',
+    value: '/rest/create',
     title: "Создать зал",
     icon: "mdi-table-chair"
   },
@@ -58,7 +58,7 @@ function ensureCanClick() {
 
         <v-btn key="2" @click="router.push('/')" icon="mdi-home-outline"></v-btn>
         <v-btn key="2" @click="router.push('/cabinet')" icon="mdi-account-outline"></v-btn>
-        <v-btn key="1" @click="router.push('/hall/create')" icon="mdi-table-chair"></v-btn>
+        <v-btn key="1" @click="router.push('/rest/create')" icon="mdi-table-chair"></v-btn>
       </v-speed-dial>
 
       <ClientOnly>

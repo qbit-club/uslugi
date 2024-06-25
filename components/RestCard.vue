@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Hall } from '../types/hall.interface';
+import type { Rest } from '../types/rest.interface';
 
 defineProps<{
-  hall: Hall
+  rest: Rest
 }>()
 </script>
 <template>
@@ -10,7 +10,7 @@ defineProps<{
     <v-parallax height="200" src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"></v-parallax>
     <div class="content">
       <h3 class="text-center">
-        {{ hall.title }}
+        {{ rest.title }}
       </h3>
     </div>
   </div>

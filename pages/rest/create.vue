@@ -10,7 +10,7 @@ import type { Table } from '../../types/table.interface'
 // other imports
 import { useField, useForm } from 'vee-validate'
 
-const hallStore = useHall()
+const hallStore = useRest()
 const router = useRouter()
 
 let loading = ref(false)
