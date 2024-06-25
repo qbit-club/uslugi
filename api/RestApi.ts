@@ -12,5 +12,8 @@ export default {
   },
   get(): Promise<any> {
     return useApiFetch('/rest/all', { method: 'GET' })
+  },
+  getByAlias(alias: string): Promise<any> {
+    return useApiFetch('/rest/one-by-alias', { method: 'POST', body: { alias } })
   }
 }

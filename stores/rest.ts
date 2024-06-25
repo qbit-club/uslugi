@@ -15,6 +15,9 @@ export const useRest = defineStore('rest', () => {
   async function get() {
     return await RestApi.get()
   }
+  async function getByAlias(alias: string) {
+    return await RestApi.getByAlias(alias)
+  }
 
-  return { create, get }
+  return { create, get, getByAlias }
 })

@@ -3,6 +3,7 @@
 useHead({
   title: 'Рестик | Создать зал'
 })
+const config = useRuntimeConfig()
 
 // all types
 import type { Table } from '../../types/table.interface'
@@ -25,6 +26,7 @@ const tablesHeaders = [
 const { meta, handleSubmit, validate } = useForm({
   initialValues: {
     title: '',
+    alias: '',
     // description: '',
     // price: '',
     // images: <Array<File>>[],
@@ -41,10 +43,20 @@ const { meta, handleSubmit, validate } = useForm({
 
       return true
     },
+    alias(value: String) {
+      if (value?.trim().length < 4) return 'слишком короткий псевдоним'
+      if (value?.length > 32) return 'слишком длинный псевдоним'
+      let regexp = /[а-яё]/i;
+      if (regexp.test(value?.trim())) {
+        return 'уберите кириллицу'
+      }
+      return true
+    }
   },
 })
 
 let title = useField<string>('title')
+let alias = useField<string>('alias')
 let tables = ref<Table[]>([{
   floor: 1,
   number: 1,
@@ -104,6 +116,11 @@ const submit = handleSubmit(async values => {
           <v-text-field v-model="title.value.value" :error-messages="title.errorMessage.value"
             placeholder="Название ресторана" variant="outlined" density="compact" class="mt-3 w-100" />
 
+          <v-text-field v-model="alias.value.value" :error-messages="alias.errorMessage.value"
+            placeholder="Название ресторана" variant="outlined" density="compact" class="mt-3 w-100" />
+          <div class="w-100 mb-4">
+            url ресторана: <br> {{ config.public.siteUrl + '/' + alias.value.value }}
+          </div>
           <v-data-table :items="tables" :headers="tablesHeaders" :items-per-page="5" v-model:page="tablePage">
             <template v-slot:top>
               <div class="d-flex justify-space-between w-100">
@@ -117,16 +134,19 @@ const submit = handleSubmit(async values => {
               </b>
             </template>
             <template v-slot:item.number="{ item }">
-              <v-text-field @change="ensureNumberType" variant="plain" type="number" v-model="item.number" :min="0"></v-text-field>
+              <v-text-field @change="ensureNumberType" variant="plain" type="number" v-model="item.number"
+                :min="0"></v-text-field>
             </template>
 
             <template v-slot:item.floor="{ item }">
-              <v-text-field @change="ensureNumberType" variant="plain" type="number" v-model="item.floor"></v-text-field>
+              <v-text-field @change="ensureNumberType" variant="plain" type="number"
+                v-model="item.floor"></v-text-field>
             </template>
 
             <template v-slot:item.seatsNumber="{ item, index }">
               <div class="d-flex justify-space-between align-center">
-                <v-text-field @change="ensureNumberType" variant="plain" type="number" v-model="item.seatsNumber" :min="1"></v-text-field>
+                <v-text-field @change="ensureNumberType" variant="plain" type="number" v-model="item.seatsNumber"
+                  :min="1"></v-text-field>
                 <v-tooltip text="Удалить" location="top" :offset="-6">
                   <template v-slot:activator="{ props }">
                     <v-btn v-bind="props" icon="mdi-delete-outline" variant="plain" color="red"
