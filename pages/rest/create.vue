@@ -117,7 +117,12 @@ const submit = handleSubmit(async values => {
             placeholder="Название ресторана" variant="outlined" density="compact" class="mt-3 w-100" />
 
           <v-text-field v-model="alias.value.value" :error-messages="alias.errorMessage.value"
-            placeholder="Название ресторана" variant="outlined" density="compact" class="mt-3 w-100" />
+            placeholder="Псевдоним ресторана" variant="outlined" density="compact" class="mt-3 w-100" />
+          <!-- режим работы -->
+          <!-- логотип  -->
+          <!-- шапка сайта(большая, широкая фотка) -->
+          <!-- svg залов -->
+          <!-- контакты: телефоны, соц сети -->
           <div class="w-100 mb-4">
             url ресторана: <br> {{ config.public.siteUrl + '/' + alias.value.value }}
           </div>
