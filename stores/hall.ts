@@ -12,7 +12,7 @@ export const useHall = defineStore('hall', () => {
     return await HallApi.create(hall)
   }
 
-  async function get(): any {
+  async function get() {
     return await HallApi.get()
   }
 
