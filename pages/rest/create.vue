@@ -94,8 +94,8 @@ function ensureNumberType() {
 // base64 img
 let logoPreview = ref()
 function uploadLogo(file: File) {
-  // examplefilename: logo_216262666_best-burger.jpg
-  imagesFormData.append('logo', file, 'logo_' + String(Date.now()) + '_' + String(alias.value.value) + '.jpg')
+  // example filename: logo_216262666_best-burger.jpg
+  imagesFormData.set('logo', file, 'logo_' + String(Date.now()) + '_' + String(alias.value.value) + '.jpg')
   // make a preview
   let reader = new FileReader();
   reader.onloadend = function() {
@@ -103,7 +103,18 @@ function uploadLogo(file: File) {
   }
   reader.readAsDataURL(file);
 }
-
+// base64 img
+let headerImagePreview = ref()
+function uploadHeaderImage(file: File) {
+  // example filename: headerimage_216262666_best-burger.jpg
+  imagesFormData.set('headerimage', file, 'headerimage_' + String(Date.now()) + '_' + String(alias.value.value) + '.jpg')
+  // make a preview
+  let reader = new FileReader();
+  reader.onloadend = function() {
+    headerImagePreview.value = reader.result
+  }
+  reader.readAsDataURL(file);
+}
 const submit = handleSubmit(async values => {
   loading.value = true
   let toSend = {
@@ -150,7 +161,10 @@ const submit = handleSubmit(async values => {
           режим работы ещё рано делать
           <h3 class="w-100 mt-4">Фотографии</h3>
           <v-avatar :image="logoPreview" size="100" color="blue"></v-avatar>
-          <ImageInput :title="'логотип'" @uploadImage="uploadLogo" />
+          <LogoInput :title="'логотип'" @uploadImage="uploadLogo" />
+
+          <img :src="headerImagePreview" style="max-height: 300px;">
+          <HeaderImageInput :title="'шапка ресторана'" @uploadHeaderImage="uploadHeaderImage" />
 
           <v-data-table :items="tables" :headers="tablesHeaders" :items-per-page="5" v-model:page="tablePage"
             class="mt-4">

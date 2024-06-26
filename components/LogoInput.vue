@@ -3,20 +3,20 @@ defineProps({
   title: String
 })
 const emit = defineEmits(['uploadImage'])
-let imageInput = ref<{
+let logoInput = ref<{
   files: File[]
 }>({
   files: []
 })
 function uploadImage() {
-  const file = imageInput.value.files[imageInput.value.files.length - 1]
+  const file = logoInput.value.files[logoInput.value.files.length - 1]
   emit('uploadImage', file)
 }
 </script>
 <template>
   <div class="w-100 my-3">
-    <input type="file" accept="image/*" ref="imageInput" id="upload" @change="uploadImage" style="display: none">
-    <label for="upload">
+    <input type="file" accept="image/*" ref="logoInput" id="uploadLogo" @change="uploadImage" style="display: none">
+    <label for="uploadLogo">
       <div class="file-input-label">
         <span class="mdi mdi-24px mdi-camera"></span>
         <span>{{ title }}</span>
