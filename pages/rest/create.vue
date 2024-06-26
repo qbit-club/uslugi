@@ -62,6 +62,7 @@ let tables = ref<Table[]>([{
   number: 1,
   seatsNumber: 1
 }])
+let imagesFormData = new FormData()
 
 /**
  * если нет столиков, то добавляем столик на 1 этаже с 1 номером
@@ -90,6 +91,18 @@ function ensureNumberType() {
     return { number: Number(e.number), seatsNumber: Number(e.seatsNumber), floor: Number(e.floor) }
   })
 }
+// base64 img
+let logoPreview = ref()
+function uploadLogo(file: File) {
+  // examplefilename: logo_216262666_best-burger.jpg
+  imagesFormData.append('logo', file, 'logo_' + String(Date.now()) + '_' + String(alias.value.value) + '.jpg')
+  // make a preview
+  let reader = new FileReader();
+  reader.onloadend = function() {
+    logoPreview.value = reader.result
+  }
+  reader.readAsDataURL(file);
+}
 
 const submit = handleSubmit(async values => {
   loading.value = true
@@ -111,22 +124,36 @@ const submit = handleSubmit(async values => {
       <v-col cols="12" md="8" lg="6">
         <v-form @submit.prevent="submit"
           class="global-box d-flex flex-column align-center w-100 h-100 pt-4 pr-6 pb-4 pl-6">
-          <div class="font-weight-bold" style="font-size: 20px;">Создать</div>
-          <h3 class="w-100">Главная информация</h3>
-          <v-text-field v-model="title.value.value" :error-messages="title.errorMessage.value"
-            placeholder="Название ресторана" variant="outlined" density="compact" class="mt-3 w-100" />
-
-          <v-text-field v-model="alias.value.value" :error-messages="alias.errorMessage.value"
-            placeholder="Псевдоним ресторана" variant="outlined" density="compact" class="mt-3 w-100" />
+          <div class="font-weight-bold" style="font-size: 20px;">Создать ресторан</div>
+          <h3 class="w-100 mt-6">Главная информация</h3>
+          <v-row class="w-100">
+            <v-col :cols="6" class="pl-0">
+              <div class="label">Название ресторана</div>
+              <v-text-field v-model="title.value.value" :error-messages="title.errorMessage.value" placeholder="Шаурма"
+                variant="outlined" density="compact" class="w-100" />
+            </v-col>
+            <v-col :cols="6" class="pr-0">
+              <div class="label">Псевдоним</div>
+              <v-text-field v-model="alias.value.value" :error-messages="alias.errorMessage.value" placeholder="shaurma"
+                variant="outlined" density="compact" class="w-100" />
+            </v-col>
+          </v-row>
           <!-- режим работы -->
           <!-- логотип  -->
           <!-- шапка сайта(большая, широкая фотка) -->
           <!-- svg залов -->
           <!-- контакты: телефоны, соц сети -->
-          <div class="w-100 mb-4">
-            url ресторана: <br> {{ config.public.siteUrl + '/' + alias.value.value }}
+          <div class="w-100">
+            url ресторана: <i style="text-decoration: underline;">{{ config.public.siteUrl + '/' + alias.value.value
+              }}</i>
           </div>
-          <v-data-table :items="tables" :headers="tablesHeaders" :items-per-page="5" v-model:page="tablePage">
+          режим работы ещё рано делать
+          <h3 class="w-100 mt-4">Фотографии</h3>
+          <img :src="logoPreview" alt="" class="logo-preview">
+          <ImageInput :title="'логотип'" @uploadImage="uploadLogo" />
+
+          <v-data-table :items="tables" :headers="tablesHeaders" :items-per-page="5" v-model:page="tablePage"
+            class="mt-4">
             <template v-slot:top>
               <div class="d-flex justify-space-between w-100">
                 <h3 class="">Столики</h3>
@@ -175,3 +202,11 @@ const submit = handleSubmit(async values => {
     </v-row>
   </ClientOnly>
 </template>
+<style lang="scss" scoped>
+.label {
+  font-size: 12px;
+}
+.logo-preview {
+  max-height: 100px;
+}
+</style>
