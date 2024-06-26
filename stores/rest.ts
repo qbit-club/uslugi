@@ -18,6 +18,9 @@ export const useRest = defineStore('rest', () => {
   async function getByAlias(alias: string) {
     return await RestApi.getByAlias(alias)
   }
+  async function uploadImages(formData: FormData, restId: string) {
+    return await RestApi.uploadImages(formData, restId)
+  }
 
-  return { create, get, getByAlias }
+  return { create, get, getByAlias,uploadImages }
 })

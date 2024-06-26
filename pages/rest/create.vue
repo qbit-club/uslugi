@@ -11,7 +11,7 @@ import type { Table } from '../../types/table.interface'
 // other imports
 import { useField, useForm } from 'vee-validate'
 
-const hallStore = useRest()
+const restStore = useRest()
 const router = useRouter()
 
 let loading = ref(false)
@@ -27,6 +27,8 @@ const { meta, handleSubmit, validate } = useForm({
   initialValues: {
     title: '',
     alias: '',
+    phone: '',
+    socialMedia: '',
     // description: '',
     // price: '',
     // images: <Array<File>>[],
@@ -51,12 +53,27 @@ const { meta, handleSubmit, validate } = useForm({
         return 'уберите кириллицу'
       }
       return true
-    }
+    },
+    phone(value: string) {
+      let regexp = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g
+      if (!regexp.test(value?.trim())) return 'неправильный формат'
+
+      return true
+    },
+    socialMedia(value: string) {
+      let regexp =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+      if (!regexp.test(value?.trim())) return 'неправильный формат'
+
+      return true
+    },
   },
 })
 
 let title = useField<string>('title')
 let alias = useField<string>('alias')
+let phone = useField<string>('phone')
+let socialMedia = useField<string>('socialMedia')
+
 let tables = ref<Table[]>([{
   floor: 1,
   number: 1,
@@ -135,8 +152,14 @@ const submit = handleSubmit(async values => {
     tables: tables.value
   }
 
-  let res = await hallStore.create(toSend)
+  let res = await restStore.create(toSend)
+  console.log(res);
+  
   if (res.status.value == 'success') {
+    let _id = res.data.value._id
+    let uplRes = await restStore.uploadImages(imagesFormData, _id)
+    console.log(uplRes);
+    
     loading.value = false
     router.push('/')
   }
@@ -151,15 +174,25 @@ const submit = handleSubmit(async values => {
           <div class="font-weight-bold" style="font-size: 20px;">Создать ресторан</div>
           <h3 class="w-100 mt-6">Главная информация</h3>
           <v-row class="w-100">
-            <v-col :cols="6" class="pl-0">
+            <v-col :cols="6" class="pl-0 pb-0">
               <div class="label">Название ресторана</div>
               <v-text-field v-model="title.value.value" :error-messages="title.errorMessage.value" placeholder="Шаурма"
                 variant="outlined" density="compact" class="w-100" />
             </v-col>
-            <v-col :cols="6" class="pr-0">
+            <v-col :cols="6" class="pr-0 pb-0">
               <div class="label">Псевдоним</div>
               <v-text-field v-model="alias.value.value" :error-messages="alias.errorMessage.value" placeholder="shaurma"
                 variant="outlined" density="compact" class="w-100" />
+            </v-col>
+            <v-col :cols="6" class="pl-0 pt-0">
+              <div class="label">Телефон</div>
+              <v-text-field v-model="phone.value.value" :error-messages="phone.errorMessage.value"
+                placeholder="+79127528877" variant="outlined" density="compact" class="w-100" />
+            </v-col>
+            <v-col :cols="6" class="pr-0 pt-0">
+              <div class="label">Соц сеть</div>
+              <v-text-field v-model="socialMedia.value.value" :error-messages="socialMedia.errorMessage.value"
+                placeholder="https://vk.com/shaurma" variant="outlined" density="compact" class="w-100" />
             </v-col>
           </v-row>
           <!-- режим работы -->
@@ -167,7 +200,7 @@ const submit = handleSubmit(async values => {
           <!-- шапка сайта(большая, широкая фотка) -->
           <!-- svg залов -->
           <!-- контакты: телефоны, соц сети -->
-          <div class="w-100">
+          <div class="w-100" v-if="alias.value.value.length > 0">
             url ресторана: <i style="text-decoration: underline;">{{ config.public.siteUrl + '/' + alias.value.value
               }}</i>
           </div>

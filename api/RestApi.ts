@@ -15,5 +15,8 @@ export default {
   },
   getByAlias(alias: string): Promise<any> {
     return useApiFetch('/rest/one-by-alias', { method: 'POST', body: { alias } })
+  },
+  uploadImages(formData: FormData, _id: string): Promise<any> {
+    return useApiFetch(`/rest/images?rest_id=${_id}`, { method: 'POST', headers: { 'Content-Type': 'multipart/form-data' }, body: { formData } })
   }
 }
