@@ -9,7 +9,7 @@ let imageInput = ref<{
   files: []
 })
 function uploadImage() {
-  const file = imageInput.value.files[0]
+  const file = imageInput.value.files[imageInput.value.files.length - 1]
   emit('uploadImage', file)
 }
 </script>

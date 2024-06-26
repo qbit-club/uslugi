@@ -149,7 +149,7 @@ const submit = handleSubmit(async values => {
           </div>
           режим работы ещё рано делать
           <h3 class="w-100 mt-4">Фотографии</h3>
-          <img :src="logoPreview" alt="" class="logo-preview">
+          <v-avatar :image="logoPreview" size="100" color="blue"></v-avatar>
           <ImageInput :title="'логотип'" @uploadImage="uploadLogo" />
 
           <v-data-table :items="tables" :headers="tablesHeaders" :items-per-page="5" v-model:page="tablePage"
@@ -205,8 +205,5 @@ const submit = handleSubmit(async values => {
 <style lang="scss" scoped>
 .label {
   font-size: 12px;
-}
-.logo-preview {
-  max-height: 100px;
 }
 </style>
