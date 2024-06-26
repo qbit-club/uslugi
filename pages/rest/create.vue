@@ -98,7 +98,7 @@ function uploadLogo(file: File) {
   imagesFormData.set('logo', file, 'logo_' + String(Date.now()) + '_' + String(alias.value.value) + '.jpg')
   // make a preview
   let reader = new FileReader();
-  reader.onloadend = function() {
+  reader.onloadend = function () {
     logoPreview.value = reader.result
   }
   reader.readAsDataURL(file);
@@ -110,8 +110,21 @@ function uploadHeaderImage(file: File) {
   imagesFormData.set('headerimage', file, 'headerimage_' + String(Date.now()) + '_' + String(alias.value.value) + '.jpg')
   // make a preview
   let reader = new FileReader();
-  reader.onloadend = function() {
+  reader.onloadend = function () {
     headerImagePreview.value = reader.result
+  }
+  reader.readAsDataURL(file);
+}
+
+// base64 img
+let hallImagePreviews = ref<string[]>([])
+function uploadHallImage(file: File, index: Number) {
+  // example filename: headerimage_216262666_best-burger.jpg
+  imagesFormData.set('hallimage_' + String(index), file, 'hallimage_' + String(index) + '_' + String(Date.now()) + '_' + String(alias.value.value) + '.jpg')
+  // make a preview
+  let reader = new FileReader();
+  reader.onloadend = function () {
+    hallImagePreviews.value.push(String(reader.result))
   }
   reader.readAsDataURL(file);
 }
@@ -165,6 +178,9 @@ const submit = handleSubmit(async values => {
 
           <img :src="headerImagePreview" style="max-height: 300px;">
           <HeaderImageInput :title="'шапка ресторана'" @uploadHeaderImage="uploadHeaderImage" />
+
+          <img v-for="hall of hallImagePreviews" :src="hall" style="max-height: 200px; margin: 2px;">
+          <HallImageInput :title="'зал'" @uploadHallImage="uploadHallImage" />
 
           <v-data-table :items="tables" :headers="tablesHeaders" :items-per-page="5" v-model:page="tablePage"
             class="mt-4">
