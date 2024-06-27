@@ -73,7 +73,7 @@ function ensureCanClick() {
 
       <v-main class="main">
         <!-- pages go here -->
-        <slot />
+        <NuxtPage />
         <!-- pages go here -->
       </v-main>
     </v-app>

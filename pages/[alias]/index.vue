@@ -2,11 +2,15 @@
 const restStore = useRest()
 
 let route = useRoute()
+let rest = ref({})
 
 let alias = String(route.params.alias) ?? ''
-let res = await restStore.getByAlias(alias)
 
-let rest = res.data
+  let res = await restStore.getByAlias(alias)
+
+  rest = res.data
+
+
 </script>
 <template>
   <v-container>
