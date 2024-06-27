@@ -137,7 +137,7 @@ function uploadHeaderImage(file: File) {
 let hallImagePreviews = ref<string[]>([])
 function uploadHallImage(file: File, index: Number) {
   // example filename: headerimage_216262666_best-burger.jpg
-  imagesFormData.set('hallimage_' + String(index), file, 'hallimage_' + String(index) + '_' + String(Date.now()) + '_' + String(alias.value.value) + '.jpg')
+  imagesFormData.set('hallimage_' + String(index), file, 'hallimage_' + String(index) + '_' + String(Date.now()) + '_' + String(alias.value.value) + '.svg')
   // make a preview
   let reader = new FileReader();
   reader.onloadend = function () {
@@ -153,15 +153,19 @@ const submit = handleSubmit(async values => {
   }
 
   let res = await restStore.create(toSend)
-  console.log(res);
   
   if (res.status.value == 'success') {
     let _id = res.data.value._id
     let uplRes = await restStore.uploadImages(imagesFormData, _id)
-    console.log(uplRes);
-    
-    loading.value = false
-    router.push('/')
+
+    if (uplRes.status.value == 'success') {  
+      loading.value = false
+      router.push('/')
+    } else {
+      console.log(uplRes);
+    }
+  } else {
+    console.log(res);
   }
 })
 </script>
