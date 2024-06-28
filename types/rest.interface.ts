@@ -5,5 +5,6 @@ export interface Rest {
   alias: string
   phone: string
   socialMedia: string
+  location: object
   tables: Table[]
 }

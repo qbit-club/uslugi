@@ -61,7 +61,7 @@ const { meta, handleSubmit, validate } = useForm({
       return true
     },
     socialMedia(value: string) {
-      let regexp =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+      let regexp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
       if (!regexp.test(value?.trim())) return 'неправильный формат'
 
       return true
@@ -80,6 +80,17 @@ let tables = ref<Table[]>([{
   seatsNumber: 1
 }])
 let imagesFormData = new FormData()
+let location = ref<any>({
+  name: 'Удмуртская республика, г. Глазов',
+  shortName: 'Глазов',
+  type: 'Point',
+  coordinates: [
+    52.663446,
+    58.135907
+  ]
+})
+let possibleLocations = ref([])
+let locationSearchRequest = ref<String>('')
 
 /**
  * если нет столиков, то добавляем столик на 1 этаже с 1 номером
@@ -149,16 +160,17 @@ const submit = handleSubmit(async values => {
   loading.value = true
   let toSend = {
     ...values,
-    tables: tables.value
+    tables: tables.value,
+    location: location.value
   }
 
   let res = await restStore.create(toSend)
-  
+
   if (res.status.value == 'success') {
     let _id = res.data.value._id
     let uplRes = await restStore.uploadImages(imagesFormData, _id)
 
-    if (uplRes.status.value == 'success') {  
+    if (uplRes.status.value == 'success') {
       loading.value = false
       router.push('/')
     } else {
@@ -205,6 +217,16 @@ const submit = handleSubmit(async values => {
               }}</i>
           </div>
           режим работы ещё рано делать
+
+          <v-autocomplete hide-details density="compact" v-model="location" v-model:search="locationSearchRequest"
+            :items="possibleLocations" item-title="name" placeholder="Место" item-value="geo" variant="outlined"
+            clearable class="w-100 mb-4" disabled>
+            <template v-slot:no-data>
+              <div class="pt-2 pr-4 pb-2 pl-4">
+                {{ locationSearchRequest.trim().length < 3 ? "Минимум 3 символа" : "Не найдено" }} </div>
+            </template>
+          </v-autocomplete>
+
           <h3 class="w-100 mt-4">Фотографии</h3>
           <v-avatar :image="logoPreview" size="100" color="blue"></v-avatar>
           <LogoInput :title="'логотип'" @uploadImage="uploadLogo" />
