@@ -10,7 +10,7 @@ let hallImageInput = ref<{
 })
 function uploadImage() {
   const file = hallImageInput.value.files[hallImageInput.value.files.length - 1]
-  emit('uploadHallImage', file)
+  emit('uploadHallImage', file, hallImageInput.value.files.length - 1)
 }
 </script>
 <template>

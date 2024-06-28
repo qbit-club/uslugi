@@ -136,7 +136,7 @@ function uploadHeaderImage(file: File) {
 // base64 img
 let hallImagePreviews = ref<string[]>([])
 function uploadHallImage(file: File, index: Number) {
-  // example filename: headerimage_216262666_best-burger.jpg
+  // example filename: headerimage_0_216262666_best-burger.svg
   imagesFormData.set('hallimage_' + String(index), file, 'hallimage_' + String(index) + '_' + String(Date.now()) + '_' + String(alias.value.value) + '.svg')
   // make a preview
   let reader = new FileReader();
@@ -199,11 +199,7 @@ const submit = handleSubmit(async values => {
                 placeholder="https://vk.com/shaurma" variant="outlined" density="compact" class="w-100" />
             </v-col>
           </v-row>
-          <!-- режим работы -->
-          <!-- логотип  -->
-          <!-- шапка сайта(большая, широкая фотка) -->
-          <!-- svg залов -->
-          <!-- контакты: телефоны, соц сети -->
+
           <div class="w-100" v-if="alias.value.value.length > 0">
             url ресторана: <i style="text-decoration: underline;">{{ config.public.siteUrl + '/' + alias.value.value
               }}</i>
