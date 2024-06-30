@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
+import getPossibleLocations from "~/utility/dadata.ts";
+
 
 // meta
 useHead({
@@ -90,17 +92,20 @@ let tables = ref<Table[]>([{
 }])
 let imagesFormData = new FormData()
 
-let location = ref<any>({
-  name: 'Удмуртская республика, г. Глазов',
-  shortName: 'Глазов',
-  type: 'Point',
-  coordinates: [
-    52.663446,
-    58.135907
-  ]
-})
+let location = ref<any>(
+)
 let possibleLocations = ref([])
 let locationSearchRequest = ref<String>('')
+let locationToSend = computed(() => {
+  if (location.value) {
+    location.value.type = 'Point'
+    location.value.coordinates = [
+      Number(location.value.geo_lat),
+      Number(location.value.geo_lon)
+    ]
+    return location.value
+  }
+})
 
 /**
  * если нет столиков, то добавляем столик на 1 этаже с 1 номером
@@ -192,6 +197,9 @@ const submit = handleSubmit(async values => {
     console.log(res);
   }
 })
+watch(locationSearchRequest, async (value) => {
+  possibleLocations.value = await getPossibleLocations(value);
+});
 </script>
 <template>
   <ClientOnly>
@@ -244,10 +252,13 @@ const submit = handleSubmit(async values => {
                 </div>
               </v-col>
 
+
+
+
               <v-col cols="12">
                 <v-autocomplete hide-details density="compact" v-model="location" v-model:search="locationSearchRequest"
                   :items="possibleLocations" item-title="name" placeholder="Место" item-value="geo" variant="outlined"
-                  clearable disabled>
+                  clearable>
                   <template v-slot:no-data>
                     <div class="pt-2 pr-4 pb-2 pl-4">
                       {{ locationSearchRequest.trim().length < 3 ? "Минимум 3 символа" : "Не найдено" }} </div>
@@ -255,7 +266,8 @@ const submit = handleSubmit(async values => {
                 </v-autocomplete>
               </v-col>
             </v-row>
-        
+            <!-- {{ location }} -->
+            {{ locationToSend }}
             <h3 class="text-center">Фотографии</h3>
             <v-avatar :image="logoPreview" size="100" color="blue"></v-avatar>
             <LogoInput :title="'логотип'" @uploadImage="uploadLogo" />
