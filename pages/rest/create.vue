@@ -85,11 +85,7 @@ let socialMedia = useField<string>('socialMedia')
 
 
 
-let tables = ref<Table[]>([{
-  floor: 1,
-  number: 1,
-  seatsNumber: 1
-}])
+let tables = ref<Table[]>([])
 let imagesFormData = new FormData()
 
 let location = ref<any>(
@@ -320,7 +316,7 @@ watch(locationSearchRequest, async (value) => {
               </template>
             </v-data-table>
             <v-btn class="ma-auto mt-4" variant="tonal" type="submit" :loading="loading"
-              :disabled="!meta.valid || tables.length == 0">
+              :disabled="!meta.valid">
               Отправить
             </v-btn>
           </v-form>
