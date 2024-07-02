@@ -18,11 +18,20 @@ let headerimage = ref(rest.value?.images.filter((e) => e.includes("headerimage")
     <v-row class="d-flex justify-center">
       <v-col :cols="12" :md="10">
         <v-row>
-          <v-col :cols="12" style="position: relative; margin-bottom: 80px;">
+          <v-col :cols="12" style="position: relative; margin-bottom: 80px">
             <v-img :src="headerimage" cover alt="" />
-            <div style="position: absolute; bottom: -50px; display: flex; justify-content: start; width: 100%; align-items: end;">
-              <v-avatar :image="logo" size="250" class="logo"></v-avatar>
-              <h1>{{ rest.title }}</h1>
+            <div
+              style="
+                position: absolute;
+                bottom: -50px;
+                display: flex;
+                justify-content: start;
+                width: 100%;
+                align-items: end;
+              "
+            >
+              <v-avatar :image="logo" :size="250" class="logo"></v-avatar>
+              <span class="title">{{ rest.title }}</span>
             </div>
           </v-col>
           <v-col :cols="12">
@@ -36,5 +45,9 @@ let headerimage = ref(rest.value?.images.filter((e) => e.includes("headerimage")
 <style lang="scss" scoped>
 .logo {
   border: 4px solid white;
+}
+.title {
+  font-size: clamp(1.5rem, 1.1023rem + 1.1364vw, 2rem);
+  font-weight: 700;
 }
 </style>
