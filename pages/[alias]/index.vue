@@ -10,8 +10,8 @@ let res = await restStore.getByAlias(alias)
 
 rest.value = res.data.value
 
-let logo = ref(rest.value?.images.filter((e: string) => e.includes("logo"))[0])
-let headerimage = ref(rest.value?.images.filter((e) => e.includes("headerimage"))[0])
+let logo = ref(rest.value.images.filter((e: string) => e.includes("logo"))[0])
+let headerimage = ref(rest.value.images.filter((e:string) => e.includes("headerimage"))[0])
 </script>
 <template>
   <v-container>

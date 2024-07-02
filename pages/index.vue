@@ -18,18 +18,18 @@ let logo = (rest: { images: string[]; }) => {
 </script>
 
 <template>
-  <v-container>   
+  <v-container>
     <v-row>
-     
-      <v-col cols="12" md="6" lg="4" v-for="rest, index in rests" :key="index"  >
+
+      <v-col cols="12" md="6" lg="4" v-for="rest, index in rests" :key="index">
         <NuxtLink :to="`/${rest.alias}`">
-        <v-card class="h-100">
-          <h3>{{ rest.title }}</h3>      
-            <v-img :src="logo(rest)" ></v-img>
-        </v-card>
-      </NuxtLink>
+          <v-card class="h-100">
+            <h3>{{ rest.title }}</h3>         
+              <v-img :src="logo(rest)" class="w-50"></v-img>
+          </v-card>
+        </NuxtLink>
       </v-col>
-  
+
     </v-row>
   </v-container>
 </template>
