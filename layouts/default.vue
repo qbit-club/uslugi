@@ -9,7 +9,7 @@ let navigationDrawer = ref<boolean>(false)
 const routes = [
 {
     value: '/user/cabinet',
-    title: "Я",
+    title: "Кабинет",
     icon: "mdi-account-outline"
   },
   {
