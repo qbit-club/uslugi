@@ -8,8 +8,8 @@ let navigationDrawer = ref<boolean>(false)
 
 const routes = [
 {
-    value: '/cabinet',
-    title: "Я",
+    value: '/user/cabinet',
+    title: "Кабинет",
     icon: "mdi-account-outline"
   },
   {
@@ -33,6 +33,9 @@ function ensureCanClick() {
     canClickOnSpeedDial.value = true
   }, 400)
 }
+
+let auth = useAuth()
+await auth.checkAuth()
 </script>
 <template>
   <v-responsive>
@@ -57,7 +60,7 @@ function ensureCanClick() {
         </template>
 
         <v-btn key="2" @click="router.push('/')" icon="mdi-home-outline"></v-btn>
-        <v-btn key="2" @click="router.push('/cabinet')" icon="mdi-account-outline"></v-btn>
+        <v-btn key="2" @click="router.push('/user/cabinet')" icon="mdi-account-outline"></v-btn>
         <v-btn key="1" @click="router.push('/rest/create')" icon="mdi-table-chair"></v-btn>
       </v-speed-dial>
 
