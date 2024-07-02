@@ -2,7 +2,7 @@
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import getPossibleLocations from "~/composables/dadata";
-
+import type { Location } from "../../types/location.interface"
 
 // meta
 useHead({
@@ -90,8 +90,9 @@ let imagesFormData = new FormData()
 
 let location = ref<any>(
 )
-let possibleLocations = ref([])
-let locationSearchRequest = ref<String>('')
+const locationSearchRequest = ref<string>('');
+const possibleLocations = ref<Location[] | undefined>(undefined);
+
 let locationToSend = computed(() => {
   if (location.value) {
     location.value.type = 'Point'
@@ -193,9 +194,13 @@ const submit = handleSubmit(async values => {
     console.log(res);
   }
 })
+
+
 watch(locationSearchRequest, async (value) => {
-  possibleLocations.value = await getPossibleLocations(value);
-});
+      const locations: any= await getPossibleLocations(value); // any - костыль надо переписать dadata.ts
+      possibleLocations.value = locations ?? []; // Если locations undefined, присваиваем пустой массив
+    });
+
 </script>
 <template>
   <ClientOnly>
@@ -315,8 +320,7 @@ watch(locationSearchRequest, async (value) => {
                 <v-pagination v-model="tablePage" :length="Math.ceil(tables.length / 5)"></v-pagination>
               </template>
             </v-data-table>
-            <v-btn class="ma-auto mt-4" variant="tonal" type="submit" :loading="loading"
-              :disabled="!meta.valid">
+            <v-btn class="ma-auto mt-4" variant="tonal" type="submit" :loading="loading" :disabled="!meta.valid">
               Отправить
             </v-btn>
           </v-form>
