@@ -8,7 +8,7 @@ let navigationDrawer = ref<boolean>(false)
 
 const routes = [
 {
-    value: '/cabinet',
+    value: '/user/cabinet',
     title: "Я",
     icon: "mdi-account-outline"
   },
@@ -57,7 +57,7 @@ function ensureCanClick() {
         </template>
 
         <v-btn key="2" @click="router.push('/')" icon="mdi-home-outline"></v-btn>
-        <v-btn key="2" @click="router.push('/cabinet')" icon="mdi-account-outline"></v-btn>
+        <v-btn key="2" @click="router.push('/user/cabinet')" icon="mdi-account-outline"></v-btn>
         <v-btn key="1" @click="router.push('/rest/create')" icon="mdi-table-chair"></v-btn>
       </v-speed-dial>
 
