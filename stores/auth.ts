@@ -11,7 +11,7 @@ export const useAuth = defineStore('auth', () => {
     try {
       const response = await AuthAPI.registration(data)
       localStorage.setItem('token', response.data.value.accessToken)
-      
+
       user.value = response.data.value.user
 
       localStorage.setItem('newUser', 'true')
@@ -21,50 +21,49 @@ export const useAuth = defineStore('auth', () => {
     }
   }
 
-  // async function login(email: string, password: string): Promise<string | false> {
-  //   try {
-  //     const response = await AuthAPI.login(email, password)
-  //     localStorage.setItem('token', response.data.accessToken)
+  async function login(email: string, password: string): Promise<string | false> {
+    try {
+      const response = await AuthAPI.login(email, password)
+      localStorage.setItem('token', response.data.value.accessToken)
 
-  //     user.value = response.data.user
-  //     return redirectTo.value
-  //   } catch {
-  //     return false
-  //   }
-  // }
+      user.value = response.data.value.user
+      return redirectTo.value
+    } catch {
+      return false
+    }
+  }
 
-  // async function checkAuth(): Promise<void> {
-  //   try {
-  //     if (!localStorage.getItem('token'))
-  //       return
+  async function checkAuth(): Promise<void> {
+    try {
+      if (!localStorage.getItem('token'))
+        return
 
-  //     const response = await AuthAPI.refresh()
-  //     localStorage.setItem('token', response.data.accessToken)
+      const response = await AuthAPI.refresh()
+      localStorage.setItem('token', response.data.value.accessToken)
 
-  //     user.value = response.data.user
-  //   } catch {
-  //     await logout()
-  //   }
-  // }
+      user.value = response.data.user
+    } catch {
+      await logout()
+    }
+  }
 
-  // async function logout(): Promise<void> {
-  //   try {
-  //     localStorage.removeItem('token')
-  //     await AuthAPI.logout()
-  //     user.value = null
+  async function logout(): Promise<void> {
+    try {
+      localStorage.removeItem('token')
+      await AuthAPI.logout()
+      user.value = null
 
-  //     localStorage.removeItem('newUser')
-  //   } catch {}
-  // }
+      localStorage.removeItem('newUser')
+    } catch { }
+  }
 
-  // async function updateUser(new_user: any) {
-  //   try {
-  //     user.value = (await AuthAPI.updateUser(new_user)).data
-  //   } catch {}
-  // }
+  async function updateUser(new_user: any) {
+    try {
+      user.value = (await AuthAPI.updateUser(new_user)).data
+    } catch { }
+  }
 
   return {
-    user, registration
-    //  redirectTo,  login, checkAuth, logout, updateUser 
+    user, registration, login, redirectTo, checkAuth, logout, updateUser
   }
 })

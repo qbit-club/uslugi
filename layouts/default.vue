@@ -33,6 +33,9 @@ function ensureCanClick() {
     canClickOnSpeedDial.value = true
   }, 400)
 }
+
+let auth = useAuth()
+await auth.checkAuth()
 </script>
 <template>
   <v-responsive>
