@@ -6,15 +6,18 @@ import { ref } from "vue"
 export const useAuth = defineStore('auth', () => {
   let user = ref<User | null>()
   let redirectTo = ref<string>('/')
+  let authenticated = ref<boolean>(false)
 
   async function registration(data: any): Promise<boolean> {
     try {
       const response = await AuthAPI.registration(data)
-      localStorage.setItem('token', response.data.value.accessToken)
+      if (response.data.value) {
+        let token = useCookie('token')
+        token.value = response.data?.value?.accessToken
 
-      user.value = response.data.value.user
-
-      localStorage.setItem('newUser', 'true')
+        user.value = response.data.value.user
+        authenticated.value = true
+      }
       return true
     } catch {
       return false
@@ -24,33 +27,46 @@ export const useAuth = defineStore('auth', () => {
   async function login(email: string, password: string): Promise<string | false> {
     try {
       const response = await AuthAPI.login(email, password)
-      localStorage.setItem('token', response.data.value.accessToken)
+      if (response.data.value) {
+        let token = useCookie('token')
+        token.value = response.data.value.accessToken
 
-      user.value = response.data.value.user
+        user.value = response.data.value.user
+      }
       return redirectTo.value
     } catch {
       return false
     }
   }
 
-  async function checkAuth(): Promise<void> {
+  async function checkAuth(): Promise<boolean> {
     try {
-      if (!localStorage.getItem('token'))
-        return
+      let refreshToken = useCookie('refreshToken')
+      if (!refreshToken.value)
+        return false
 
       const response = await AuthAPI.refresh()
-      localStorage.setItem('token', response.data.value.accessToken)
+      if (response.data.value) {
+        let token = useCookie('token')
+        token.value = response.data.value.accessToken
 
-      user.value = response.data.user
+        user.value = response.data.user
+        return true
+      }
+      return false
     } catch {
       await logout()
+      return false
     }
   }
 
   async function logout(): Promise<void> {
     try {
-      localStorage.removeItem('token')
+      let token = useCookie('token')
+      token.value = null
+
       await AuthAPI.logout()
+
       user.value = null
 
       localStorage.removeItem('newUser')
@@ -64,6 +80,6 @@ export const useAuth = defineStore('auth', () => {
   }
 
   return {
-    user, registration, login, redirectTo, checkAuth, logout, updateUser
+    user, registration, login, redirectTo, checkAuth, logout, updateUser, authenticated
   }
 })
