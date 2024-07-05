@@ -41,9 +41,9 @@ export const useAuth = defineStore('auth', () => {
 
   async function checkAuth(): Promise<boolean> {
     try {
-      let refreshToken = useCookie('refreshToken')
-      if (!refreshToken.value)
-        return false
+      // let refreshToken = useCookie('refreshToken')
+      // if (!refreshToken.value)
+      //   return false
 
       const response = await AuthAPI.refresh()
       if (response.data.value) {

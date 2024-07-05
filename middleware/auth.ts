@@ -6,6 +6,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     if (token.value) {
         // check with refresh token
         let isAuth = await authStore.checkAuth()
+        console.log("isAuth", isAuth);
+        
         if (!isAuth) {
             authenticated.value = false
             abortNavigation();
