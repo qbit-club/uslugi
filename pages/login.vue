@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { useField, useForm } from 'vee-validate';
 
-// document.title = 'Авторизация — Ищу наставника'
-
+const auth = useAuth()
 let router = useRouter()
 
 const { meta, handleSubmit, handleReset } = useForm({
@@ -26,7 +25,7 @@ let loading = ref(false)
 
 const login = handleSubmit(async values => {
   loading.value = true
-  // await auth.login(values.email, values.password)
+  await auth.login(values.email, values.password)
   loading.value = false
   
   router.push('/')
