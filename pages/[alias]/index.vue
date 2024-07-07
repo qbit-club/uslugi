@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import VkSvg from '../../assets/styles/Vk.vue'
 import InfoCard from '../../components/_restindex/InfoCard.vue'
 import DeliveryCard from '../../components/_restindex/DeliveryCard.vue'
 import AddressCard from '../../components/_restindex/AddressCard.vue'
@@ -21,7 +20,7 @@ let headerimage = ref(rest.value.images.filter((e: string) => e.includes("header
 </script>
 <template>
   <v-container>
-    <v-row class="d-flex justify-center">
+    <v-row class="d-flex justify-center pb-16">
       <v-col :cols="12" :md="10">
         <v-row>
           <v-col :cols="12" style="position: relative; margin-bottom: 80px">
@@ -37,7 +36,7 @@ let headerimage = ref(rest.value.images.filter((e: string) => e.includes("header
               <v-avatar :image="logo" :size="250" class="logo"></v-avatar>
               <span class="title me-auto ">{{ rest.title }}</span>
               <a :href="rest.socialMedia" target="_blank">
-              <VkSvg class="mr-6 mb-4"></VkSvg>
+              <img src="../../assets/icons/vk.svg" class="mr-6 mb-4"/>
             </a>
             </div>
           </v-col>
@@ -48,7 +47,7 @@ let headerimage = ref(rest.value.images.filter((e: string) => e.includes("header
               <v-icon icon="mdi-map-marker-outline" class="mr-8" size="x-large" @click="currentTab = AddressCard"/>
             </div>
           </v-col>
-          <component :is="currentTab" :info="rest"></component>
+          <component :is="currentTab" :info="rest" class="pa-4"></component>
         </v-row>
       </v-col>
     </v-row>
@@ -63,7 +62,5 @@ let headerimage = ref(rest.value.images.filter((e: string) => e.includes("header
   font-size: clamp(1.5rem, 1.1023rem + 1.1364vw, 2rem);
   font-weight: 700;
 }
-.vk{
-  color: blue;
-}
+
 </style>

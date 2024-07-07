@@ -1,14 +1,20 @@
 <script setup lang="ts">
 const props = defineProps<{
-    info?: Object
+  info?: Object
 }>()
 </script>
 <template>
-  <v-card title="Адрес" variant="outlined" class="w-100" height="450px" style="border-color:#8B4513">
-    <v-card-text>
-        Адрес : {{props.info.location.name}}<br>
-        Расписание : <span v-html="props.info.schedule"></span>
-    </v-card-text>
-  </v-card>
+  <div>
+    <h3 class="mb-4 mt-4">
+      Адрес и контакты
+    </h3>
+    <p>
+      Адрес : {{ props.info.location.name }}
+    </p>
+    <p>
+      Расписание : <span v-html="props.info.schedule"></span>
+    </p>
+  </div>
+
 </template>
 <style lang="scss" scoped></style>

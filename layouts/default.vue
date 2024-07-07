@@ -7,7 +7,7 @@ const router = useRouter()
 let navigationDrawer = ref<boolean>(false)
 
 const routes = [
-{
+  {
     value: '/cabinet',
     title: "Кабинет",
     icon: "mdi-account-outline"
@@ -27,7 +27,7 @@ function navigateTo(route: any) {
 let canClickOnSpeedDial = ref(true)
 // если не верите - закомментируйте тело функции и нажмите очень много раз
 function ensureCanClick() {
-  if (canClickOnSpeedDial.value == false) return 
+  if (canClickOnSpeedDial.value == false) return
   canClickOnSpeedDial.value = false
   setTimeout(() => {
     canClickOnSpeedDial.value = true
@@ -40,16 +40,16 @@ await auth.checkAuth()
 <template>
   <v-responsive>
     <v-app>
-      <v-app-bar :elevation="0" class="d-none d-md-flex">
-        <v-row class="d-flex space-between">
-          <v-col :cols="2">
-            <v-icon icon="$vuetify" class="ml-6" @click="router.push('/')"></v-icon>
-          </v-col>
-          <v-col :cols="8">main content</v-col>
-          <v-col :cols="2" class="d-flex justify-end">
-            <v-icon icon="mdi-hamburger" class="mr-6" @click="navigationDrawer = !navigationDrawer" />
-          </v-col>
-        </v-row>
+      <v-app-bar :elevation="0" class="d-none d-md-block">
+        <div class="w-100 d-flex justify-space-between align-center">
+
+          <div class="flex-grow-1 flex-shrink-0"> 
+            <img src="../assets/images/logo.jpg"  alt="logo" @click="router.push('/')"/>
+          </div>
+          <v-icon icon="mdi-hamburger" class="ma-6" @click="navigationDrawer = !navigationDrawer" />
+
+        </div>
+
       </v-app-bar>
 
       <v-speed-dial transition="fade-transition" class="d-flex d-md-none">
@@ -63,6 +63,7 @@ await auth.checkAuth()
         <v-btn key="2" @click="router.push('/cabinet')" icon="mdi-account-outline"></v-btn>
         <v-btn key="1" @click="router.push('/rest/create')" icon="mdi-table-chair"></v-btn>
       </v-speed-dial>
+    
 
       <ClientOnly>
         <!-- только на экранах md и больше, потому что на телефоне можно свайпнуть и navigation-drawer появится -->
@@ -89,6 +90,7 @@ await auth.checkAuth()
     padding-top: 0px;
   }
 }
+
 @media (min-width: 960px) {
   .main {
     padding-top: 64px;

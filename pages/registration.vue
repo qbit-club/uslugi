@@ -70,22 +70,17 @@ const submit = handleSubmit(async values => {
 
     <v-col 
       cols="12" xs="12" sm="10" md="7" lg="5" 
-      class="mt-4 ma-auto"
+      class="ma-auto"
     >
-      <v-card 
-        class="d-flex flex-column 
-        justify-center align-center 
-        text-center w-100 pl-6 pr-6 
-        pt-4 pb-6 rounded-lg"
-      >
+  
         <div 
-          class="text-h6 font-weight-bold"
+          class="text-h6 font-weight-bold pa-8 text-center"
         >
           Регистрация
         </div>
   
         <v-form
-          class="mt-6 w-100"
+          class=" w-100 align-center justify-center d-flex flex-column"
           @submit="submit"
         >
           <v-text-field 
@@ -107,7 +102,7 @@ const submit = handleSubmit(async values => {
             :error-messages="email.errors.value"
             variant="outlined"
             density="compact"
-            class="w-100 mt-1"
+            class="w-100"
           />          
 
           <v-text-field 
@@ -119,7 +114,7 @@ const submit = handleSubmit(async values => {
             :error-messages="password.errorMessage.value"
             variant="outlined"
             density="compact"
-            class="w-100 mt-1"
+            class="w-100"
           />
 
           <v-btn 
@@ -127,7 +122,6 @@ const submit = handleSubmit(async values => {
             :disabled="!meta.valid" 
             :loading="loading"
             color="accent"
-            class="mt-6"
           >
             Отправить
           </v-btn>
@@ -135,11 +129,11 @@ const submit = handleSubmit(async values => {
   
         <div 
           @click="router.push('/login')" 
-          class="text-subtitle-1 w-100 cursor-pointer font-weight-semibold pa-1 mt-2"
+          class="text-body-2 pa-2 w-100 cursor-pointer font-weight-semibold text-center"
         >
           вход
         </div>
-      </v-card>
+  
     </v-col>
   </v-container>
 </template>

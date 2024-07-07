@@ -4,10 +4,14 @@ const props = defineProps<{
 }>()
 </script>
 <template>
-  <v-card title="Доставка" variant="outlined" class="w-100" height="450px" style="border-color: coral">
-    <v-card-text>
-        Доставка за 1000000000000000руб
-    </v-card-text>
-  </v-card>
+  <div>
+    <h3 class="mb-4 mt-4">
+      Доставка
+    </h3>
+    <p>
+      Доставка за 1000000000000000руб
+    </p>
+  
+  </div>
 </template>
 <style lang="scss" scoped></style>

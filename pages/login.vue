@@ -33,16 +33,15 @@ const login = handleSubmit(async values => {
 </script>
 
 <template>
-  <v-container class="align-start">
+  <v-container>
     <BackButton></BackButton>
 
-    <v-col cols="12" xs="12" md="6" lg="4" class="mt-4 ma-auto">
-      <v-card 
-        class="d-flex flex-column justify-center align-center text-center rounded-lg w-100 pl-6 pr-6 pt-4 pb-6"
-      >
-        <div class="text-h6 font-weight-bold">Вход</div>
+    <v-col   cols="12" xs="12" sm="10" md="7" lg="5" 
+    class="ma-auto">
+   
+        <div class="text-h6 font-weight-bold pa-8 text-center">Вход</div>
   
-        <v-form @submit.prevent="login" class="d-flex mt-3 flex-column align-center justify-center w-100">
+        <v-form @submit.prevent="login" class="d-flex flex-column align-center justify-center w-100">
           <v-text-field 
             label="Email"
             type="email"
@@ -66,22 +65,22 @@ const login = handleSubmit(async values => {
             class="w-100"
           />
 
-          <v-btn type="submit" :disabled="!meta.valid" color="accent" class="mt-4">Войти</v-btn>
+          <v-btn type="submit" :disabled="!meta.valid" color="accent">Войти</v-btn>
         </v-form>
   
         <div 
           @click="router.push('/registration')" 
           :loading="loading"
-          class="text-body-2 w-100 cursor-pointer font-weight-semibold pa-1 mt-4"
+          class="text-body-2 pa-2 w-100 cursor-pointer font-weight-semibold text-center"
         >
           регистрация
         </div>
         <div
-          class="text-body-2 w-100 cursor-pointer font-weight-semibold pa-1"
+          class="text-body-2 w-100 cursor-pointer font-weight-semibold text-center"
         >
           восстановить пароль
         </div>
-      </v-card>
+   
     </v-col>
   </v-container>
 </template>
