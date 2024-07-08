@@ -7,7 +7,7 @@ const restStore = useRest()
 let route = useRoute()
 let rest = ref<any>({})
 
-let currentTab= shallowRef<any>(InfoCard)
+let currentTab = shallowRef<any>(InfoCard)
 
 let alias = String(route.params.alias) ?? ""
 
@@ -24,30 +24,31 @@ let headerimage = ref(rest.value.images.filter((e: string) => e.includes("header
       <v-col :cols="12" :md="10">
         <v-row>
           <v-col :cols="12" style="position: relative; margin-bottom: 80px">
-            <v-img :src="headerimage" cover alt="" />
+            <v-img :src="headerimage" max-height="25vh" cover alt="" />
             <div style="
                 position: absolute;
                 bottom: -50px;
                 display: flex;
                 justify-content: start;
+                aspect-ratio: 1;
                 width: 100%;
                 align-items: end;
               ">
-              <v-avatar :image="logo" :size="250" class="logo"></v-avatar>
+              <v-avatar :image="logo" size="20%" class="logo"></v-avatar>
               <span class="title me-auto ">{{ rest.title }}</span>
               <a :href="rest.socialMedia" target="_blank">
-              <img src="../../assets/icons/vk.svg" class="mr-6 mb-4"/>
-            </a>
+                <img src="../../assets/icons/vk.svg" class="mr-6 mb-4" />
+              </a>
             </div>
           </v-col>
           <v-col :cols="12">
             <div class="d-flex flex-row">
-              <v-icon icon="mdi-information-outline" class="mr-8" size="x-large" @click="currentTab = InfoCard"/>
-              <v-icon icon="mdi-truck-fast-outline" class="mr-8" size="x-large" @click="currentTab = DeliveryCard"/>
-              <v-icon icon="mdi-map-marker-outline" class="mr-8" size="x-large" @click="currentTab = AddressCard"/>
+              <v-icon icon="mdi-information-outline" class="mr-8" size="x-large" @click="currentTab = InfoCard" />
+              <v-icon icon="mdi-truck-fast-outline" class="mr-8" size="x-large" @click="currentTab = DeliveryCard" />
+              <v-icon icon="mdi-map-marker-outline" class="mr-8" size="x-large" @click="currentTab = AddressCard" />
             </div>
-          </v-col>
-          <component :is="currentTab" :info="rest" class="pa-4"></component>
+          </v-col> 
+            <component :is="currentTab" :info="rest" class="pa-4"></component>
         </v-row>
       </v-col>
     </v-row>
@@ -62,5 +63,4 @@ let headerimage = ref(rest.value.images.filter((e: string) => e.includes("header
   font-size: clamp(1.5rem, 1.1023rem + 1.1364vw, 2rem);
   font-weight: 700;
 }
-
 </style>
