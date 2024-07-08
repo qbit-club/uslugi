@@ -7,13 +7,13 @@ export const useAuth = defineStore('auth', () => {
   let user = ref<User | null>()
   let redirectTo = ref<string>('/')
   let authenticated = ref<boolean>(false)
-
+  
+  let tokenCookie = useCookie('token')
   async function registration(data: any): Promise<boolean> {
     try {
       const response = await AuthAPI.registration(data)
       if (response.data.value) {
-        let token = useCookie('token')
-        token.value = response.data?.value?.accessToken
+        tokenCookie.value = response.data?.value?.accessToken
 
         user.value = response.data.value.user
         authenticated.value = true
@@ -28,8 +28,7 @@ export const useAuth = defineStore('auth', () => {
     try {
       const response = await AuthAPI.login(email, password)
       if (response.data.value) {
-        let token = useCookie('token')
-        token.value = response.data.value.accessToken
+        tokenCookie.value = response.data.value.accessToken
 
         user.value = response.data.value.user
       }
@@ -46,15 +45,16 @@ export const useAuth = defineStore('auth', () => {
       //   return false
 
       const response = await AuthAPI.refresh()
-      if (response.data.value) {
-        let token = useCookie('token')
-        token.value = response.data.value.accessToken
+      
+      if (response.data.value?.accessToken) {
+        tokenCookie.value = response.data.value.accessToken
 
         user.value = response.data.user
         return true
+      } else {
+        return false
       }
-      return false
-    } catch {
+    } catch(error) {
       await logout()
       return false
     }
@@ -62,8 +62,7 @@ export const useAuth = defineStore('auth', () => {
 
   async function logout(): Promise<void> {
     try {
-      let token = useCookie('token')
-      token.value = null
+      tokenCookie.value = null
 
       await AuthAPI.logout()
 

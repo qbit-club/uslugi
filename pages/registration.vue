@@ -57,7 +57,7 @@ const submit = handleSubmit(async values => {
   
   await auth.registration(values)
   .then((res: Boolean) => {
-    if (res) router.push(`/user/cabinet`)
+    if (res) router.push(`/cabinet`)
   })
 
   loading.value = false 

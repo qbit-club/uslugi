@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { useWindowSize } from '@vueuse/core'
 const { width } = useWindowSize()
 
