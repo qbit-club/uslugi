@@ -8,6 +8,9 @@ import type { Location } from "../../types/location.interface"
 useHead({
   title: 'Рестик | Создать зал'
 })
+definePageMeta({
+  middleware: 'auth'
+})
 const config = useRuntimeConfig()
 
 // all types
@@ -17,6 +20,7 @@ import type { Table } from '../../types/table.interface'
 import { useField, useForm } from 'vee-validate'
 
 const restStore = useRest()
+const authStore = useAuth()
 const router = useRouter()
 
 let loading = ref(false)
@@ -170,12 +174,14 @@ function uploadHallImage(file: File, index: Number) {
 }
 const submit = handleSubmit(async values => {
   loading.value = true
+  
   let toSend = {
     ...values,
     tables: tables.value,
     location: location.value,
     description: description.value,
-    schedule: schedule.value
+    schedule: schedule.value,
+    author: String(authStore.user?._id)
   }
 
   let res = await restStore.create(toSend)

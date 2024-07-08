@@ -2,6 +2,9 @@
 definePageMeta({
   middleware: 'auth'
 })
+const authStore = useAuth()
+
+let { user } = storeToRefs(authStore)
 </script>
 <template>
   <v-container>
@@ -12,13 +15,13 @@ definePageMeta({
             <v-avatar size="100" class="gradient">
             </v-avatar>
           </div>
-          <h4 class="text-center">Григорий Дзюин</h4>
+          <h4 class="text-center">{{ user?.name }}</h4>
         </div>
       </v-col>
       <v-col :cols="12" :md="4">
         <div class="rests-container">
           <b class="text-white">
-            Какая-то информация(цифры)
+            {{ user }}
           </b>
         </div>
       </v-col>

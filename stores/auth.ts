@@ -49,7 +49,7 @@ export const useAuth = defineStore('auth', () => {
       if (response.data.value?.accessToken) {
         tokenCookie.value = response.data.value.accessToken
 
-        user.value = response.data.user
+        user.value = response.data.value.user
         return true
       } else {
         return false

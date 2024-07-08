@@ -6,5 +6,6 @@ export interface Rest {
   phone: string
   socialMedia: string
   location: object
+  author: string
   tables: Table[]
 }
