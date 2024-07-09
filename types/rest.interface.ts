@@ -1,3 +1,4 @@
+import type { Location } from "./location.interface"
 import type { Table } from "./table.interface"
 
 export interface Rest {
@@ -5,7 +6,7 @@ export interface Rest {
   alias: string
   phone: string
   socialMedia: string
-  location: object
+  location: Location
   author: string
   tables: Table[]
 }

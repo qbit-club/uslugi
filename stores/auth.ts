@@ -7,7 +7,7 @@ export const useAuth = defineStore('auth', () => {
   let user = ref<User | null>()
   let redirectTo = ref<string>('/')
   let authenticated = ref<boolean>(false)
-  
+
   let tokenCookie = useCookie('token')
   async function registration(data: any): Promise<boolean> {
     try {
@@ -45,7 +45,7 @@ export const useAuth = defineStore('auth', () => {
       //   return false
 
       const response = await AuthAPI.refresh()
-      
+
       if (response.data.value?.accessToken) {
         tokenCookie.value = response.data.value.accessToken
 
@@ -54,7 +54,7 @@ export const useAuth = defineStore('auth', () => {
       } else {
         return false
       }
-    } catch(error) {
+    } catch (error) {
       await logout()
       return false
     }
@@ -77,8 +77,21 @@ export const useAuth = defineStore('auth', () => {
       user.value = (await AuthAPI.updateUser(new_user)).data
     } catch { }
   }
+  /**
+   * get user's rests and set it to the user in pinia
+   */
+  async function getUserRests() {
+    try {
+      if (user.value?._id) {
+        let res = await AuthAPI.getUserRests(user.value?._id)
+        user.value.rests = res.data.value.rests
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return {
-    user, registration, login, redirectTo, checkAuth, logout, updateUser, authenticated
+    user, registration, login, redirectTo, checkAuth, logout, updateUser, authenticated, getUserRests
   }
 })
