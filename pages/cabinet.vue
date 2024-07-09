@@ -3,8 +3,10 @@ definePageMeta({
   middleware: 'auth'
 })
 const authStore = useAuth()
+const router = useRouter()
 
 let { user } = storeToRefs(authStore)
+await authStore.getUserRests()
 </script>
 <template>
   <v-container>
@@ -18,12 +20,24 @@ let { user } = storeToRefs(authStore)
           <h4 class="text-center">{{ user?.name }}</h4>
         </div>
       </v-col>
-      <v-col :cols="12" :md="4">
-        <div class="rests-container">
-          <b class="text-white">
-            {{ user }}
-          </b>
-        </div>
+      <v-col :cols="12">
+        <v-row>
+          <v-col :cols="4" v-for="rest of user?.rests">
+            <v-card>
+              <v-card-title>
+                {{ rest.title }}
+              </v-card-title>
+              <v-card-text>
+                {{ rest }}
+              </v-card-text>
+              <v-card-actions>
+                <v-btn variant="tonal" @click="router.push(`/add-tables?rest_id=${rest._id}`)">
+                  <v-icon icon="mdi-table-chair"></v-icon>
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
   </v-container>
@@ -38,14 +52,5 @@ let { user } = storeToRefs(authStore)
   background: linear-gradient(90deg, rgba(41, 182, 246, 1) 0%, rgba(3, 155, 229, 1) 35%, rgba(2, 136, 209, 1) 100%);
   // background: linear-gradient(90deg, rgba(79,195,247,1) 0%, rgba(41,182,246,1) 41%);
 
-}
-
-.rests-container {
-  // background: linear-gradient(90deg, rgba(41,182,246,1) 0%, rgba(3,155,229,1) 35%, rgba(2,136,209,1) 100%);
-  // background: linear-gradient(90deg, rgba(79,195,247,1) 0%, rgba(41,182,246,1) 41%);
-  background: linear-gradient(90deg, rgba(79, 195, 247, 1) 0%, rgba(3, 155, 229, 1) 50%);
-
-  border-radius: 20px;
-  padding: 16px;
 }
 </style>

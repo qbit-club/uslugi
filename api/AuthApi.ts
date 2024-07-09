@@ -20,4 +20,17 @@ export default {
   updateUser(user: any): Promise<any> {
     return useApiFetch('/auth/update', { method: 'POST', body: { user } })
   },
+  /**
+   * 
+   * @param userId 
+   * @returns user's rests
+   */
+  getUserRests(userId: string): Promise<any> {
+    return useApiFetch('/user/rests', {
+      method: 'GET',
+      query: {
+        userId
+      }
+    })
+  }
 }
