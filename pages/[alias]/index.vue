@@ -44,6 +44,14 @@ let headerimage = ref(rest.value.images.filter((e: string) => e.includes("header
           <v-col :cols="12">
             <div class="d-flex">
               <div class="d-flex flex-column align-center pa-4">
+                <v-icon icon="mdi-silverware-fork-knife" size="x-large" @click="currentTab = InfoCard" />
+                <div class="explanation">меню</div>
+              </div>
+              <div class="d-flex flex-column align-center pa-4">
+                <v-icon icon="mdi-table-chair" size="x-large" @click="currentTab = InfoCard" />
+                <div class="explanation text-center">бронь <br> столиков</div>
+              </div>
+              <div class="d-flex flex-column align-center pa-4">
                 <v-icon icon="mdi-information-outline" size="x-large" @click="currentTab = InfoCard" />
                 <div class="explanation">инфо</div>
               </div>
