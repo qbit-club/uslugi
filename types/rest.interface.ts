@@ -9,4 +9,5 @@ export interface Rest {
   location: Location
   author: string
   tables: Table[]
+  description: string
 }

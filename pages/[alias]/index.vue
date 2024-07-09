@@ -2,10 +2,13 @@
 import InfoCard from '../../components/_restindex/InfoCard.vue'
 import DeliveryCard from '../../components/_restindex/DeliveryCard.vue'
 import AddressCard from '../../components/_restindex/AddressCard.vue'
+import Menu from '~/components/_restindex/Menu.vue';
+import type { RestFromDb } from "../../types/rest-from-db.interface.ts"
+
 const restStore = useRest()
 
 let route = useRoute()
-let rest = ref<any>({})
+let rest = ref<RestFromDb>()
 
 let currentTab = shallowRef<any>(InfoCard)
 
@@ -14,9 +17,11 @@ let alias = String(route.params.alias) ?? ""
 let res = await restStore.getByAlias(alias)
 
 rest.value = res.data.value
+
 // window.open(rest.value.socialMedia)
-let logo = ref(rest.value.images.filter((e: string) => e.includes("logo"))[0])
-let headerimage = ref(rest.value.images.filter((e: string) => e.includes("headerimage"))[0])
+let logo = ref(rest.value?.images.filter((e: string) => e.includes("logo"))[0])
+let headerimage = ref(rest.value?.images.filter((e: string) => e.includes("headerimage"))[0])
+
 </script>
 <template>
   <v-container>
@@ -35,8 +40,8 @@ let headerimage = ref(rest.value.images.filter((e: string) => e.includes("header
                 align-items: end;
               ">
               <v-avatar :image="logo" size="20%" class="logo"></v-avatar>
-              <span class="title me-auto ">{{ rest.title }}</span>
-              <a :href="rest.socialMedia" target="_blank">
+              <span class="title me-auto ">{{ rest?.title }}</span>
+              <a :href="rest?.socialMedia" target="_blank">
                 <img src="../../assets/icons/vk.svg" class="mr-6 mb-4" />
               </a>
             </div>
@@ -44,7 +49,7 @@ let headerimage = ref(rest.value.images.filter((e: string) => e.includes("header
           <v-col :cols="12">
             <div class="d-flex">
               <div class="d-flex flex-column align-center pa-4">
-                <v-icon icon="mdi-silverware-fork-knife" size="x-large" @click="currentTab = InfoCard" />
+                <v-icon icon="mdi-silverware-fork-knife" size="x-large" @click="currentTab = Menu" />
                 <div class="explanation">меню</div>
               </div>
               <div class="d-flex flex-column align-center pa-4">
