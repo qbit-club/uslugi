@@ -42,13 +42,22 @@ let headerimage = ref(rest.value.images.filter((e: string) => e.includes("header
             </div>
           </v-col>
           <v-col :cols="12">
-            <div class="d-flex flex-row">
-              <v-icon icon="mdi-information-outline" class="mr-8" size="x-large" @click="currentTab = InfoCard" />
-              <v-icon icon="mdi-truck-fast-outline" class="mr-8" size="x-large" @click="currentTab = DeliveryCard" />
-              <v-icon icon="mdi-map-marker-outline" class="mr-8" size="x-large" @click="currentTab = AddressCard" />
+            <div class="d-flex">
+              <div class="d-flex flex-column align-center pa-4">
+                <v-icon icon="mdi-information-outline" size="x-large" @click="currentTab = InfoCard" />
+                <div class="explanation">инфо</div>
+              </div>
+              <div class="d-flex flex-column align-center pa-4">
+                <v-icon icon="mdi-truck-fast-outline" size="x-large" @click="currentTab = DeliveryCard" />
+                <div class="explanation">доставка</div>
+              </div>
+              <div class="d-flex flex-column align-center pa-4">
+                <v-icon icon="mdi-map-marker-outline" size="x-large" @click="currentTab = AddressCard" />
+                <div class="explanation">адрес</div>
+              </div>
             </div>
-          </v-col> 
-            <component :is="currentTab" :info="rest" class="pa-4"></component>
+          </v-col>
+          <component :is="currentTab" :info="rest" class="pa-4"></component>
         </v-row>
       </v-col>
     </v-row>
@@ -62,5 +71,9 @@ let headerimage = ref(rest.value.images.filter((e: string) => e.includes("header
 .title {
   font-size: clamp(1.5rem, 1.1023rem + 1.1364vw, 2rem);
   font-weight: 700;
+}
+
+.explanation {
+  font-size: 8px;
 }
 </style>
