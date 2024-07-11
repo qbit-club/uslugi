@@ -6,17 +6,13 @@ import { ref } from "vue"
 export const useAuth = defineStore('auth', () => {
   let user = ref<User | null>()
   let redirectTo = ref<string>('/')
-  let authenticated = ref<boolean>(false)
 
   let tokenCookie = useCookie('token')
   async function registration(data: any): Promise<boolean> {
     try {
       const response = await AuthAPI.registration(data)
       if (response.data.value) {
-        tokenCookie.value = response.data?.value?.accessToken
-
         user.value = response.data.value.user
-        authenticated.value = true
       }
       return true
     } catch {
@@ -28,8 +24,6 @@ export const useAuth = defineStore('auth', () => {
     try {
       const response = await AuthAPI.login(email, password)
       if (response.data.value) {
-        tokenCookie.value = response.data.value.accessToken
-
         user.value = response.data.value.user
       }
       return redirectTo.value
@@ -40,16 +34,11 @@ export const useAuth = defineStore('auth', () => {
 
   async function checkAuth(): Promise<boolean> {
     try {
-      // let refreshToken = useCookie('refreshToken')
-      // if (!refreshToken.value)
-      //   return false
-
       const response = await AuthAPI.refresh()
-
-      if (response.data.value?.accessToken) {
-        tokenCookie.value = response.data.value.accessToken
-
-        user.value = response.data.value.user
+      
+      if (response.data.value?._id) {
+        // tokenCookie.value = response.data.value.accessToken
+        user.value = response.data.value
         return true
       } else {
         return false
@@ -62,6 +51,7 @@ export const useAuth = defineStore('auth', () => {
 
   async function logout(): Promise<void> {
     try {
+      let tokenCookie = useCookie('token')
       tokenCookie.value = null
 
       await AuthAPI.logout()
@@ -92,6 +82,6 @@ export const useAuth = defineStore('auth', () => {
   }
 
   return {
-    user, registration, login, redirectTo, checkAuth, logout, updateUser, authenticated, getUserRests
+    user, registration, login, redirectTo, checkAuth, logout, updateUser, getUserRests
   }
 })
