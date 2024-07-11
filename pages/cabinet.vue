@@ -34,7 +34,7 @@ await authStore.getUserRests()
                 <v-btn variant="tonal" @click="router.push(`/add-tables?rest_id=${rest._id}`)">
                   <v-icon icon="mdi-table-chair"></v-icon>
                 </v-btn>
-                <v-btn variant="tonal" @click="router.push(`/change-menu?rest_id=${rest._id}`)">
+                <v-btn variant="tonal" @click="router.push(`/change-menu?alias=${rest.alias}`)">
                   <v-icon icon="mdi-silverware"></v-icon>
                 </v-btn>
               </v-card-actions>
