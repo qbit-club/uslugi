@@ -11,7 +11,7 @@ await authStore.getUserRests()
 <template>
   <v-container>
     <v-row>
-      <v-col :cols="12" :md="4">
+      <v-col :cols="12">
         <div class="avatar-container">
           <div class="w-100 d-flex justify-center mb-3 mt-2">
             <v-avatar size="100" class="gradient">
@@ -22,7 +22,7 @@ await authStore.getUserRests()
       </v-col>
       <v-col :cols="12">
         <v-row>
-          <v-col :cols="4" v-for="rest of user?.rests">
+          <v-col :cols="12" v-for="rest of user?.rests">
             <v-card>
               <v-card-title>
                 {{ rest.title }}
@@ -33,6 +33,9 @@ await authStore.getUserRests()
               <v-card-actions>
                 <v-btn variant="tonal" @click="router.push(`/add-tables?rest_id=${rest._id}`)">
                   <v-icon icon="mdi-table-chair"></v-icon>
+                </v-btn>
+                <v-btn variant="tonal" @click="router.push(`/change-menu?rest_id=${rest._id}`)">
+                  <v-icon icon="mdi-silverware"></v-icon>
                 </v-btn>
               </v-card-actions>
             </v-card>
