@@ -3,6 +3,7 @@ import InfoCard from '../../components/_restindex/InfoCard.vue'
 import DeliveryCard from '../../components/_restindex/DeliveryCard.vue'
 import AddressCard from '../../components/_restindex/AddressCard.vue'
 import Menu from '~/components/_restindex/Menu.vue';
+import Reservation from '~/components/_restindex/Reservation.vue'
 import type { RestFromDb } from "../../types/rest-from-db.interface.ts"
 
 const restStore = useRest()
@@ -53,7 +54,7 @@ let headerimage = ref(rest.value?.images.filter((e: string) => e.includes("heade
                 <div class="explanation">меню</div>
               </div>
               <div class="d-flex flex-column align-center pa-4">
-                <v-icon icon="mdi-table-chair" size="x-large" @click="currentTab = InfoCard" />
+                <v-icon icon="mdi-table-chair" size="x-large" @click="currentTab = Reservation" />
                 <div class="explanation text-center">бронь <br> столиков</div>
               </div>
               <div class="d-flex flex-column align-center pa-4">
@@ -86,7 +87,5 @@ let headerimage = ref(rest.value?.images.filter((e: string) => e.includes("heade
   font-weight: 700;
 }
 
-.explanation {
-  font-size: 8px;
-}
+
 </style>

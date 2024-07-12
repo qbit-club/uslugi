@@ -10,4 +10,5 @@ export interface Rest {
   author: string
   tables: Table[]
   description: string
+  schedule: string
 }

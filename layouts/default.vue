@@ -9,7 +9,17 @@ let navigationDrawer = ref<boolean>(false)
 const routes = [
   {
     value: '/cabinet',
-    title: "Кабинет",
+    title: "Пользователь",
+    icon: "mdi-account-outline"
+  },
+  {
+    value: '/cabinet-admin',
+    title: "Администратор",
+    icon: "mdi-account-outline"
+  },
+  {
+    value: '/cabinet-manager',
+    title: "Менеджер",
     icon: "mdi-account-outline"
   },
   {
@@ -61,6 +71,8 @@ await auth.checkAuth()
 
         <v-btn key="2" @click="router.push('/')" icon="mdi-home-outline"></v-btn>
         <v-btn key="2" @click="router.push('/cabinet')" icon="mdi-account-outline"></v-btn>
+        <v-btn key="2" @click="router.push('/cabinet-admin')" icon="mdi-account-outline"></v-btn>
+        <v-btn key="2" @click="router.push('/cabinet-manager')" icon="mdi-account-outline"></v-btn>
         <v-btn key="1" @click="router.push('/rest/create')" icon="mdi-table-chair"></v-btn>
       </v-speed-dial>
     
