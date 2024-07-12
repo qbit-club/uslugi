@@ -11,15 +11,15 @@ let res = await restStore.getByAlias(String(route.query.alias))
 rest.value = res.data.value
 
 let form = ref({
-  name: null,
-  category: null
+  name: '',
+  category: '',
 })
 
 async function submit() {
   // если надо будет - добавить _id меню, чтобы обновить его 
   // в базе(серверная часть уже написана)
   let toSend = form.value
-  let res = await restStore.changeMenu(String(rest.value?._id), toSend)
+  let res = await restStore.changeFoodList(String(rest.value?._id), toSend)
 }
 </script>
 <template>

@@ -1,4 +1,6 @@
+import type { FoodListItem } from '~/types/food-list-item.interface'
 import type { Rest } from '../types/rest.interface'
+import type { FoodListItemFromDb } from '~/types/food-list-item-from-db.interface'
 
 
 export default {
@@ -19,12 +21,12 @@ export default {
   uploadImages(formData: FormData, _id: string): Promise<any> {
     return useApiFetch(`/rest/images?rest_id=${_id}`, { method: 'POST', headers: { 'Content-Type': 'multipart/form-data' }, body: formData })
   },
-  changeMenu(restId: string, menuItem: any): Promise<any> {
-    return useApiFetch('/menu', {
+  changeFoodList(restId: string, foodListItem: FoodListItem | FoodListItemFromDb): Promise<any> {
+    return useApiFetch('/rest/food-list', {
       method: 'PUT',
       body: {
         restId,
-        menuItem
+        foodListItem
       }
     })
   }
