@@ -26,6 +26,9 @@ export const useRest = defineStore('rest', () => {
   async function changeFoodList(restId: string, foodListItem: FoodListItemFromDb | FoodListItem) {
     return await RestApi.changeFoodList(restId, foodListItem)
   }
+  async function sendFoodListItemToMenu(_id: string, restId: string) {
+    return await RestApi.sendFoodListItemToMenu(_id, restId)
+  }
 
-  return { create, get, getByAlias, uploadImages, changeFoodList }
+  return { create, get, getByAlias, uploadImages, changeFoodList, sendFoodListItemToMenu }
 })

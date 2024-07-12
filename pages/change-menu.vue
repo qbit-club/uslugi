@@ -36,6 +36,12 @@ async function submit() {
     loading.value = false
   }
 }
+async function sendFoodListItemToMenu(_id: string) {
+  let res = await restStore.sendFoodListItemToMenu(_id, String(rest.value?._id))
+  if (res.status.value == "success") {
+    rest.value = res.data.value
+  }
+}
 function startEditingFoodList(item: FoodListItemFromDb) {
   currentFoodListItemId.value = item._id
   Object.assign(form.value, item)
@@ -57,11 +63,22 @@ function startEditingFoodList(item: FoodListItemFromDb) {
         </v-row>
         <v-row>
           <v-col :cols="12" class="d-flex justify-center">
-            <v-btn size="large" @click="submit" :prepend-icon="currentFoodListItemId.length > 0 ? 'mdi-pencil' : ''" :loading="loading">
+            <v-btn
+              size="large"
+              @click="submit"
+              :prepend-icon="currentFoodListItemId.length > 0 ? 'mdi-pencil' : ''"
+              :loading="loading"
+            >
               отправить
             </v-btn>
           </v-col>
         </v-row>
+      </v-col>
+    </v-row>
+    <v-row class="d-flex justify-center">
+      <v-col :cols="10">
+        <h2>Menu</h2>
+        {{ rest?.menu }}
       </v-col>
     </v-row>
     <v-row class="d-flex justify-center">
@@ -76,6 +93,9 @@ function startEditingFoodList(item: FoodListItemFromDb) {
               <v-card-actions>
                 <v-btn variant="tonal" @click="startEditingFoodList(item)">
                   <v-icon icon="mdi-pencil"></v-icon>
+                </v-btn>
+                <v-btn variant="tonal" @click="sendFoodListItemToMenu(item._id)">
+                  <v-icon icon="mdi-silverware"></v-icon>
                 </v-btn>
               </v-card-actions>
             </v-card>

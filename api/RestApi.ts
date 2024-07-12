@@ -29,5 +29,14 @@ export default {
         foodListItem
       }
     })
+  },
+  sendFoodListItemToMenu(_id: string, restId: string): Promise<any> {
+    return useApiFetch('/rest/menu', {
+      method: 'POST',
+      body: {
+        foodListItemId: _id,
+        restId
+      }
+    })
   }
 }
