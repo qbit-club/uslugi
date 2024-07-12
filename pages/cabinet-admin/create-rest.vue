@@ -1,9 +1,9 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
-import getPossibleLocations from "~/composables/dadata";
-import type { Location } from "~/types/location.interface"
-
+import getPossibleLocations from "../../composables/dadata";
+import type { Location } from "../../types/location.interface"
+import type { Table } from '../../types/table.interface'
 // meta
 useHead({
   title: 'Рестик | Создать зал'
@@ -13,8 +13,7 @@ definePageMeta({
 })
 const config = useRuntimeConfig()
 
-// all types
-import type { Table } from '../../types/table.interface'
+
 
 // other imports
 import { useField, useForm } from 'vee-validate'
