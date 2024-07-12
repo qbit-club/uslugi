@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import type { RestFromDb } from '~/types/rest-from-db.interface';
 const props = defineProps<{
-  info?: Object
+  info: RestFromDb
 }>()
 </script>
 <template>

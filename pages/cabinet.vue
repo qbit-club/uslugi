@@ -43,6 +43,16 @@ await authStore.getUserRests()
         </v-row>
       </v-col>
     </v-row>
+    <v-row>
+      <v-col :cols="12">
+
+        Что делает пользователь:
+        <ul>
+          <li>Редактирует свои данные кроме почты</li>
+          <li>Просматривает свои заказы</li>
+        </ul>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 <style lang="scss" scoped>
