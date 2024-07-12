@@ -18,5 +18,14 @@ export default {
   },
   uploadImages(formData: FormData, _id: string): Promise<any> {
     return useApiFetch(`/rest/images?rest_id=${_id}`, { method: 'POST', headers: { 'Content-Type': 'multipart/form-data' }, body: formData })
+  },
+  changeMenu(restId: string, menuItem: any): Promise<any> {
+    return useApiFetch('/menu', {
+      method: 'PUT',
+      body: {
+        restId,
+        menuItem
+      }
+    })
   }
 }

@@ -7,10 +7,20 @@ const route = useRoute()
 const restStore = useRest()
 
 let rest = ref<RestFromDb>()
-
 let res = await restStore.getByAlias(String(route.query.alias))
-
 rest.value = res.data.value
+
+let form = ref({
+  name: null,
+  category: null
+})
+
+async function submit() {
+  // если надо будет - добавить _id меню, чтобы обновить его 
+  // в базе(серверная часть уже написана)
+  let toSend = form.value
+  let res = await restStore.changeMenu(String(rest.value?._id), toSend)
+}
 </script>
 <template>
   <v-container>
@@ -19,16 +29,16 @@ rest.value = res.data.value
         <v-row>
           <v-col :cols="6">
             <div class="caption">Название</div>
-            <v-text-field placeholder="Пирожное"></v-text-field>
+            <v-text-field placeholder="Пирожное" variant="outlined" v-model="form.name"></v-text-field>
           </v-col>
           <v-col :cols="6">
             <div class="caption">Категория в меню</div>
-            <v-select :items="CATEGORIES" placeholder="пасты"></v-select>
+            <v-select :items="CATEGORIES" placeholder="пасты" variant="outlined" v-model="form.category"></v-select>
           </v-col>
         </v-row>
         <v-row>
           <v-col :cols="12" class="d-flex justify-center">
-            <v-btn size="large">отправить</v-btn>
+            <v-btn size="large" @click="submit">отправить</v-btn>
           </v-col>
         </v-row>
       </v-col>
@@ -37,7 +47,7 @@ rest.value = res.data.value
       <v-col :cols="10">
         {{ rest }}
         <h1>
-          все компоненты меню, которые можно отредактировать и тп
+          все компоненты меню, которые можно отредактировать и спрятать
         </h1>
       </v-col>
     </v-row>
