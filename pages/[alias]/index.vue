@@ -19,9 +19,6 @@ let res = await restStore.getByAlias(alias)
 
 rest.value = res.data.value
 
-// window.open(rest.value.socialMedia)
-let logo = ref(rest.value?.images.filter((e: string) => e.includes("logo"))[0])
-let headerimage = ref(rest.value?.images.filter((e: string) => e.includes("headerimage"))[0])
 
 </script>
 <template>
@@ -30,7 +27,7 @@ let headerimage = ref(rest.value?.images.filter((e: string) => e.includes("heade
       <v-col :cols="12" :md="10">
         <v-row>
           <v-col :cols="12" style="position: relative; margin-bottom: 80px">
-            <v-img :src="headerimage" max-height="25vh" cover alt="" />
+            <v-img :src="rest?.images.headerimage" max-height="25vh" cover alt="" />
             <div style="
                 position: absolute;
                 bottom: -50px;
@@ -40,7 +37,7 @@ let headerimage = ref(rest.value?.images.filter((e: string) => e.includes("heade
                 width: 100%;
                 align-items: end;
               ">
-              <v-avatar :image="logo" size="20%" class="logo"></v-avatar>
+              <v-avatar :image="rest?.images.logo" size="20%" class="logo" color="white"></v-avatar>
               <span class="title me-auto ">{{ rest?.title }}</span>
               <a :href="rest?.socialMedia" target="_blank">
                 <img src="../../assets/icons/vk.svg" class="mr-6 mb-4" />

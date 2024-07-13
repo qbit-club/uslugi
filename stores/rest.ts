@@ -1,5 +1,4 @@
 import { defineStore } from "pinia"
-import { ref } from "vue"
 import RestApi from '../api/RestApi'
 
 // interfaces
@@ -17,6 +16,9 @@ export const useRest = defineStore('rest', () => {
   async function get() {
     return await RestApi.get()
   }
+  async function deleteRest(rest_id:string) {
+    return await RestApi.deleteRest(rest_id)
+  }
   async function getByAlias(alias: string) {
     return await RestApi.getByAlias(alias)
   }
@@ -30,5 +32,5 @@ export const useRest = defineStore('rest', () => {
     return await RestApi.sendFoodListItemToMenu(_id, restId)
   }
 
-  return { create, get, getByAlias, uploadImages, changeFoodList, sendFoodListItemToMenu }
+  return { create, get, getByAlias, uploadImages, changeFoodList, sendFoodListItemToMenu, deleteRest }
 })

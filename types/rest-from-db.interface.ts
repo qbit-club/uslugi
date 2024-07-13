@@ -3,7 +3,7 @@ import type { FoodListItemFromDb } from "./food-list-item-from-db.interface"
 
 export interface RestFromDb extends Rest {
   _id: string
-  images: string[]
-  menu: string[]
+  images: {logo: string, headerimage:string} //  не стринг[] {logo:"", headImg: ""}
+  menu: string[] // не стринг[] тип food []
   foodList: FoodListItemFromDb[]
 }

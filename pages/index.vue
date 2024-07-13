@@ -10,12 +10,7 @@ const router = useRouter()
 
 let { data } = await resrStore.get()
 let rests = ref(data.value)
-let logo = (rest: { images: string[]; }) => {
-  if (_.has(rest, 'images')) {
-    return rest.images.filter((e: string) => e.includes("logo"))[0] || ''
-  }
-  return ''
-}
+
 let isShow = ref(false)
 let filter = ref<string>('')
 
@@ -46,19 +41,20 @@ let showSearch = () => {
 <template>
   <v-container>
     <v-row class="pt-4 pb-16">
-      <v-col cols="12" class="d-flex justify-end align-center">
+      <v-col cols="12" class="d-flex align-center">
+        <v-icon icon="mdi-magnify" class="ma-2" @click="showSearch" />
         <transition name="fade">
           <v-text-field v-model='filter' v-if="isShow" density="compact" variant="solo" hide-details single-line
             placeholder="поиск ресторана" clear-icon="mdi-close-circle" clearable></v-text-field>
         </transition>
-        <v-icon icon="mdi-magnify" class="ma-2" @click="showSearch" />
+       
       </v-col>
 
       <v-col cols="12" md="6" lg="4" v-for="rest, index in restsWithFilter" :key="index">
         <NuxtLink :to="`/${rest.alias}`">
           <div class="h-100 d-flex flex-column align-center pa-4">
             <h3>{{ rest.title }}</h3>
-            <v-img :src="logo(rest)" class="w-50"></v-img>
+            <v-img :src="rest.images.logo" class="w-50"></v-img>
           </div>
         </NuxtLink>
       </v-col>
