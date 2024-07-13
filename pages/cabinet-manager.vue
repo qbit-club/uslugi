@@ -2,21 +2,60 @@
     <v-container>
         <v-row>
             <v-col :cols="12">
-                Что делает менеджер:
-                <ul>
-                    <li>Создает элементы меню</li>
-                    <li>Управляете активностью элементов меню </li>
-                    <li>Просматривает заказы получаемые рестораном (может устанавливает статусы заказа?)</li>
-                    <li>Редактирует информацию о кафе </li>
-                    <li>Управляет системой бронирования столиков</li>
-                    <li>Формирует заказы полученные по телефону, мессенджерам</li>
-                    <li>Добавляет бронирование полученные по телефону, меседжерам </li>
-                    <li>Получает уведомления о заказах, бронировании на почту</li>
-                    <li>Устанавливает емейлы на которые приходят уведомления </li>
-                    <li>Наделяет правами менеджера другого менеджера </li>
-
-                </ul>
+                <h2>Менеджер</h2>
             </v-col>
+            <v-col :cols="12" class="d-flex overflow-x-auto">
+                <NuxtLink to="/cabinet-manager/orders" class="d-flex">
+                        <div class="d-flex flex-column align-center pa-4">
+                            <v-icon icon="mdi-cart-check" size="x-large" />
+                            <div class="explanation text-center">заказы</div>
+                        </div>
+                    </NuxtLink>
+                    <NuxtLink to="/cabinet-manager/table-reservation" class="d-flex">
+                        <div class="d-flex flex-column align-center pa-4">
+                            <v-icon icon="mdi-table-chair" size="x-large" />
+                            <div class="explanation text-center">бронирование <br> столиков</div>
+                        </div>
+                    </NuxtLink>
+                    <NuxtLink to="/cabinet-manager/create-meal" class="d-flex">
+                        <div class="d-flex flex-column align-center pa-4">
+                            <v-icon icon="mdi-bowl-mix-outline" size="x-large" />
+                            <div class="explanation text-center">создать <br> блюдо</div>
+                        </div>
+                    </NuxtLink>
+                    <NuxtLink to="/cabinet-manager/manage-menu" class="d-flex">
+                        <div class="d-flex flex-column align-center pa-4">
+                            <v-icon icon="mdi-food-outline" size="x-large" />
+                            <div class="explanation text-center">управлять <br> меню</div>
+                        </div>
+                    </NuxtLink>
+                    <NuxtLink to="/cabinet-manager/rest-info" class="d-flex">
+                        <div class="d-flex flex-column align-center pa-4">
+                            <v-icon icon="mdi-tune-variant" size="x-large" />
+                            <div class="explanation text-center">информация <br> о ресторане</div>
+                        </div>
+                    </NuxtLink>
+                   
+                 
+                    <NuxtLink to="/cabinet-manager/add-manager" class="d-flex">
+                        <div class="d-flex flex-column align-center pa-4">
+                            <v-icon icon="mdi-account-plus-outline" size="x-large" />
+                            <div class="explanation text-center"> добавить <br> менеджера</div>
+                        </div>
+                    </NuxtLink>
+                    <NuxtLink to="/cabinet-manager/manage-email-list" class="d-flex">
+                        <div class="d-flex flex-column align-center pa-4">
+                            <v-icon icon="mdi-email-fast-outline" size="x-large" />
+                            <div class="explanation text-center"> email список <br> для уведомлений</div>
+                        </div>
+                    </NuxtLink>
+         
+            </v-col>
+            <v-col :cols="12">
+                <NuxtPage />
+            </v-col>
+
         </v-row>
+
     </v-container>
 </template>

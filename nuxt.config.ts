@@ -1,12 +1,12 @@
-import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 export default defineNuxtConfig({
-  css: ['~/assets/styles/main.scss'],
+  css: ["~/assets/styles/main.scss"],
   devtools: { enabled: true },
   build: {
-    transpile: ['vuetify'],
+    transpile: ["vuetify"],
   },
   runtimeConfig: {
     public: {
@@ -16,17 +16,20 @@ export default defineNuxtConfig({
   },
   modules: [
     (_options, nuxt) => {
-      nuxt.hooks.hook('vite:extendConfig', (config) => {
+      nuxt.hooks.hook("vite:extendConfig", (config) => {
         // @ts-expect-error
-        config.plugins.push(vuetify({ autoImport: true }))
-      })
+        config.plugins.push(vuetify({ autoImport: true }));
+      });
     },
-    ['@nuxtjs/google-fonts', {
-      families: {
-        Montserrat: [100, 200, 300, 400, 500, 600, 700, 800, 900]
-      }
-    }],
-    '@pinia/nuxt',
+    [
+      "@nuxtjs/google-fonts",
+      {
+        families: {
+          Montserrat: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+        },
+      },
+    ],
+    "@pinia/nuxt",
   ],
   vite: {
     vue: {
@@ -36,6 +39,6 @@ export default defineNuxtConfig({
     },
   },
   devServer: {
-    port: 3041
-  }
-})
+    port: 3041,
+  },
+});

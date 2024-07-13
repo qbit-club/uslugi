@@ -4,7 +4,7 @@
             <v-col :cols="12">
                 <h2>Администратор</h2>
             </v-col>
-            <v-col :cols="12" class="d-flex">
+            <v-col :cols="12" class="d-flex overflow-x-auto">
               
                     <NuxtLink to="/cabinet-admin/create-rest" class="d-flex">
                         <div class="d-flex flex-column align-center pa-4">

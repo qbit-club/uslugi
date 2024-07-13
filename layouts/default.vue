@@ -7,6 +7,11 @@ const router = useRouter()
 let navigationDrawer = ref<boolean>(false)
 
 const routes = [
+{
+    value: '/',
+    title: "Выбор ресторана",
+    icon: "mdi-home-outline"
+  },
   {
     value: '/cabinet',
     title: "Пользователь",
@@ -22,11 +27,7 @@ const routes = [
     title: "Менеджер",
     icon: "mdi-account-outline"
   },
-  {
-    value: '/rest/create',
-    title: "Создать зал",
-    icon: "mdi-table-chair"
-  },
+
 ]
 
 function navigateTo(route: any) {
@@ -73,7 +74,7 @@ await auth.checkAuth()
         <v-btn key="2" @click="router.push('/cabinet')" icon="mdi-account-outline"></v-btn>
         <v-btn key="2" @click="router.push('/cabinet-admin')" icon="mdi-account-outline"></v-btn>
         <v-btn key="2" @click="router.push('/cabinet-manager')" icon="mdi-account-outline"></v-btn>
-        <v-btn key="1" @click="router.push('/rest/create')" icon="mdi-table-chair"></v-btn>
+      
       </v-speed-dial>
     
 

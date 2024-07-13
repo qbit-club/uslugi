@@ -1,3 +1,71 @@
+<script lang="ts" setup>
+const appStore = useApp()
+
+interface FoodCategoryResponse {
+    foodCategory: string[]
+}
+
+let foodCategory = ref('')
+let dialog = ref(false)
+let dbFoodCategory = ref<string[]>()
+let selectedCategory = ref('')
+
+
+let showDialog = (category:string) =>{
+    selectedCategory.value = category
+    dialog.value = true
+}
+
+let deleteCategory = async ()=>{
+    await appStore.deleteFoodCategory(selectedCategory.value)
+    getFoodCategory()
+    dialog.value = false
+}
+let createFoodCategory = async () => {
+    let category = foodCategory.value.toLowerCase().trim().split(', ')
+    await appStore.createFoodCategory(category)
+    getFoodCategory()
+    foodCategory.value = ''
+}
+let getFoodCategory = async () => {
+    let  { data }  = await appStore.getFoodCategory() 
+    
+    dbFoodCategory.value  = data.value.foodCategory.sort()
+
+}
+getFoodCategory()
+
+</script>
 <template>
-    Управление категориями: создание и удаление
+
+    <v-container>
+        <v-row>
+            <v-col :cols="12">
+                <h3>Управление категориями</h3>
+            </v-col>
+            <v-col class="d-flex ">
+                <v-text-field v-model="foodCategory" placeholder="суп, холодные напитки, пицца" variant="outlined"
+                    density="compact" class="w-100" />
+                <v-btn class="ml-4" @click="createFoodCategory()">создать</v-btn>
+            </v-col>
+            <v-col :cols="12" class="d-flex flex-wrap">
+                <v-chip variant="outlined" v-for="category, index in dbFoodCategory" :key="index" class="ma-2" @click="showDialog(category)">
+                    {{ category }}
+                </v-chip>
+            </v-col>
+        </v-row>
+        <v-dialog v-model="dialog" width="auto">
+        <v-card max-width="400"
+    
+            title="Удаляем?">
+            <template v-slot:actions>
+                <v-btn class="ms-auto" @click="dialog = false">Нет</v-btn>
+                <v-btn class="ms-auto" @click="deleteCategory()">Да</v-btn>
+            </template>
+        </v-card>
+    </v-dialog>
+    </v-container>
+
+ 
+
 </template>
