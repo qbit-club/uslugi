@@ -9,7 +9,7 @@ let dbFoodCategory = ref<FoodCategory>()
 let selectedCategory = ref('')
 
 
-let showDialog = (category:string) =>{
+let showDialog = (category:any) =>{
     selectedCategory.value = category
     dialog.value = true
 }
@@ -45,7 +45,7 @@ getFoodCategory()
                 <v-btn class="ml-4" @click="createFoodCategory()">создать</v-btn>
             </v-col>
             <v-col :cols="12" class="d-flex flex-wrap">
-                <v-chip variant="outlined" v-for="category, index in dbFoodCategory" :key="index" class="ma-2" @click="showDialog(category)">
+                <v-chip variant="outlined" v-for="(category, index) in dbFoodCategory" :key="index" class="ma-2" @click="showDialog(category)">
                     {{ category }}
                 </v-chip>
             </v-col>
