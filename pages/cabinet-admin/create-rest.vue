@@ -3,10 +3,10 @@ import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import getPossibleLocations from "../../composables/dadata";
 import type { Location } from "../../types/location.interface"
-import type { Table } from '../../types/table.interface'
+
 // meta
 useHead({
-  title: 'Рестик | Создать зал'
+  title: 'Создать ресторан'
 })
 definePageMeta({
   middleware: 'auth'
@@ -23,15 +23,10 @@ const authStore = useAuth()
 const router = useRouter()
 
 let loading = ref(false)
-let tablePage = ref(1)
 let schedule = ref('')
 let description = ref('')
 
-const tablesHeaders = [
-  { title: 'Номер места', key: 'number' },
-  { title: 'Этаж', key: 'floor' },
-  { title: 'Кол-во мест', key: 'seatsNumber' },
-]
+
 
 const { meta, handleSubmit, validate } = useForm({
   initialValues: {
@@ -86,9 +81,6 @@ let alias = useField<string>('alias')
 let phone = useField<string>('phone')
 let socialMedia = useField<string>('socialMedia')
 
-
-
-let tables = ref<Table[]>([])
 let imagesFormData = new FormData()
 
 let location = ref<any>(
@@ -107,33 +99,7 @@ let locationToSend = computed(() => {
   }
 })
 
-/**
- * если нет столиков, то добавляем столик на 1 этаже с 1 номером
- * если есть столик, то добавляем новый столик на этаже предыдущего 
- * столика с номером на 1 больше 
- */
-function addTable() {
-  if (tables.value.length > 0) {
-    let prevTable = tables.value[tables.value.length - 1]
-    // добавляем новый столик на таком же этаже, что и предыдущий
-    tables.value.push({
-      floor: Number(prevTable.floor),
-      number: Number(prevTable.number) + 1,
-      seatsNumber: prevTable.seatsNumber
-    })
-  } else {
-    tables.value.push({
-      floor: 1,
-      number: 1,
-      seatsNumber: 1
-    })
-  }
-}
-function ensureNumberType() {
-  tables.value = tables.value.map((e) => {
-    return { number: Number(e.number), seatsNumber: Number(e.seatsNumber), floor: Number(e.floor) }
-  })
-}
+
 // base64 img
 let logoPreview = ref()
 function uploadLogo(file: File) {
@@ -173,11 +139,10 @@ function uploadHallImage(file: File, index: Number) {
 }
 const submit = handleSubmit(async values => {
   loading.value = true
-  
+
   let toSend = {
-    ...values,
-    tables: tables.value,
-    location: location.value,
+    ...values, 
+    location: locationToSend.value,
     description: description.value,
     schedule: schedule.value,
     author: String(authStore.user?._id)
@@ -202,9 +167,9 @@ const submit = handleSubmit(async values => {
 
 
 watch(locationSearchRequest, async (value) => {
-      const locations: any= await getPossibleLocations(value); // any - костыль надо переписать dadata.ts
-      possibleLocations.value = locations ?? []; // Если locations undefined, присваиваем пустой массив
-    });
+  const locations: any = await getPossibleLocations(value); // any - костыль надо переписать dadata.ts
+  possibleLocations.value = locations ?? []; // Если locations undefined, присваиваем пустой массив
+});
 
 </script>
 <template>
@@ -214,7 +179,7 @@ watch(locationSearchRequest, async (value) => {
         <v-col>
           <v-form @submit.prevent="submit">
             <div class="font-weight-bold text-center" style="font-size: 20px;">Создать ресторан</div>
-            <h3 class="text-center">Главная информация</h3>
+
             <v-row>
               <v-col cols="12" md="6">
                 <div class="label">Название ресторана</div>
@@ -258,9 +223,6 @@ watch(locationSearchRequest, async (value) => {
                 </div>
               </v-col>
 
-
-
-
               <v-col cols="12">
                 <v-autocomplete hide-details density="compact" v-model="location" v-model:search="locationSearchRequest"
                   :items="possibleLocations" item-title="name" placeholder="Место" item-value="geo" variant="outlined"
@@ -271,63 +233,40 @@ watch(locationSearchRequest, async (value) => {
                   </template>
                 </v-autocomplete>
               </v-col>
+
+
+              <v-col :cols="12" style="position: relative; margin-bottom: 80px;"
+                v-if="logoPreview || headerImagePreview">
+                <div style="height:25vh">
+                  <v-img :src="headerImagePreview" max-height="25vh" cover alt="" />
+                </div>
+
+                <div style="
+                position: absolute;
+                bottom: -50px;
+                display: flex;
+                justify-content: start;
+                aspect-ratio: 1;
+                width: 100%;
+                align-items: end;
+              ">
+                  <v-avatar v-if="logoPreview" :image="logoPreview" size="20%" class="logo" color="white"></v-avatar>
+                </div>
+              </v-col>
+
+
+              <v-col :cols="12" class="d-flex justify-center">
+                <LogoInput @uploadImage="uploadLogo" />
+                <HeaderImageInput @uploadHeaderImage="uploadHeaderImage" />
+              </v-col>
+
+              <v-col :cols="12" class="d-flex justify-center">
+                <v-btn class="ma-auto mt-4" variant="tonal" type="submit" :loading="loading" :disabled="!meta.valid">
+                  Отправить
+                </v-btn>
+              </v-col>
+
             </v-row>
-            <!-- {{ location }} -->
-            {{ locationToSend }}
-            <h3 class="text-center">Фотографии</h3>
-            <v-avatar :image="logoPreview" size="100" color="blue"></v-avatar>
-            <LogoInput :title="'логотип'" @uploadImage="uploadLogo" />
-
-            <img :src="headerImagePreview" style="max-height: 300px;">
-            <HeaderImageInput :title="'шапка ресторана'" @uploadHeaderImage="uploadHeaderImage" />
-
-            <img v-for="hall of hallImagePreviews" :src="hall" style="max-height: 200px; margin: 2px;">
-            <HallImageInput :title="'зал'" @uploadHallImage="uploadHallImage" />
-
-            <v-data-table :items="tables" :headers="tablesHeaders" :items-per-page="5" v-model:page="tablePage"
-              class="mt-4">
-              <template v-slot:top>
-                <div class="d-flex justify-space-between w-100">
-                  <h3 class="">Столики</h3>
-                  <v-btn @click="addTable" variant="tonal" prepend-icon="mdi-plus">добавить</v-btn>
-                </div>
-              </template>
-              <template v-slot:no-data>
-                <b class="text-red cursor-pointer" @click="addTable">
-                  Добавьте столики
-                </b>
-              </template>
-              <template v-slot:item.number="{ item }">
-                <v-text-field @change="ensureNumberType" variant="plain" type="number" v-model="item.number"
-                  :min="0"></v-text-field>
-              </template>
-
-              <template v-slot:item.floor="{ item }">
-                <v-text-field @change="ensureNumberType" variant="plain" type="number"
-                  v-model="item.floor"></v-text-field>
-              </template>
-
-              <template v-slot:item.seatsNumber="{ item, index }">
-                <div class="d-flex justify-space-between align-center">
-                  <v-text-field @change="ensureNumberType" variant="plain" type="number" v-model="item.seatsNumber"
-                    :min="1"></v-text-field>
-                  <v-tooltip text="Удалить" location="top" :offset="-6">
-                    <template v-slot:activator="{ props }">
-                      <v-btn v-bind="props" icon="mdi-delete-outline" variant="plain" color="red"
-                        @click="tables.splice(index, 1)">
-                      </v-btn>
-                    </template>
-                  </v-tooltip>
-                </div>
-              </template>
-
-              <template v-slot:bottom>
-                <v-pagination v-model="tablePage" :length="Math.ceil(tables.length / 5)"></v-pagination>
-              </template>
-            </v-data-table>
-            <v-btn class="ma-auto mt-4" variant="tonal" type="submit" :loading="loading" :disabled="!meta.valid">
-              Отправить
-            </v-btn>
           </v-form>
         </v-col>
       </v-row>
@@ -344,5 +283,9 @@ watch(locationSearchRequest, async (value) => {
   max-height: 300px;
   overflow-y: scroll;
 
+}
+
+.logo {
+  border: 4px solid white;
 }
 </style>

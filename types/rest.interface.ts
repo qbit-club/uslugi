@@ -8,7 +8,7 @@ export interface Rest {
   socialMedia: string
   location: Location
   author: string
-  tables: Table[]
+  tables?: Table[] 
   description: string
   schedule: string
 }

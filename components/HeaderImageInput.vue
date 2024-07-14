@@ -1,7 +1,5 @@
 <script setup lang="ts">
-defineProps({
-  title: String
-})
+
 const emit = defineEmits(['uploadHeaderImage'])
 let headerImageInput = ref<{
   files: File[]
@@ -14,12 +12,12 @@ function uploadImage() {
 }
 </script>
 <template>
-  <div class="w-100 my-3">
+  <div>
     <input type="file" accept="image/*" ref="headerImageInput" id="uploadHeaderImage" @change="uploadImage" style="display: none">
     <label for="uploadHeaderImage">
       <div class="file-input-label">
-        <span class="mdi mdi-24px mdi-camera"></span>
-        <span>{{ title }}</span>
+        <v-icon icon="mdi-camera" size="x-large" />
+        <span class="explanation text-center">шапка <br> ресторана</span>
       </div>
     </label>
   </div>
@@ -30,11 +28,12 @@ function uploadImage() {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  height: 150px;
   cursor: pointer;
-  width: 100%;
   border: 1px dashed black;
-  border-radius: 16px;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px;
+  width: 100px;
+  aspect-ratio: 1;
 }
 </style>

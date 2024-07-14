@@ -29,9 +29,7 @@ let createFoodCategory = async () => {
 }
 let getFoodCategory = async () => {
     let  { data }  = await appStore.getFoodCategory() 
-    
     dbFoodCategory.value  = data.value.foodCategory.sort()
-
 }
 getFoodCategory()
 
