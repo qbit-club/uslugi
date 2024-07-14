@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { QuillEditor } from '@vueup/vue-quill'
+
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import getPossibleLocations from "../../composables/dadata";
 import type { Location } from "../../types/location.interface"
@@ -11,7 +11,7 @@ useHead({
 definePageMeta({
   middleware: 'auth'
 })
-const config = useRuntimeConfig()
+
 
 
 
@@ -28,8 +28,7 @@ let schedule = ref('')
 let description = ref('')
 
 const tablesHeaders = [
-  { title: 'Номер места', key: 'number' },
-  { title: 'Этаж', key: 'floor' },
+  { title: 'Номер столика', key: 'number' },
   { title: 'Кол-во мест', key: 'seatsNumber' },
 ]
 
@@ -84,7 +83,7 @@ const { meta, handleSubmit, validate } = useForm({
 let title = useField<string>('title')
 let alias = useField<string>('alias')
 let phone = useField<string>('phone')
-let socialMedia = useField<string>('socialMedia')
+
 
 
 
@@ -96,16 +95,7 @@ let location = ref<any>(
 const locationSearchRequest = ref<string>('');
 const possibleLocations = ref<Location[] | undefined>(undefined);
 
-let locationToSend = computed(() => {
-  if (location.value) {
-    location.value.type = 'Point'
-    location.value.coordinates = [
-      Number(location.value.geo_lat),
-      Number(location.value.geo_lon)
-    ]
-    return location.value
-  }
-})
+
 
 /**
  * если нет столиков, то добавляем столик на 1 этаже с 1 номером
@@ -134,40 +124,17 @@ function ensureNumberType() {
     return { number: Number(e.number), seatsNumber: Number(e.seatsNumber), floor: Number(e.floor) }
   })
 }
-// base64 img
-let logoPreview = ref()
-function uploadLogo(file: File) {
-  // example filename: logo_216262666_best-burger.jpg
-  imagesFormData.set('logo', file, 'logo_' + String(Date.now()) + '_' + String(alias.value.value) + '.jpg')
-  // make a preview
-  let reader = new FileReader();
-  reader.onloadend = function () {
-    logoPreview.value = reader.result
-  }
-  reader.readAsDataURL(file);
-}
-// base64 img
-let headerImagePreview = ref()
-function uploadHeaderImage(file: File) {
-  // example filename: headerimage_216262666_best-burger.jpg
-  imagesFormData.set('headerimage', file, 'headerimage_' + String(Date.now()) + '_' + String(alias.value.value) + '.jpg')
-  // make a preview
-  let reader = new FileReader();
-  reader.onloadend = function () {
-    headerImagePreview.value = reader.result
-  }
-  reader.readAsDataURL(file);
-}
+
 
 // base64 img
-let hallImagePreviews = ref<string[]>([])
+let hallImagePreviews = ref<string>()
 function uploadHallImage(file: File, index: Number) {
   // example filename: headerimage_0_216262666_best-burger.svg
   imagesFormData.set('hallimage_' + String(index), file, 'hallimage_' + String(index) + '_' + String(Date.now()) + '_' + String(alias.value.value) + '.svg')
   // make a preview
   let reader = new FileReader();
   reader.onloadend = function () {
-    hallImagePreviews.value.push(String(reader.result))
+    hallImagePreviews.value = String(reader.result)
   }
   reader.readAsDataURL(file);
 }
@@ -213,77 +180,27 @@ watch(locationSearchRequest, async (value) => {
       <v-row>
         <v-col>
           <v-form @submit.prevent="submit">
-            <div class="font-weight-bold text-center" style="font-size: 20px;">Создать ресторан</div>
-            <h3 class="text-center">Главная информация</h3>
+            <div class="font-weight-bold text-center" style="font-size: 20px;">Создать зал</div>
+      
             <v-row>
               <v-col cols="12" md="6">
-                <div class="label">Название ресторана</div>
+                <div class="label">Название ресторана тут должен быть селектор из созданных ресторанов</div>
                 <v-text-field v-model="title.value.value" :error-messages="title.errorMessage.value"
                   placeholder="Шаурма" variant="outlined" density="compact" class="w-100" />
               </v-col>
+          
               <v-col cols="12" md="6">
-                <div class="label">Псевдоним</div>
-                <v-text-field v-model="alias.value.value" :error-messages="alias.errorMessage.value"
-                  placeholder="shaurma" variant="outlined" density="compact" class="w-100" />
-                <div v-if="alias.value.value.length > 0" class="label text-right">
-                  url ресторана: <i style="text-decoration: underline;">{{ config.public.siteUrl + '/' +
-            alias.value.value
-                    }}</i>
-                </div>
-              </v-col>
-              <v-col cols="12" md="6">
-                <div class="label">Телефон</div>
+                <div class="label">Название зала</div>
                 <v-text-field v-model="phone.value.value" :error-messages="phone.errorMessage.value"
                   placeholder="+79127528877" variant="outlined" density="compact" class="w-100" />
               </v-col>
-              <v-col cols="12" md="6">
-                <div class="label">Соц сеть</div>
-                <v-text-field v-model="socialMedia.value.value" :error-messages="socialMedia.errorMessage.value"
-                  placeholder="https://vk.com/shaurma" variant="outlined" density="compact" class="w-100" />
-              </v-col>
-
-              <v-col cols="12" md="6">
-                <div class="label">Расписание</div>
-                <div class="editor-container">
-                  <QuillEditor v-model:content="schedule" theme="snow" contentType="html"
-                    :toolbar="[['bold', 'italic', 'underline'], ['clean']]" />
-                </div>
-
-              </v-col>
-              <v-col cols="12" md="6">
-                <div class="label">Описание</div>
-                <div class="editor-container">
-                  <QuillEditor theme="snow" v-model:content="description" contentType="html"
-                    :toolbar="[['bold', 'italic', 'underline'], [{ 'list': 'ordered' }, { 'list': 'bullet' }], ['clean']]" />
-                </div>
-              </v-col>
-
-
-
-
-              <v-col cols="12">
-                <v-autocomplete hide-details density="compact" v-model="location" v-model:search="locationSearchRequest"
-                  :items="possibleLocations" item-title="name" placeholder="Место" item-value="geo" variant="outlined"
-                  clearable>
-                  <template v-slot:no-data>
-                    <div class="pt-2 pr-4 pb-2 pl-4">
-                      {{ locationSearchRequest.trim().length < 3 ? "Минимум 3 символа" : "Не найдено" }} </div>
-                  </template>
-                </v-autocomplete>
-              </v-col>
+    
+    
             </v-row>
             <!-- {{ location }} -->
-            {{ locationToSend }}
-            <h3 class="text-center">Фотографии</h3>
-            <v-avatar :image="logoPreview" size="100" color="blue"></v-avatar>
-            <LogoInput :title="'логотип'" @uploadImage="uploadLogo" />
-
-            <img :src="headerImagePreview" style="max-height: 300px;">
-            <HeaderImageInput :title="'шапка ресторана'" @uploadHeaderImage="uploadHeaderImage" />
-
-            <img v-for="hall of hallImagePreviews" :src="hall" style="max-height: 200px; margin: 2px;">
+        
+            <img  :src="hallImagePreviews" style="max-height: 200px; margin: 2px;">
             <HallImageInput :title="'зал'" @uploadHallImage="uploadHallImage" />
-
             <v-data-table :items="tables" :headers="tablesHeaders" :items-per-page="5" v-model:page="tablePage"
               class="mt-4">
               <template v-slot:top>
