@@ -1,13 +1,11 @@
 <script lang="ts" setup>
 const appStore = useApp()
+import type { FoodCategory } from "../../types/category.intarface"
 
-interface FoodCategoryResponse {
-    foodCategory: string[]
-}
 
 let foodCategory = ref('')
 let dialog = ref(false)
-let dbFoodCategory = ref<string[]>()
+let dbFoodCategory = ref<FoodCategory>()
 let selectedCategory = ref('')
 
 
@@ -28,7 +26,7 @@ let createFoodCategory = async () => {
     foodCategory.value = ''
 }
 let getFoodCategory = async () => {
-    let  { data }  = await appStore.getFoodCategory() 
+    let  { data }: { data: any }  = await appStore.getFoodCategory() 
     dbFoodCategory.value  = data.value.foodCategory.sort()
 }
 getFoodCategory()
