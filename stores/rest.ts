@@ -12,7 +12,6 @@ export const useRest = defineStore('rest', () => {
   async function create(rest: Rest) {
     return await RestApi.create(rest)
   }
-
   async function get() {
     return await RestApi.get()
   }
