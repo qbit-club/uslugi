@@ -67,6 +67,11 @@ export const useAuth = defineStore('auth', () => {
       user.value = (await AuthAPI.updateUser(new_user)).data
     } catch { }
   }
+  async function setManagerByAdmin(user_email:string,chosen_rest:string) {
+    try {
+      user.value = (await AuthAPI.setManagerByAdmin(user_email,chosen_rest)).data
+    } catch { }
+  }
   /**
    * get user's rests and set it to the user in pinia
    */
@@ -82,6 +87,6 @@ export const useAuth = defineStore('auth', () => {
   }
 
   return {
-    user, registration, login, redirectTo, checkAuth, logout, updateUser, getUserRests
+    user, registration, login, redirectTo, checkAuth, logout, updateUser, setManagerByAdmin, getUserRests
   }
 })
