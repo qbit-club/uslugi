@@ -4,11 +4,11 @@ useHead({
   title: 'Рестик'
 })
 
-const resrStore = useRest()
+const restStore = useRest()
 const router = useRouter()
 
 
-let { data } = await resrStore.get()
+let { data } = await restStore.get()
 let rests = ref(data.value)
 
 let isShow = ref(false)
