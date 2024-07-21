@@ -24,6 +24,12 @@ export default {
   uploadImages(formData: FormData, _id: string): Promise<any> {
     return useApiFetch(`/rest/images?rest_id=${_id}`, { method: 'POST', headers: { 'Content-Type': 'multipart/form-data' }, body: formData })
   },
+  /**
+   * updates food list
+   * @param restId 
+   * @param foodListItem 
+   * @returns 
+   */
   changeFoodList(restId: string, foodListItem: FoodListItem | FoodListItemFromDb): Promise<any> {
     return useApiFetch('/rest/food-list', {
       method: 'PUT',
@@ -40,6 +46,15 @@ export default {
         foodListItemId: _id,
         restId
       }
+    })
+  },
+  /**
+   * create new food list item 
+   */
+  createFoodListItem(body: any) {
+    return useApiFetch('/rest/food-list', {
+      method: 'POST',
+      body: body
     })
   }
 }
