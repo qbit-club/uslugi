@@ -34,6 +34,9 @@ export const useRest = defineStore('rest', () => {
   async function createFoodListItem(_id: string, item: FoodListItem) {
     return await RestApi.createFoodListItem({ restId: _id, foodListItem: item })
   }
+  async function uploadFoodListItemImages(restId: string, foodListItemId: string, fd: FormData) {
+    return await RestApi.uploadFoodListItemImages(restId, foodListItemId, fd)
+  }
 
-  return { create, get, getByAlias, uploadImages, changeFoodList, sendFoodListItemToMenu, deleteRest, createFoodListItem }
+  return { create, get, getByAlias, uploadImages, changeFoodList, sendFoodListItemToMenu, deleteRest, createFoodListItem, uploadFoodListItemImages }
 })

@@ -15,6 +15,8 @@ let form = ref({
   },
   price: ''
 })
+let imagesFormData = new FormData()
+
 watch(form, (newVal, oldVal) => {
   form.value.health.protein = Number(form.value.health.protein)
   form.value.health.carb = Number(form.value.health.carb)
@@ -24,15 +26,38 @@ watch(form, (newVal, oldVal) => {
   form.value.health.energy = String(sum) + ' ккал'
 }, { deep: true })
 
+let previews = ref<string[]>([])
+let index = 0
+function uploadImage(file: File) {
+  imagesFormData.set('menuitemimage_' + String(index) + '_6694096e4901af87e35e23aa', file, 'menuitemimage_' + String(index) + '_6694096e4901af87e35e23aa' + '_' + String(Date.now()) + '.jpg')
+  // make a preview
+  let reader = new FileReader();
+  reader.onloadend = function () {
+    previews.value.push(String(reader.result))
+    index += 1
+  }
+  reader.readAsDataURL(file);
+}
+
 let loading = ref(false)
 async function submit() {
-  // если надо будет - добавить _id меню, чтобы обновить его
-  // в базе(серверная часть уже написана)
   loading.value = true
   // пусть пока в морковку создаются
   let res = await restStore.createFoodListItem("6694096e4901af87e35e23aa", form.value)
   if (res.status.value == "success") {
-    loading.value = false
+    // find foodItem
+    let restId = res.data.value._id
+    let itemId;
+    for (let item of res.data.value?.foodList) {
+      if (item.name == form.value.name) {
+        itemId = item._id
+        break
+      }
+    }
+    let uploadRes = await restStore.uploadFoodListItemImages(restId, itemId, imagesFormData)
+    if (uploadRes.status.value == "success") {
+      loading.value = false
+    }
   }
 }
 </script>
@@ -40,6 +65,10 @@ async function submit() {
   <v-row>
     <v-col cols="12">
       <h3>Создать блюдо</h3>
+    </v-col>
+    <v-col cols="12" class="d-flex justify-space-between align-center">
+      <MenuItemImageInput @upload-menu-item-image="uploadImage" />
+      <v-img v-for="pr of previews" :src="pr" class="img-preview"></v-img>
     </v-col>
     <v-col cols="6">
       Название
@@ -75,4 +104,8 @@ async function submit() {
     </v-col>
   </v-row>
 </template>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.img-preview {
+  max-height: 200px;
+}
+</style>

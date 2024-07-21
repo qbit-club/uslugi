@@ -51,10 +51,13 @@ export default {
   /**
    * create new food list item 
    */
-  createFoodListItem(body: any) {
+  createFoodListItem(body: any): Promise<any> {
     return useApiFetch('/rest/food-list', {
       method: 'POST',
       body: body
     })
+  },
+  uploadFoodListItemImages(restId: string, foodListItemId: string, fd: FormData): Promise<any> {
+    return useApiFetch(`/rest/food-list-images?rest_id=${restId}&item_id=${foodListItemId}`, { method: 'POST', headers: { 'Content-Type': 'multipart/form-data' }, body: fd })
   }
 }
