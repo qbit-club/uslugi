@@ -20,7 +20,7 @@ export default {
   updateUser(user: any): Promise<any> {
     return useApiFetch('/auth/update', { method: 'POST', body: { user } })
   },
-  setManagerByAdmin(user_email:string,chosen_rest:string): Promise<any>{
+  setManager(user_email:string,chosen_rest:string): Promise<any>{
     return useApiFetch('/user/set-manager', { method: 'POST', body: { user_email,chosen_rest } })
   },
   /**

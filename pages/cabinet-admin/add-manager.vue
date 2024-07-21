@@ -11,29 +11,32 @@ let chosen_rest=ref("")
 let user_email = ref("")
 
 async function setManager(){
-    await authStore.setManagerByAdmin(user_email.value,chosen_rest.value)
+    await authStore.setManager(user_email.value,chosen_rest.value)
 }
 
 onMounted(async ()=>{
-    rest_ids=data.value.map((item:Rest) => item._id)
+    rest_ids=data.value.map( (item:Rest) => ({name:item.title, id:item._id}) )
 })
 </script>
 
 <template>
-    <v-row>
-        <v-col cols="4">
-
-            <v-select label="Рестораны" :items="rest_ids" v-model="chosen_rest">
-            </v-select>
-        </v-col>
-        <v-col cols="8">
-            <v-text-field v-model="user_email" placeholder="Электронная почта" type="email">
-            </v-text-field>
-
-        </v-col>
-    </v-row>
-    <v-btn variant="tonal" @click="setManager()">сделать манагером</v-btn>
-
+  <v-row>
+    <v-col cols="4">
+      <v-select
+        label="Рестораны"
+        :items="rest_ids"
+        item-title="name"
+        item-value="id"
+        v-model="chosen_rest"
+      >
+      </v-select>
+    </v-col>
+    <v-col cols="8">
+      <v-text-field v-model="user_email" placeholder="Электронная почта" type="email">
+      </v-text-field>
+    </v-col>
+  </v-row>
+  <v-btn variant="tonal" @click="setManager()">сделать менеджером</v-btn>
 </template>
 
 <style scoped></style>

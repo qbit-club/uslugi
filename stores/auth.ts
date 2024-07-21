@@ -67,9 +67,9 @@ export const useAuth = defineStore('auth', () => {
       user.value = (await AuthAPI.updateUser(new_user)).data
     } catch { }
   }
-  async function setManagerByAdmin(user_email:string,chosen_rest:string) {
+  async function setManager(user_email:string,chosen_rest:string) {
     try {
-      user.value = (await AuthAPI.setManagerByAdmin(user_email,chosen_rest)).data
+      user.value = (await AuthAPI.setManager(user_email,chosen_rest)).data
     } catch { }
   }
   /**
@@ -87,6 +87,6 @@ export const useAuth = defineStore('auth', () => {
   }
 
   return {
-    user, registration, login, redirectTo, checkAuth, logout, updateUser, setManagerByAdmin, getUserRests
+    user, registration, login, redirectTo, checkAuth, logout, updateUser, setManager, getUserRests
   }
 })
