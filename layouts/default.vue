@@ -46,7 +46,9 @@ function ensureCanClick() {
 }
 
 let auth = useAuth()
+let appStore = useApp()
 await auth.checkAuth()
+await appStore.getAppState()
 </script>
 <template>
   <v-responsive>
