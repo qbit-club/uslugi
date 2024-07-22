@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import MenuCard from './MenuCard.vue'
 const appStore = useApp()
 import type { FoodCategory } from "../../types/category.intarface"
 import type { RestFromDb } from '~/types/rest-from-db.interface';
@@ -64,10 +65,9 @@ getFoodCategory()
                     </v-chip>
                 </v-chip-group>
             </v-col>
-            <v-col :cols="12">
-                <p>
-{{ rest }}
-                </p>
+            <!-- пока нет меню  используется foodList -->
+            <v-col :cols="12" :md="4" v-for="(meal, index) in rest.foodList">
+                <MenuCard :meal="meal"></MenuCard>
             </v-col>
 
         </v-row>
