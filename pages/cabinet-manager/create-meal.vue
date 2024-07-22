@@ -13,7 +13,9 @@ let form = ref({
     protein: 0,
     carb: 0,
     fat: 0,
-    energy: '0 ккал'
+    energy: '0 ккал',
+    mass: '',
+    ingredients: ''
   },
   price: ''
 })
@@ -92,21 +94,29 @@ async function submit() {
     </v-col>
     <v-col cols="2">
       Белки
-      <v-text-field type="number" v-model="form.health.protein" density="compact" variant="outlined"></v-text-field>
+      <v-text-field type="number" v-model="form.health.protein" density="compact" variant="outlined" suffix="г."></v-text-field>
     </v-col>
     <v-col cols="2">
       + Жиры
-      <v-text-field type="number" v-model="form.health.fat" density="compact" variant="outlined"></v-text-field>
+      <v-text-field type="number" v-model="form.health.fat" density="compact" variant="outlined" suffix="г."></v-text-field>
     </v-col>
     <v-col cols="2">
       + Углеводы
-      <v-text-field type="number" v-model="form.health.carb" density="compact" variant="outlined"></v-text-field>
+      <v-text-field type="number" v-model="form.health.carb" density="compact" variant="outlined" suffix="г."></v-text-field>
     </v-col>
     <v-col cols="2">
       = Энергетическая ценность
-      <v-text-field v-model="form.health.energy" density="compact" variant="outlined" placeholder=""></v-text-field>
+      <v-text-field v-model="form.health.energy" density="compact" variant="outlined"></v-text-field>
     </v-col>
     <v-col cols="4">
+      Масса
+      <v-text-field v-model="form.health.mass" density="compact" variant="outlined" placeholder="500 г"></v-text-field>
+    </v-col>
+    <v-col cols="9">
+      Состав
+      <v-text-field v-model="form.health.ingredients" density="compact" variant="outlined" placeholder="Из слабосолёного лосося, с тартаром из огурцов, красной икрой, укропом, луком шнитт и шалот"></v-text-field>
+    </v-col>
+    <v-col cols="3">
       Цена
       <v-text-field v-model="form.price" prefix="₽" density="compact" variant="outlined"></v-text-field>
     </v-col>
