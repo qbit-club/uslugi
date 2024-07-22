@@ -4,8 +4,17 @@ defineProps({
 })
 </script>
 <template>
-    <v-card class="w-100" aspect-ratio="1">
-       
-       {{meal}}
-    </v-card>
+    
+        <v-card class="w-100 meal-card">
+
+            {{ meal }}
+        </v-card>
+  
+
 </template>
+
+<style scoped>
+.meal-card {
+    aspect-ratio: 2/1;
+}
+</style>

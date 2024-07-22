@@ -66,7 +66,7 @@ getFoodCategory()
                 </v-chip-group>
             </v-col>
             <!-- пока нет меню  используется foodList -->
-            <v-col :cols="12" :md="4" v-for="(meal, index) in rest.foodList">
+            <v-col :cols="12" :md="6" v-for="(meal, index) in rest.foodList">
                 <MenuCard :meal="meal"></MenuCard>
             </v-col>
 
