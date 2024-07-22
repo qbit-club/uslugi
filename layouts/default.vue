@@ -8,7 +8,7 @@ let auth = useAuth()
 let navigationDrawer = ref<boolean>(false)
 
 const routes = [
-{
+  {
     value: '/',
     title: "Выбор ресторана",
     icon: "mdi-home-outline"
@@ -50,7 +50,7 @@ await appStore.getAppState()
 <template>
   <v-responsive>
     <v-app class="overflow-y-auto" style="max-height: 100dvh">
-      <v-app-bar :elevation="0" class="d-none d-md-block">
+      <!-- <v-app-bar :elevation="0" class="d-none d-md-block">
         <div class="w-100 d-flex justify-space-between align-center">
 
           <div class="flex-grow-1 flex-shrink-0"> 
@@ -60,7 +60,14 @@ await appStore.getAppState()
 
         </div>
 
-      </v-app-bar>
+      </v-app-bar> -->
+      <div class="d-none d-md-block">
+        <img src="../assets/images/logo.jpg" alt="logo" @click="router.push('/')" class="position-absolute"
+          style="top:20px; left:20px" />
+
+        <v-icon icon="mdi-hamburger" class="position-absolute" style="top:20px; right:20px"
+          @click="navigationDrawer = !navigationDrawer" />
+      </div>
 
       <v-speed-dial transition="fade-transition" class="d-flex d-md-none">
         <template v-slot:activator="{ props: activatorProps }">
@@ -69,20 +76,20 @@ await appStore.getAppState()
             class="d-flex d-md-none" @click="ensureCanClick"></v-btn>
         </template>
 
-        <v-btn key="2"  to="/"  icon="mdi-home-outline"></v-btn>
-        <v-btn key="2" to="/cabinet"  icon="mdi-account-outline"></v-btn>
-        <v-btn key="2" to="/cabinet-admin"  icon="mdi-account-outline"></v-btn>
-        <v-btn key="2" to="/cabinet-manager"  icon="mdi-account-outline"></v-btn>
-      
+        <v-btn key="2" to="/" icon="mdi-home-outline"></v-btn>
+        <v-btn key="2" to="/cabinet" icon="mdi-account-outline"></v-btn>
+        <v-btn key="2" to="/cabinet-admin" icon="mdi-account-outline"></v-btn>
+        <v-btn key="2" to="/cabinet-manager" icon="mdi-account-outline"></v-btn>
+
       </v-speed-dial>
-    
+
 
       <ClientOnly>
         <!-- только на экранах md и больше, потому что на телефоне можно свайпнуть и navigation-drawer появится -->
-        <v-navigation-drawer v-if="width > 960" :model-value="navigationDrawer" location="right" temporary persistent>
-          <v-list nav >
+        <v-navigation-drawer v-if="width > 960" :model-value="navigationDrawer" location="left" temporary>
+          <v-list nav>
             <v-list-item v-for="route of routes" :prepend-icon="route.icon" :to="route.value" :title="route.title"
-              :value="route.value" @click="navigationDrawer=false"></v-list-item>
+              :value="route.value" @click="navigationDrawer = false"></v-list-item>
           </v-list>
         </v-navigation-drawer>
       </ClientOnly>
@@ -96,16 +103,4 @@ await appStore.getAppState()
   </v-responsive>
 </template>
 
-<style scoped lang="scss">
-@media (max-width: 960px) {
-  .main {
-    padding-top: 0px;
-  }
-}
-
-@media (min-width: 960px) {
-  .main {
-    padding-top: 64px;
-  }
-}
-</style>
+<style scoped lang="scss"></style>

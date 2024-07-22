@@ -79,7 +79,7 @@ selectedCategory.value = groupMeals.value[0].category
                     <v-icon icon="mdi-magnify" class="ma-2" @click="showSearch" />
                 </div>
             </v-col>
-            <v-col cols="12" class="d-flex overflow-x-hide position-sticky" style="z-index:2; top:60px; background:white">
+            <v-col cols="12" class="d-flex overflow-x-hide position-sticky pa-0" style="z-index:2; top:0px; background:white">
                 <v-chip-group>
                     <v-chip color="red" variant="outlined" size="small" v-for="(item, index) in groupMeals" :key="index"
                         class="mb-2" @click="selectCategory(item.category)">
