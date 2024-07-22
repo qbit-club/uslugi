@@ -15,7 +15,7 @@ export const useRest = defineStore('rest', () => {
   async function get() {
     return await RestApi.get()
   }
-  async function deleteRest(rest_id:string) {
+  async function deleteRest(rest_id: string) {
     return await RestApi.deleteRest(rest_id)
   }
   async function getByAlias(alias: string) {
@@ -30,6 +30,12 @@ export const useRest = defineStore('rest', () => {
   async function sendFoodListItemToMenu(_id: string, restId: string) {
     return await RestApi.sendFoodListItemToMenu(_id, restId)
   }
+  async function createFoodListItem(_id: string, item: FoodListItem) {
+    return await RestApi.createFoodListItem({ restId: _id, foodListItem: item })
+  }
+  async function uploadFoodListItemImages(restId: string, foodListItemId: string, fd: FormData) {
+    return await RestApi.uploadFoodListItemImages(restId, foodListItemId, fd)
+  }
 
-  return { create, get, getByAlias, uploadImages, changeFoodList, sendFoodListItemToMenu, deleteRest }
+  return { create, get, getByAlias, uploadImages, changeFoodList, sendFoodListItemToMenu, deleteRest, createFoodListItem, uploadFoodListItemImages }
 })
