@@ -31,9 +31,6 @@ const routes = [
 
 ]
 
-function navigateTo(route: any) {
-  router.push(route.id)
-}
 // создает timeout, после которого можно нажать на кнопку,
 // без этой функции анимация открытия ломается
 let canClickOnSpeedDial = ref(true)
@@ -59,7 +56,7 @@ await appStore.getAppState()
           <div class="flex-grow-1 flex-shrink-0"> 
             <img src="../assets/images/logo.jpg"  alt="logo" @click="router.push('/')"/>
           </div>
-          <v-icon icon="mdi-hamburger" class="ma-6" @click.stop="navigationDrawer = !navigationDrawer" />
+          <v-icon icon="mdi-hamburger" class="ma-6" @click="navigationDrawer = !navigationDrawer" />
 
         </div>
 
@@ -72,10 +69,10 @@ await appStore.getAppState()
             class="d-flex d-md-none" @click="ensureCanClick"></v-btn>
         </template>
 
-        <v-btn key="2" @click="router.push('/')" icon="mdi-home-outline"></v-btn>
-        <v-btn key="2" @click="router.push('/cabinet')" icon="mdi-account-outline"></v-btn>
-        <v-btn key="2" @click="router.push('/cabinet-admin')" icon="mdi-account-outline"></v-btn>
-        <v-btn key="2" @click="router.push('/cabinet-manager')" icon="mdi-account-outline"></v-btn>
+        <v-btn key="2"  to="/"  icon="mdi-home-outline"></v-btn>
+        <v-btn key="2" to="/cabinet"  icon="mdi-account-outline"></v-btn>
+        <v-btn key="2" to="/cabinet-admin"  icon="mdi-account-outline"></v-btn>
+        <v-btn key="2" to="/cabinet-manager"  icon="mdi-account-outline"></v-btn>
       
       </v-speed-dial>
     
@@ -83,9 +80,9 @@ await appStore.getAppState()
       <ClientOnly>
         <!-- только на экранах md и больше, потому что на телефоне можно свайпнуть и navigation-drawer появится -->
         <v-navigation-drawer v-if="width > 960" :model-value="navigationDrawer" location="right" temporary persistent>
-          <v-list nav @click:select="navigateTo">
-            <v-list-item v-for="route of routes" :prepend-icon="route.icon" :title="route.title"
-              :value="route.value"></v-list-item>
+          <v-list nav >
+            <v-list-item v-for="route of routes" :prepend-icon="route.icon" :to="route.value" :title="route.title"
+              :value="route.value" @click="navigationDrawer=false"></v-list-item>
           </v-list>
         </v-navigation-drawer>
       </ClientOnly>
