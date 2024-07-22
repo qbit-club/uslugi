@@ -1,6 +1,10 @@
 <script setup lang="ts">
 const appStore = useApp()
 import type { FoodCategory } from "../../types/category.intarface"
+import type { RestFromDb } from '~/types/rest-from-db.interface';
+defineProps<{
+    rest: RestFromDb
+}>()
 let dbFoodCategory = ref<FoodCategory>()
 
 let isShow = ref(false)
@@ -54,15 +58,15 @@ getFoodCategory()
             </v-col>
             <v-col :cols="12" class="d-flex overflow-x-hide">
                 <v-chip-group>
-                    <v-chip color="red" variant="outlined" size="small" v-for="(category, index) in dbFoodCategory" :key="index"
-                        class="ma-2" @click="selectCategory(category)">
+                    <v-chip color="red" variant="outlined" size="small" v-for="(category, index) in dbFoodCategory"
+                        :key="index" class="ma-2" @click="selectCategory(category)">
                         {{ category }}
                     </v-chip>
                 </v-chip-group>
             </v-col>
             <v-col :cols="12">
                 <p>
-                    тут будет список блюд
+{{ rest }}
                 </p>
             </v-col>
 

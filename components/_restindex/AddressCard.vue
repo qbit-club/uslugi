@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { RestFromDb } from '~/types/rest-from-db.interface';
 const props = defineProps<{
-  info: RestFromDb
+  rest: RestFromDb
 }>()
 </script>
 <template>
@@ -10,10 +10,10 @@ const props = defineProps<{
       Адрес и контакты
     </h3>
     <p>
-      Адрес : {{ props.info.location.name }}
+      Адрес : {{ props.rest.location.name }}
     </p>
     <p>
-      Расписание : <span v-html="props.info.schedule"></span>
+      Расписание : <span v-html="props.rest.schedule"></span>
     </p>
   </div>
 

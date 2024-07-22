@@ -70,7 +70,7 @@ rest.value = res.data.value
               </div>
             </div>
           </v-col>
-          <component :is="currentTab" :info="rest" class="pa-4"></component>
+          <component :is="currentTab" :rest="rest" class="pa-4"></component>
         </v-row>
       </v-col>
     </v-row>
