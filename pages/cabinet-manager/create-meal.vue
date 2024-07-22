@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { toast } from 'vue3-toastify';
+
 let appStore = useApp()
 const CATEGORIES = appStore.appState?.foodCategory || []
 
@@ -11,7 +13,9 @@ let form = ref({
     protein: 0,
     carb: 0,
     fat: 0,
-    energy: '0 ккал'
+    energy: '0 ккал',
+    mass: '',
+    ingredients: ''
   },
   price: ''
 })
@@ -29,12 +33,21 @@ watch(form, (newVal, oldVal) => {
 let previews = ref<string[]>([])
 let index = 0
 function uploadImage(file: File) {
-  imagesFormData.set('menuitemimage_' + String(index) + '_6694096e4901af87e35e23aa', file, 'menuitemimage_' + String(index) + '_6694096e4901af87e35e23aa' + '_' + String(Date.now()) + '.jpg')
   // make a preview
   let reader = new FileReader();
   reader.onloadend = function () {
-    previews.value.push(String(reader.result))
-    index += 1
+    let img = new Image();
+    img.src = String(reader.result);
+    img.onload = function (this: any) {
+      if (this.width / this.height >= 1.1 || this.width / this.height <= 0.9) {
+        toast('Картинка должна быть "более" квадратной', { type: 'error' })
+      } else {
+        imagesFormData.set('menuitemimage_' + String(index) + '_6694096e4901af87e35e23aa', file, 'menuitemimage_' + String(index) + '_6694096e4901af87e35e23aa' + '_' + String(Date.now()) + '.jpg')
+        previews.value.push(String(reader.result))
+        index += 1
+      }
+    }
+
   }
   reader.readAsDataURL(file);
 }
@@ -81,21 +94,29 @@ async function submit() {
     </v-col>
     <v-col cols="2">
       Белки
-      <v-text-field type="number" v-model="form.health.protein" density="compact" variant="outlined"></v-text-field>
+      <v-text-field type="number" v-model="form.health.protein" density="compact" variant="outlined" suffix="г."></v-text-field>
     </v-col>
     <v-col cols="2">
       + Жиры
-      <v-text-field type="number" v-model="form.health.fat" density="compact" variant="outlined"></v-text-field>
+      <v-text-field type="number" v-model="form.health.fat" density="compact" variant="outlined" suffix="г."></v-text-field>
     </v-col>
     <v-col cols="2">
       + Углеводы
-      <v-text-field type="number" v-model="form.health.carb" density="compact" variant="outlined"></v-text-field>
+      <v-text-field type="number" v-model="form.health.carb" density="compact" variant="outlined" suffix="г."></v-text-field>
     </v-col>
     <v-col cols="2">
       = Энергетическая ценность
-      <v-text-field v-model="form.health.energy" density="compact" variant="outlined" placeholder=""></v-text-field>
+      <v-text-field v-model="form.health.energy" density="compact" variant="outlined"></v-text-field>
     </v-col>
     <v-col cols="4">
+      Масса
+      <v-text-field v-model="form.health.mass" density="compact" variant="outlined" placeholder="500 г"></v-text-field>
+    </v-col>
+    <v-col cols="9">
+      Состав
+      <v-text-field v-model="form.health.ingredients" density="compact" variant="outlined" placeholder="Из слабосолёного лосося, с тартаром из огурцов, красной икрой, укропом, луком шнитт и шалот"></v-text-field>
+    </v-col>
+    <v-col cols="3">
       Цена
       <v-text-field v-model="form.price" prefix="₽" density="compact" variant="outlined"></v-text-field>
     </v-col>
