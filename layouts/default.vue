@@ -3,6 +3,7 @@ import { useWindowSize } from '@vueuse/core'
 const { width } = useWindowSize()
 
 const router = useRouter()
+let auth = useAuth()
 
 let navigationDrawer = ref<boolean>(false)
 
@@ -45,7 +46,6 @@ function ensureCanClick() {
   }, 400)
 }
 
-let auth = useAuth()
 await auth.checkAuth()
 </script>
 <template>
@@ -57,7 +57,7 @@ await auth.checkAuth()
           <div class="flex-grow-1 flex-shrink-0"> 
             <img src="../assets/images/logo.jpg"  alt="logo" @click="router.push('/')"/>
           </div>
-          <v-icon icon="mdi-hamburger" class="ma-6" @click="navigationDrawer = !navigationDrawer" />
+          <v-icon icon="mdi-hamburger" class="ma-6" @click.stop="navigationDrawer = !navigationDrawer" />
 
         </div>
 
@@ -80,7 +80,7 @@ await auth.checkAuth()
 
       <ClientOnly>
         <!-- только на экранах md и больше, потому что на телефоне можно свайпнуть и navigation-drawer появится -->
-        <v-navigation-drawer v-if="width > 960" :model-value="navigationDrawer" location="right" temporary>
+        <v-navigation-drawer v-if="width > 960" :model-value="navigationDrawer" location="right" temporary persistent>
           <v-list nav @click:select="navigateTo">
             <v-list-item v-for="route of routes" :prepend-icon="route.icon" :title="route.title"
               :value="route.value"></v-list-item>
