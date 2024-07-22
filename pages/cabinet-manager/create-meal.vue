@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { toast } from 'vue3-toastify';
+
 let appStore = useApp()
 const CATEGORIES = appStore.appState?.foodCategory || []
 
@@ -29,12 +31,21 @@ watch(form, (newVal, oldVal) => {
 let previews = ref<string[]>([])
 let index = 0
 function uploadImage(file: File) {
-  imagesFormData.set('menuitemimage_' + String(index) + '_6694096e4901af87e35e23aa', file, 'menuitemimage_' + String(index) + '_6694096e4901af87e35e23aa' + '_' + String(Date.now()) + '.jpg')
   // make a preview
   let reader = new FileReader();
   reader.onloadend = function () {
-    previews.value.push(String(reader.result))
-    index += 1
+    let img = new Image();
+    img.src = String(reader.result);
+    img.onload = function (this: any) {
+      if (this.width / this.height >= 1.1 || this.width / this.height <= 0.9) {
+        toast('Картинка должна быть "более" квадратной', { type: 'error' })
+      } else {
+        imagesFormData.set('menuitemimage_' + String(index) + '_6694096e4901af87e35e23aa', file, 'menuitemimage_' + String(index) + '_6694096e4901af87e35e23aa' + '_' + String(Date.now()) + '.jpg')
+        previews.value.push(String(reader.result))
+        index += 1
+      }
+    }
+
   }
   reader.readAsDataURL(file);
 }
