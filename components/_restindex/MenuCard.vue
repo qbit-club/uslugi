@@ -4,12 +4,21 @@ defineProps({
 })
 </script>
 <template>
-    
-        <v-card class="w-100 meal-card">
 
-            {{ meal }}
-        </v-card>
-  
+    <v-card class="w-100 meal-card d-flex">
+
+
+        <div class="w-100">
+            <v-img :src="meal.images[0]" v-if="meal.images[0]">
+
+            </v-img>
+        </div>
+        <div class="w-100">
+            {{ meal.name }}
+        </div>
+
+    </v-card>
+
 
 </template>
 

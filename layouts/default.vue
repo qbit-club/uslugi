@@ -49,7 +49,7 @@ await appStore.getAppState()
 </script>
 <template>
   <v-responsive>
-    <v-app>
+    <v-app class="overflow-y-auto" style="max-height: 100dvh">
       <v-app-bar :elevation="0" class="d-none d-md-block">
         <div class="w-100 d-flex justify-space-between align-center">
 
