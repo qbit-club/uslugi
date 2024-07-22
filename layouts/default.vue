@@ -86,10 +86,13 @@ await appStore.getAppState()
 
       <ClientOnly>
         <!-- только на экранах md и больше, потому что на телефоне можно свайпнуть и navigation-drawer появится -->
-        <v-navigation-drawer v-if="width > 960" :model-value="navigationDrawer" location="left" temporary>
+        <v-navigation-drawer v-if="width > 960" :model-value="navigationDrawer" location="left" temporary persistent
+          permanent>
+          <div class="text-right"> <v-icon icon="mdi-close" @click="navigationDrawer = !navigationDrawer" /></div>
+
           <v-list nav>
             <v-list-item v-for="route of routes" :prepend-icon="route.icon" :to="route.value" :title="route.title"
-              :value="route.value" @click="navigationDrawer = false"></v-list-item>
+              :value="route.value"></v-list-item>
           </v-list>
         </v-navigation-drawer>
       </ClientOnly>
