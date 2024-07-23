@@ -8,4 +8,5 @@ export interface User {
 	password: string
 	rests: RestFromDb[]
 	role: Role
+	managingRest: string
 }

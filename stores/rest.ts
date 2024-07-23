@@ -22,6 +22,9 @@ export const useRest = defineStore('rest', () => {
   async function getByAlias(alias: string) {
     return await RestApi.getByAlias(alias)
   }
+  async function getById(_id: string) {
+    return await RestApi.getById(_id)
+  }
   async function uploadImages(formData: FormData, restId: string) {
     return await RestApi.uploadImages(formData, restId)
   }
@@ -44,5 +47,5 @@ export const useRest = defineStore('rest', () => {
     return await RestApi.deleteFromMenu(menuItemId, restId)
   }
 
-  return { create, get, getByAlias, uploadImages, changeFoodList, sendFoodListItemToMenu, deleteRest, createFoodListItem, uploadFoodListItemImages, moveFoodItemToMenu, deleteFromMenu }
+  return { create, get, getByAlias, getById, uploadImages, changeFoodList, sendFoodListItemToMenu, deleteRest, createFoodListItem, uploadFoodListItemImages, moveFoodItemToMenu, deleteFromMenu }
 })

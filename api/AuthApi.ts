@@ -35,5 +35,14 @@ export default {
         userId
       }
     })
+  },
+  chooseManagingRest(userId: string, restId: string): Promise<any> {
+    return useApiFetch('/user/choose-managing-rest', {
+      method: 'PATCH',
+      body: {
+        userId,
+        restId
+      }
+    })
   }
 }
