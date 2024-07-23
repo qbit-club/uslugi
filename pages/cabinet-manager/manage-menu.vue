@@ -39,7 +39,7 @@ async function deleteFromMenu(menuItemId: string) {
       <h3>Меню</h3>
     </v-col>
     <TransitionGroup name="fade" v-if="menu.length > 0">
-      <v-col cols="12" md="4" lg="3" xl="2" v-for="item of menu" :key="item._id">
+      <v-col cols="12" sm="6" md="4" lg="3" xl="2.5" xxl="2" v-for="item of menu" :key="item._id">
         <ManagerMenuItemCard :item="item" @delete-from-menu="deleteFromMenu" />
       </v-col>
     </TransitionGroup>
