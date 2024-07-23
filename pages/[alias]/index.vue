@@ -18,8 +18,6 @@ let alias = String(route.params.alias) ?? ""
 let res = await restStore.getByAlias(alias)
 
 rest.value = res.data.value
-
-
 </script>
 <template>
   <ClientOnly>

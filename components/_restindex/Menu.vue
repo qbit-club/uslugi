@@ -55,7 +55,7 @@ let groupMealsByCategory = (meals: FoodListItemFromDb[]): CategoryMeals[] => {
         }));
 }
 //  взят лист блюд надо меню 
-groupMeals.value = groupMealsByCategory(props.rest.foodList)
+groupMeals.value = groupMealsByCategory(props.rest?.menu)
 selectedCategory.value = groupMeals.value[0].category
 </script>
 
