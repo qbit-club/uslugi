@@ -38,7 +38,7 @@ async function deleteFromMenu(menuItemId: string) {
     <v-col cols="12">
       <h3>Меню</h3>
     </v-col>
-    <TransitionGroup name="fade">
+    <TransitionGroup name="fade" v-if="menu.length > 0">
       <v-col cols="12" md="4" lg="3" xl="2" v-for="item of menu" :key="item._id">
         <v-card class="h-100">
           <v-img :src="item?.images[0]" cover></v-img>
@@ -53,10 +53,13 @@ async function deleteFromMenu(menuItemId: string) {
         </v-card>
       </v-col>
     </TransitionGroup>
+    <v-col v-else cols="12">
+      Пусто
+    </v-col>
     <v-col cols="12">
       <h3>Список блюд</h3>
     </v-col>
-    <v-col cols="12" md="4" lg="3" xl="2" v-for="item of rest?.foodList">
+    <v-col v-if="Number(rest?.foodList?.length) > 0" cols="12" md="4" lg="3" xl="2" v-for="item of rest?.foodList">
       <v-card class="h-100">
         <v-img :src="item?.images[0]" cover></v-img>
         <v-card-text>
@@ -68,6 +71,9 @@ async function deleteFromMenu(menuItemId: string) {
           </v-btn>
         </div>
       </v-card>
+    </v-col>
+    <v-col v-else cols="12">
+      Пусто
     </v-col>
   </v-row>
 </template>
