@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import type { RestFromDb } from '@/types/rest-from-db.interface'
+import type { RestFromDb } from "@/types/rest-from-db.interface"
 
 let restStore = useRest()
 const userStore = useAuth()
 
+let { user } = storeToRefs(userStore)
 let rest = ref<RestFromDb>()
-let res = await restStore.getById(userStore.user?.managingRest || '')
-rest.value = res.data.value
 
 let menu = computed(() => {
   if (!rest.value?.menu) return []
@@ -24,16 +23,25 @@ let menu = computed(() => {
 })
 async function moveToMenu(_id: string) {
   let res = await restStore.moveFoodItemToMenu(String(rest.value?._id), _id)
-  if (res.status.value == 'success') {
+  if (res.status.value == "success") {
     rest.value = res.data.value
   }
 }
 async function deleteFromMenu(menuItemId: string) {
   let res = await restStore.deleteFromMenu(menuItemId, String(rest.value?._id))
-  if (res.status.value == 'success') {
+  if (res.status.value == "success") {
     rest.value = res.data.value
   }
 }
+async function getRest() {
+  let res = await restStore.getById(userStore.user?.managingRest || "")
+  rest.value = res.data.value
+}
+getRest()
+
+watch(user, () => {
+  getRest()
+})
 </script>
 <template>
   <v-row>
@@ -45,17 +53,13 @@ async function deleteFromMenu(menuItemId: string) {
         <ManagerMenuItemCard :item="item" @delete-from-menu="deleteFromMenu" />
       </v-col>
     </TransitionGroup>
-    <v-col v-else cols="12">
-      Пусто
-    </v-col>
+    <v-col v-else cols="12"> Пусто </v-col>
     <v-col cols="12">
       <h3>Список блюд</h3>
     </v-col>
     <v-col v-if="Number(rest?.foodList?.length) > 0" cols="12" md="4" lg="3" xl="2" v-for="item of rest?.foodList">
       <ManagerFoodListItemCard :item="item" @move-to-menu="moveToMenu" />
     </v-col>
-    <v-col v-else cols="12">
-      Пусто
-    </v-col>
+    <v-col v-else cols="12"> Пусто </v-col>
   </v-row>
 </template>

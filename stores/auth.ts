@@ -86,8 +86,12 @@ export const useAuth = defineStore('auth', () => {
     }
   }
   async function chooseManagingRest(restId: string) {
-    try { 
-      return await AuthAPI.chooseManagingRest(String(user.value?._id), restId)
+    try {
+      let res = await AuthAPI.chooseManagingRest(String(user.value?._id), restId)
+      if (res.status.value == 'success') {
+        user.value = res.data.value
+      }
+      return res
     } catch (error) {
       console.log(error);
     }
