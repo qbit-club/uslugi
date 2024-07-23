@@ -4,7 +4,10 @@ import { toast } from 'vue3-toastify';
 let appStore = useApp()
 const CATEGORIES = appStore.appState?.foodCategory || []
 
+const userStore = useAuth()
 let restStore = useRest()
+
+const managingRest = userStore.user?.managingRest
 
 let form = ref({
   name: '',
@@ -42,7 +45,7 @@ function uploadImage(file: File) {
       if (this.width / this.height >= 1.1 || this.width / this.height <= 0.9) {
         toast('Картинка должна быть "более" квадратной', { type: 'error' })
       } else {
-        imagesFormData.set('menuitemimage_' + String(index) + '_6694096e4901af87e35e23aa', file, 'menuitemimage_' + String(index) + '_6694096e4901af87e35e23aa' + '_' + String(Date.now()) + '.jpg')
+        imagesFormData.set('menuitemimage_' + String(index) + `_${managingRest}`, file, 'menuitemimage_' + String(index) + `_${managingRest}` + '_' + String(Date.now()) + '.jpg')
         previews.value.push(String(reader.result))
         index += 1
       }
@@ -56,7 +59,7 @@ let loading = ref(false)
 async function submit() {
   loading.value = true
   // пусть пока в морковку создаются
-  let res = await restStore.createFoodListItem("6694096e4901af87e35e23aa", form.value)
+  let res = await restStore.createFoodListItem(String(managingRest), form.value)
   if (res.status.value == "success") {
     // find foodItem
     let restId = res.data.value._id

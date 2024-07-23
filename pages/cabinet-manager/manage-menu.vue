@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import type { RestFromDb } from '@/types/rest-from-db.interface'
+
 let restStore = useRest()
+const userStore = useAuth()
 
 let rest = ref<RestFromDb>()
-let res = await restStore.getByAlias('morkovka')
+let res = await restStore.getById(userStore.user?.managingRest || '')
 rest.value = res.data.value
 
 let menu = computed(() => {

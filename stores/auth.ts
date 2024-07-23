@@ -85,8 +85,15 @@ export const useAuth = defineStore('auth', () => {
       console.log(error);
     }
   }
+  async function chooseManagingRest(restId: string) {
+    try { 
+      return await AuthAPI.chooseManagingRest(String(user.value?._id), restId)
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return {
-    user, registration, login, redirectTo, checkAuth, logout, updateUser, setManager, getUserRests
+    user, registration, login, redirectTo, checkAuth, logout, updateUser, setManager, getUserRests, chooseManagingRest
   }
 })
