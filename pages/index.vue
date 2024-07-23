@@ -40,14 +40,14 @@ let showSearch = () => {
 
 <template>
   <v-container>
-    <v-row class="pt-4 pb-16">
-      <v-col cols="12" class="d-flex align-center">
-        <v-icon icon="mdi-magnify" class="ma-2" @click="showSearch" />
-        <transition name="fade">
-          <v-text-field v-model='filter' v-if="isShow" density="compact" variant="solo" hide-details single-line
-            placeholder="поиск ресторана" clear-icon="mdi-close-circle" clearable></v-text-field>
-        </transition>
+    <v-row class="pb-16">
+      <v-col cols="12" class="d-flex align-center justify-center">
        
+     
+          <v-text-field v-model='filter' prepend-inner-icon="mdi-magnify" density="compact" max-width="300px" variant="solo" hide-details single-line
+            placeholder="поиск ресторана" clear-icon="mdi-close-circle" clearable></v-text-field>
+   
+        <!-- <v-icon icon="mdi-magnify" class="ma-2" @click="showSearch" /> -->
       </v-col>
 
       <v-col cols="12" md="6" lg="4" v-for="rest, index in restsWithFilter" :key="index">

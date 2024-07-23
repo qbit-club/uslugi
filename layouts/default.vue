@@ -14,7 +14,7 @@ const routes = [
     icon: "mdi-home-outline"
   },
   {
-    value: '/cabinet',
+    value: '/cabinet-user/profile',
     title: "Пользователь",
     icon: "mdi-account-outline"
   },
@@ -62,10 +62,8 @@ await appStore.getAppState()
 
       </v-app-bar> -->
       <div class="d-none d-md-block">
-        <img src="../assets/images/logo.jpg" alt="logo" @click="router.push('/')" class="position-absolute"
-          style="top:20px; left:20px" />
-
-        <v-icon icon="mdi-hamburger" class="position-absolute" style="top:20px; right:20px"
+        <img src="../assets/images/logo.jpg" alt="logo" @click="router.push('/')" class="logo"  />
+        <v-icon icon="mdi-hamburger" class="menu-button"
           @click="navigationDrawer = !navigationDrawer" />
       </div>
 
@@ -86,13 +84,13 @@ await appStore.getAppState()
 
       <ClientOnly>
         <!-- только на экранах md и больше, потому что на телефоне можно свайпнуть и navigation-drawer появится -->
-        <v-navigation-drawer v-if="width > 960" :model-value="navigationDrawer" location="left" temporary persistent
-          permanent>
-          <div class="text-right"> <v-icon icon="mdi-close" @click="navigationDrawer = !navigationDrawer" /></div>
+        <v-navigation-drawer v-if="width > 960" :model-value="navigationDrawer" location="right" temporary persistent
+          >
+          
 
           <v-list nav>
             <v-list-item v-for="route of routes" :prepend-icon="route.icon" :to="route.value" :title="route.title"
-              :value="route.value"></v-list-item>
+              :value="route.value" @click="navigationDrawer=false"></v-list-item>
           </v-list>
         </v-navigation-drawer>
       </ClientOnly>
@@ -106,4 +104,18 @@ await appStore.getAppState()
   </v-responsive>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.menu-button{
+position: fixed;
+top: 25px;
+right: 25px;
+}
+.logo {
+  position: fixed;
+top: 25px;
+left: 25px;
+}
+
+
+
+</style>
