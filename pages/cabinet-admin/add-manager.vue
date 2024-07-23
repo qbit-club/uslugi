@@ -7,7 +7,7 @@ const restStore = useRest()
 const authStore = useAuth()
 let { data } = await restStore.get()
 let rest_ids = ref<[]>()
-let chosen_rest=ref("")
+let chosen_rest=ref<any>("")
 let user_email = ref("")
 
 async function setManager(){

@@ -11,7 +11,7 @@ const restStore = useRest()
 let route = useRoute()
 let rest = ref<RestFromDb>()
 
-let currentTab = shallowRef<any>(InfoCard)
+let currentTab = shallowRef<any>(Menu)
 
 let alias = String(route.params.alias) ?? ""
 
@@ -22,13 +22,14 @@ rest.value = res.data.value
 
 </script>
 <template>
-  <v-container>
+  <ClientOnly>
+  <v-container >
     <v-row class="d-flex justify-center pb-16">
-      <v-col :cols="12" :md="10">
+      <v-col :cols="12" :md="10" >
         <v-row>
           <v-col :cols="12" style="position: relative; margin-bottom: 40px">
           <a :href="`tel:${rest?.phone}`"> <span class="phone"> <v-icon icon="mdi-phone" /> {{ rest?.phone }} </span></a> 
-
+<!-- убрать стили в стили -->
             <v-img :src="rest?.images.headerimage" max-height="25vh" cover alt="" />
             <div style="
                 position: absolute;
@@ -70,11 +71,12 @@ rest.value = res.data.value
               </div>
             </div>
           </v-col>
-          <component :is="currentTab" :info="rest" class="pa-4"></component>
+          <component :is="currentTab" :rest="rest" class="pa-4" ></component>
         </v-row>
       </v-col>
     </v-row>
   </v-container>
+</ClientOnly>
 </template>
 <style lang="scss" scoped>
 .logo {
@@ -87,14 +89,14 @@ rest.value = res.data.value
 }
 
 .phone {
-  background: rgba($color: #000000, $alpha: 0.7);
+  background: rgba(256, 256, 256, 0.8);
   font-weight: 600;
-  color: white;
+  color: black;
   padding: 10px;
   border-radius: 5px;
   position: absolute;
   right: 20px;
-  top: 20px;
+  bottom: 20px;
   z-index: 999;
 }
 </style>
