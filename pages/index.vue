@@ -54,7 +54,7 @@ let showSearch = () => {
         <NuxtLink :to="`/${rest.alias}`">
           <div class="h-100 d-flex flex-column align-center pa-4">
             <h3>{{ rest.title }}</h3>
-            <v-img :src="rest.images.logo" class="w-50"></v-img>
+            <v-img :src="rest.images.logo" class="w-100"></v-img>
           </div>
         </NuxtLink>
       </v-col>
