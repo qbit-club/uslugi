@@ -5,6 +5,7 @@ import RestApi from '../api/RestApi'
 import type { Rest } from "../types/rest.interface"
 import type { FoodListItemFromDb } from "~/types/food-list-item-from-db.interface"
 import type { FoodListItem } from "~/types/food-list-item.interface"
+import type { RestFromDb } from "~/types/rest-from-db.interface"
 
 export const useRest = defineStore('rest', () => {
   // let halls = ref<Hall[] | []>()
@@ -36,6 +37,12 @@ export const useRest = defineStore('rest', () => {
   async function uploadFoodListItemImages(restId: string, foodListItemId: string, fd: FormData) {
     return await RestApi.uploadFoodListItemImages(restId, foodListItemId, fd)
   }
+  async function moveFoodItemToMenu(restId: string, foodListItemId: string): Promise<any> {
+    return await RestApi.moveFoodItemToMenu({ restId, foodListItemId })
+  }
+  async function deleteFromMenu(menuItemId: string, restId: string): Promise<any> {
+    return await RestApi.deleteFromMenu(menuItemId, restId)
+  }
 
-  return { create, get, getByAlias, uploadImages, changeFoodList, sendFoodListItemToMenu, deleteRest, createFoodListItem, uploadFoodListItemImages }
+  return { create, get, getByAlias, uploadImages, changeFoodList, sendFoodListItemToMenu, deleteRest, createFoodListItem, uploadFoodListItemImages, moveFoodItemToMenu, deleteFromMenu }
 })

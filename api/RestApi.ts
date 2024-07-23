@@ -59,5 +59,17 @@ export default {
   },
   uploadFoodListItemImages(restId: string, foodListItemId: string, fd: FormData): Promise<any> {
     return useApiFetch(`/rest/food-list-images?rest_id=${restId}&item_id=${foodListItemId}`, { method: 'POST', headers: { 'Content-Type': 'multipart/form-data' }, body: fd })
+  },
+  moveFoodItemToMenu(body: {
+    restId: string,
+    foodListItemId: string
+  }) {
+    return useApiFetch('/rest/move-food-list-item-to-menu', {
+      method: 'PATCH',
+      body: body
+    })
+  },
+  deleteFromMenu(menuItemId: string, restId: string) {
+    return useApiFetch(`/rest/delete-from-menu?rest_id=${restId}&menu_item_id=${menuItemId}`, { method: 'DELETE' })
   }
 }
