@@ -92,7 +92,7 @@ selectedCategory.value = groupMeals.value[0].category
 
             <v-col :cols="12">
                 <div v-for="(item, index) in groupMeals">
-                    <div class="text-center text-uppercase bold font-weight-bold ma-4 " :id="item.category">
+                    <div class="text-center text-uppercase  font-weight-bold ma-4 " :id="item.category">
                         {{ item.category }}
                     </div>
                     <v-row>
