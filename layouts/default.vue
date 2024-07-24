@@ -61,8 +61,11 @@ await appStore.getAppState()
         </div>
 
       </v-app-bar> -->
-      <div class="d-none d-md-block">
-        <img src="../assets/images/logo.jpg" alt="logo" @click="router.push('/')" class="logo"  />
+      <div class="d-none d-md-block ">
+        <div class="logo">
+          <img src="../assets/images/logo.svg" alt="logo" @click="router.push('/')"  height="100%" />
+        </div>
+       
         <v-icon icon="mdi-hamburger" class="menu-button"
           @click="navigationDrawer = !navigationDrawer" />
       </div>
@@ -111,9 +114,18 @@ top: 25px;
 right: 25px;
 }
 .logo {
-  position: fixed;
+position: fixed;
 top: 25px;
 left: 25px;
+padding: 5px;
+border-radius: 50%;
+width:50px;
+aspect-ratio: 1;
+display:flex;
+justify-content: center;
+align-items: center;
+
+background: rgba(255, 255, 255, 0.7);
 }
 
 
