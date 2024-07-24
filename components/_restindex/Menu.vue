@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import MenuCard from './MenuCard.vue'
+import { useElementBounding } from '@vueuse/core'
 import type { FoodListItemFromDb } from "../../types/food-list-item-from-db.interface";
 import type { RestFromDb } from '~/types/rest-from-db.interface';
 const props = defineProps<{
@@ -9,6 +10,10 @@ type CategoryMeals = {
     category: string;
     meals: FoodListItemFromDb[];
 };
+
+const logo = ref(null)
+const { y: logoY }
+    = useElementBounding(logo)
 
 let groupMeals = ref<CategoryMeals[]>()
 let isShow = ref(false)
@@ -27,7 +32,7 @@ let selectCategory = (category: any) => {
         selectedCategory.value = category.toLowerCase()
         const el = document.getElementById(category);
         if (el) {
-            el.scrollIntoView({ behavior: 'smooth',block: "center" });
+            el.scrollIntoView({ behavior: 'smooth', block: "center" });
         }
 
     }
@@ -61,7 +66,7 @@ selectedCategory.value = groupMeals.value[0].category
 
 <template>
     <v-container>
-        <v-row >
+        <v-row>
             <v-col cols="12" class="d-flex justify-space-between">
                 <div>
                     <h3>
@@ -79,13 +84,18 @@ selectedCategory.value = groupMeals.value[0].category
                     <v-icon icon="mdi-magnify" class="ma-2" @click="showSearch" />
                 </div>
             </v-col>
-            <v-col cols="12" class="d-flex overflow-x-hide position-sticky pa-0" style="z-index:2; top:0px; background:white">
-                <v-chip-group>
-                    <v-chip color="red" variant="outlined" size="small" v-for="(item, index) in groupMeals" :key="index"
-                        class="mb-2" @click="selectCategory(item.category)">
-                        {{ item.category }}
-                    </v-chip>
-                </v-chip-group>
+            <v-col ref="logo" cols="12" class="d-flex overflow-x-hide position-sticky pa-0 align-center"
+                style="z-index:2; top:0px; background:white">
+                <transition name="fade-slide">
+                    <img v-if="logoY < 100" :src="rest.images.logo" style="width: 50px;"  class="ma-2"></img>
+                </transition>
+                    <v-chip-group>
+                        <v-chip color="red" variant="outlined"  v-for="(item, index) in groupMeals"
+                            :key="index" class="mb-2" @click="selectCategory(item.category)">
+                            {{ item.category }}
+                        </v-chip>
+                    </v-chip-group>
+              
             </v-col>
 
             <!-- пока нет меню  используется foodList -->
@@ -107,7 +117,7 @@ selectedCategory.value = groupMeals.value[0].category
 
     </v-container>
 
-  
+
 
 
 </template>
