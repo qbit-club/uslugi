@@ -76,5 +76,11 @@ export default {
   },
   deleteFromMenu(menuItemId: string, restId: string) {
     return useApiFetch(`/rest/delete-from-menu?rest_id=${restId}&menu_item_id=${menuItemId}`, { method: 'DELETE' })
-  }
+  },
+  update(rest: Rest, restId: string) {
+    return useApiFetch(`/rest?rest_id=${restId}`, {
+      method: 'PUT',
+      body: { rest },
+    })
+  },
 }
