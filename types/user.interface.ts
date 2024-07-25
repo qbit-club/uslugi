@@ -7,6 +7,6 @@ export interface User {
 	email: string
 	password: string
 	rests: RestFromDb[]
-	role: Role
+	roles: Role[]
 	managingRest: string
 }

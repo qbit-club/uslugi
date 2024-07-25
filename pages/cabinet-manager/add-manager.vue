@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { Rest } from '~/types/rest.interface';
+import type { Role } from '~/types/role.interface';
 
 const auth = useAuth()
 
@@ -7,7 +8,7 @@ const restStore = useRest()
 const authStore = useAuth()
 let { data } = await restStore.get()
 let user = authStore.user
-let rest_ids = ref<[]>()
+let rest_ids = ref<string[]>()
 let chosen_rest=ref("")
 let user_email = ref("")
 
@@ -16,7 +17,9 @@ async function setManager(){
 }
 
 onMounted(async ()=>{
-    rest_ids=data.value.filter((rest:Rest) => user?.role.rest_ids.includes(rest._id)).map( (rest:Rest) => ({name:rest.title, id:rest._id}) )
+    // rest_ids=data.value.filter((rest:Rest) => user?.role.rest_ids.includes(rest.alias)).map( (rest:Rest) => ({name:rest.title, id:rest.alias}) )
+    let user_rests=authStore.user?.roles.find((role:Role) => role.type=="manager")?.rest_ids
+    rest_ids.value=data.value.filter((rest:Rest)=>user_rests?.includes(rest.alias)).map( (rest:Rest) => ({name:rest.title, alias:rest.alias}))
 })
 </script>
 
