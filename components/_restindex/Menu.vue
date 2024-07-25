@@ -134,7 +134,5 @@ onMounted(() => {
 
 </template>
 <style scoped>
-.menu{
-    overflow-y: hidden;
-}
+
 </style>
