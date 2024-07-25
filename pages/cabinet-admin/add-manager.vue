@@ -15,7 +15,7 @@ async function setManager(){
 }
 
 onMounted(async ()=>{
-    rest_ids=data.value.map( (item:Rest) => ({name:item.title, id:item._id}) )
+    rest_ids=data.value.map( (item:Rest) => ({name:item.title, alias:item.alias}) )
 })
 </script>
 
