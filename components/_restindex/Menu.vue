@@ -15,6 +15,8 @@ const logo = ref<any>()
 const { y: logoY }
     = useElementBounding(logo)
 
+const cartStore = useCart()
+
 let groupMeals = ref<CategoryMeals[]>()
 let isShow = ref(false)
 let filter = ref<string>('')
@@ -74,65 +76,68 @@ onMounted(() => {
 </script>
 
 <template>
- 
-        <v-container>
-            <v-row>
-                <v-col cols="12" class="d-flex justify-space-between">
-                    <div>
-                        <h3>
-                            Меню
-                        </h3>
 
-                    </div>
+    <v-container>
+        <v-row>
+            <v-col cols="12" class="d-flex justify-space-between">
+                <div>
+                    <h3>
+                        Меню
+                    </h3>
+                </div>
 
-                    <div class="d-flex align-center">
-                        <transition name="fade">
-                            <v-text-field min-width="200" v-model='filter' v-if="isShow" density="compact"
-                                variant="solo" hide-details single-line placeholder="поиск"
-                                clear-icon="mdi-close-circle" clearable></v-text-field>
-                        </transition>
-                        <v-icon icon="mdi-magnify" class="ma-2" @click="showSearch" />
-                    </div>
-                </v-col>
-                <v-col ref="logo" cols="12" class="d-flex overflow-x-hide position-sticky pa-0 align-center"
-                    style="z-index:2; top:0px; background:white">
-                    <ClientOnly>
+                <div class="d-flex align-center">
+                    <transition name="fade">
+                        <v-text-field min-width="200" v-model='filter' v-if="isShow" density="compact" variant="solo"
+                            hide-details single-line placeholder="поиск" clear-icon="mdi-close-circle"
+                            clearable></v-text-field>
+                    </transition>
+                    <v-icon icon="mdi-magnify" class="ma-2" @click="showSearch" />
+                </div>
+            </v-col>
+            <v-col cols="12">
+            </v-col>
+            <v-col ref="logo" cols="12" class="d-flex align-center overflow-x-hide position-sticky pa-0"
+                style="z-index:2; top:0px; background:white">
+                <div class="mr-3 d-flex align-center">
+                    <v-badge :content="cartStore.cart.length" color="primary">
+                        <v-icon icon="mdi-cart" class="cursor-pointer"></v-icon>
+                    </v-badge>
+                </div>
+                <ClientOnly>
                     <transition name="fade">
                         <img v-if="logoY < 100" :src="rest.images.logo" style="width: 50px;" class="ma-2"></img>
                     </transition>
-                    </ClientOnly>
-                    <v-chip-group >
-                        <v-chip color="red" variant="outlined" v-for="(item, index) in groupMeals" :key="index"
-                            class="mb-2" @click="selectCategory(item.category)">
-                            {{ item.category }}
-                        </v-chip>
-                    </v-chip-group>
+                </ClientOnly>
+                <v-chip-group>
+                    <v-chip color="red" variant="outlined" v-for="(item, index) in groupMeals" :key="index" class="mb-2"
+                        @click="selectCategory(item.category)">
+                        {{ item.category }}
+                    </v-chip>
+                </v-chip-group>
+            </v-col>
 
-                </v-col>
+            <!-- пока нет меню  используется foodList -->
 
-                <!-- пока нет меню  используется foodList -->
-
-                <v-col :cols="12">
-                    <div v-for="(item, index) in groupMeals">
-                        <div class="text-center text-uppercase  font-weight-bold ma-4 " :id="item.category">
-                            {{ item.category }}
-                        </div>
-                        <v-row>
-                            <v-col cols="12" md="6" v-for="(meal, index) in item.meals">
-                                <MenuCard :meal="meal"></MenuCard>
-                            </v-col>
-                        </v-row>
+            <v-col :cols="12">
+                <div v-for="(item, index) in groupMeals">
+                    <div class="text-center text-uppercase  font-weight-bold ma-4 " :id="item.category">
+                        {{ item.category }}
                     </div>
-                </v-col>
+                    <v-row>
+                        <v-col cols="12" md="6" v-for="(meal, index) in item.meals">
+                            <MenuCard :meal="meal"></MenuCard>
+                        </v-col>
+                    </v-row>
+                </div>
+            </v-col>
 
-            </v-row>
+        </v-row>
 
-        </v-container>
+    </v-container>
 
 
 
 
 </template>
-<style scoped>
-
-</style>
+<style scoped></style>
