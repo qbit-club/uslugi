@@ -23,7 +23,7 @@ rest.value = res.data.value
   <ClientOnly>
   <v-container >
     <v-row class="d-flex justify-center pb-16">
-      <v-col :cols="12" :md="10" >
+      <v-col :cols="12"  >
         <v-row>
           <v-col :cols="12" style="position: relative; margin-bottom: 40px">
           <a :href="`tel:${rest?.phone}`"> <span class="phone"> <v-icon icon="mdi-phone" /> {{ rest?.phone }} </span></a> 
