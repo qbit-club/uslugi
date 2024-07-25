@@ -5,12 +5,3 @@
     opacity: 0;
   }
   
-/* Стили для плавного появления */
-.fade-slide-enter-active, .fade-slide-leave-active {
-  transition: transform 0.5s ease, opacity 0.5s ease;
-}
-
-.fade-slide-enter, .fade-slide-leave-to /* .fade-slide-leave-active в <2.1.8 */ {
-  transform: translateX(-100%);
-  opacity: 0;
-}
