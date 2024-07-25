@@ -75,7 +75,7 @@ onMounted(() => {
 
 <template>
  
-        <v-container class="menu">
+        <v-container>
             <v-row>
                 <v-col cols="12" class="d-flex justify-space-between">
                     <div>
