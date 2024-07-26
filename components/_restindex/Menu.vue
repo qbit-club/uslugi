@@ -62,34 +62,45 @@ let groupMealsByCategory = (meals: FoodListItemFromDb[]): CategoryMeals[] => {
         }));
 }
 
+let menuWithFilter = () => {
+    if (filter.value == null) {
+        filter.value = ''
+    }
+    if (filter.value.length > 2) {
+        let tempMenu = props.rest?.menu.filter((meal: any) =>
+            meal.name.toLowerCase().includes(filter.value.toLowerCase()) ||
+            meal.category.toLowerCase().includes(filter.value.toLowerCase())
+        )
+        groupMeals.value = groupMealsByCategory(tempMenu)
+    } else {
+
+        groupMeals.value = groupMealsByCategory(props.rest?.menu)
+    }
+}
+
+watch(filter, () => {
+
+    menuWithFilter()
+
+})
 watch(logoY, () => {
     logoY.value >= 100 ? logo.value.style.display = 'none' : logo.value.style.display = 'block'
 })
 
-
-groupMeals.value = groupMealsByCategory(props.rest?.menu)
-selectedCategory.value = groupMeals.value[0].category
 onMounted(() => {
+    groupMeals.value = groupMealsByCategory(props.rest?.menu)
+    selectedCategory.value = groupMeals.value[0].category
     logo.value.style.display = 'none'
 })
+
+
 </script>
 
 <template>
 
     <v-container>
         <v-row>
-            <!-- <v-col cols="12" class="d-flex justify-space-between pb-0 pt-0">
-            
-                <div class="d-flex align-center">
-                    <transition name="fade">
-                        <v-text-field min-width="200" v-model='filter' v-if="isShow" density="compact" variant="solo"
-                            hide-details single-line placeholder="поиск" clear-icon="mdi-close-circle"
-                            clearable></v-text-field>
-                    </transition>
-                    <v-icon icon="mdi-magnify" class="ma-2" @click="showSearch" />
-                </div>
-            </v-col> -->
-          
+
             <v-col ref="logo" cols="12" class="position-sticky pt-0 pb-0" style="z-index:2; top:0px; ">
                 <div class="d-flex align-center" style="background:white">
 
@@ -100,19 +111,30 @@ onMounted(() => {
                     </ClientOnly>
                     <v-chip-group>
                         <v-chip color="red" variant="outlined" v-for="(item, index) in groupMeals" :key="index"
-                            class="mb-2" @click="selectCategory(item.category)">
+                            @click="selectCategory(item.category)">
                             {{ item.category }}
                         </v-chip>
                     </v-chip-group>
                 </div>
-              <div class="pr-2">
-                <v-badge :content="cartStore.cart.length" color="primary" class="float-right" >
-                        <v-btn icon="mdi-cart" >
+                <div class="pa-2">
+                    <v-badge :content="cartStore.cart.length" color="primary" class="float-right">
+                        <v-btn icon="mdi-cart">
                         </v-btn>
                     </v-badge>
-              </div>
-                    
-               
+                    <div class="d-flex align-center float-left">
+                        <v-btn icon="mdi-magnify" @click="showSearch" class="mr-2">
+
+                        </v-btn>
+                        <transition name="fade">
+                            <v-text-field min-width="200" v-model='filter' v-if="isShow" density="compact"
+                                variant="solo" hide-details single-line placeholder="поиск"
+                                clear-icon="mdi-close-circle" clearable></v-text-field>
+                        </transition>
+
+                    </div>
+                </div>
+
+
             </v-col>
 
             <v-col :cols="12" class="pt-0">
