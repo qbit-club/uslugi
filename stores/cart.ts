@@ -1,4 +1,5 @@
 import { defineStore } from "pinia"
+import { watch } from 'vue'
 
 // types
 import type { FoodListItemFromDb } from "~/types/food-list-item-from-db.interface"
@@ -29,6 +30,16 @@ interface CartItem {
 }
 export const useCart = defineStore('cart', () => {
   let cart = ref<CartItem[]>([])
+  
+  if (process.client) {
+    cart.value = JSON.parse(String(localStorage.getItem('cart')))
+  }
+
+  watch(cart, (newVal) => {
+    if (process.client) {
+      localStorage.setItem('cart', JSON.stringify(newVal))
+    }
+  }, { deep: true })
 
   function addToCart(meal: FoodListItemFromDb, rest: RestFromDb): void {
     const itemToPush = {
@@ -40,7 +51,7 @@ export const useCart = defineStore('cart', () => {
       menuItemId: meal._id,
     }
     // если нет такого ресторана в корзине, то создаем его
-    // ииначе добавляем в споисок товаров текущий товар
+    // иначе добавляем в список товаров текущий товар
     if (!cart.value.find((o) => o.restId == rest._id)) {
       cart.value.push({
         restId: rest._id,

@@ -18,6 +18,7 @@ const { y: logoY }
     = useElementBounding(logo)
 
 const cartStore = useCart()
+let { cart } = storeToRefs(cartStore)
 
 let cartDialog = ref<boolean>(false)
 
@@ -83,13 +84,12 @@ let menuWithFilter = () => {
 }
 
 watch(filter, () => {
-
     menuWithFilter()
 })
 
 let cartLength = computed(() => {
     let res = 0
-    for (let item of cartStore.cart) {
+    for (let item of cartStore?.cart) {
         res += item.items.length
     }
     return res
@@ -162,7 +162,7 @@ onMounted(() => {
                 </div>
             </v-col>
         </v-row>
-        <v-dialog v-model="cartDialog">
+        <v-dialog v-model="cartDialog" width="700">
             <CartCard />
         </v-dialog>
     </v-container>
