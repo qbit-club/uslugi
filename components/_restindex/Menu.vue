@@ -18,7 +18,7 @@ const { y: logoY }
     = useElementBounding(logo)
 
 const cartStore = useCart()
-let { cart } = storeToRefs(cartStore)
+const route = useRoute()
 
 let cartDialog = ref<boolean>(false)
 
@@ -90,7 +90,9 @@ watch(filter, () => {
 let cartLength = computed(() => {
     let res = 0
     for (let item of cartStore?.cart) {
-        res += item.items.length
+        if (item.restInfo.alias == route.params.alias) {
+            res += item.items.length
+        }
     }
     return res
 })
@@ -133,7 +135,7 @@ onMounted(() => {
 
                         </v-btn>
                         <transition name="fade">
-                            <v-text-field min-width="200" v-model='filter' v-if="isShow" density="compact"
+                            <v-text-field min-width="200" v-model="filter" v-if="isShow" density="compact"
                                 variant="solo" hide-details single-line placeholder="поиск"
                                 clear-icon="mdi-close-circle" clearable></v-text-field>
                         </transition>
@@ -162,9 +164,10 @@ onMounted(() => {
                 </div>
             </v-col>
         </v-row>
-        <v-dialog v-model="cartDialog" width="700">
+        <v-dialog v-model="cartDialog" width="auto">
             <CartCard />
         </v-dialog>
     </v-container>
 </template>
-<style scoped></style>
+<style scoped>
+</style>

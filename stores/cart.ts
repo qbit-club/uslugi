@@ -25,14 +25,15 @@ interface CartItem {
     title: string,
     phone: string,
     socialMedia: string,
-    schedule: string
+    schedule: string,
+    alias: string
   }
 }
 export const useCart = defineStore('cart', () => {
   let cart = ref<CartItem[]>([])
-  
+
   if (process.client) {
-    cart.value = JSON.parse(String(localStorage.getItem('cart')))
+    cart.value = JSON.parse(String(localStorage.getItem('cart'))) ?? []
   }
 
   watch(cart, (newVal) => {
@@ -59,7 +60,8 @@ export const useCart = defineStore('cart', () => {
           title: rest.title,
           phone: rest.phone,
           socialMedia: rest.socialMedia,
-          schedule: rest.schedule
+          schedule: rest.schedule,
+          alias: rest.alias
         },
         items: [itemToPush]
       })
@@ -116,12 +118,21 @@ export const useCart = defineStore('cart', () => {
     }
     return false
   }
+
+  function clearRestCart(restId: string) {
+    for (let i = 0; i < cart.value.length; i++) {
+      if (cart.value[i].restId == restId) {
+        cart.value.splice(i, 1)
+      }
+    }
+  }
   return {
     // variables:
     cart,
     // methods:
     addToCart,
     plusCart,
-    minusCart
+    minusCart,
+    clearRestCart
   }
 })
