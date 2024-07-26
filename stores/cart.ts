@@ -8,12 +8,24 @@ interface CartItem {
     price: number,
     count: number,
     name: string,
-    health: object,
+    health: {
+      protein: number,
+      carb: number,
+      fat: number,
+      energy: string,
+      mass: string,
+      ingredients: string
+    },
     images: string[],
     menuItemId: string
   }]
   restId: string
-  restInfo: object
+  restInfo: {
+    title: string,
+    phone: string,
+    socialMedia: string,
+    schedule: string
+  }
 }
 export const useCart = defineStore('cart', () => {
   let cart = ref<CartItem[]>([])
