@@ -21,69 +21,86 @@ rest.value = res.data.value
 </script>
 <template>
   <ClientOnly>
-  <v-container >
-    <v-row class="d-flex justify-center pb-16">
-      <v-col :cols="12"  >
-        <v-row>
-          <v-col class="overflow-x-" :cols="12" style="position: relative; margin-bottom: 40px">
-          <a :href="`tel:${rest?.phone}`"> <span class="phone"> <v-icon icon="mdi-phone" /> {{ rest?.phone }} </span></a> 
-<!-- убрать стили в стили -->
-            <v-img :src="rest?.images.headerimage" max-height="25vh" cover alt="" />
-            <div style="
-                position: absolute;
-                bottom: -50px;
-                display: flex;
-                justify-content: start;
-                aspect-ratio: 1;
-                width: 100%;
-                align-items: end;
-              ">
-              <v-avatar :image="rest?.images.logo" size="20%" class="logo" color="white"></v-avatar>
-              <span class="title me-auto ">{{ rest?.title }}</span>
-              <a :href="rest?.socialMedia" target="_blank">
-                <img src="../../assets/icons/vk.svg" class="mr-6 mb-4" />
-              </a>
-            </div>
-          </v-col>
-          <v-col :cols="12">
-            <div class="d-flex">
-              <div class="d-flex flex-column align-center pa-4">
-                <v-icon icon="mdi-silverware-fork-knife" size="x-large" @click="currentTab = Menu" />
-                <div class="explanation">меню</div>
+    <v-container>
+      <v-row class="d-flex justify-center pb-16">
+        <v-col :cols="12">
+          <v-row>
+            <v-col :cols="12" style="position: relative;">
+              <a :href="`tel:${rest?.phone}`"> <span class="phone"> <v-icon icon="mdi-phone" /> {{ rest?.phone }}
+                </span></a>
+                <a :href="rest?.socialMedia" target="_blank">
+                  <img src="../../assets/icons/vk.svg" class="vk" />
+                </a>
+              <v-img :src="rest?.images.headerimage" max-height="25vh" cover alt="">
+                
+              </v-img>
+              <div>
+
+                <div class="logo">
+                  <img :src="rest?.images.logo" alt="">
+                </div>
+
               </div>
-              <div class="d-flex flex-column align-center pa-4">
-                <v-icon icon="mdi-table-chair" size="x-large" @click="currentTab = Reservation" />
-                <div class="explanation text-center">бронь <br> столиков</div>
+            </v-col>
+            <v-col :cols="12" class="ma-0 pa-0">  <div class="title">{{ rest?.title }}</div></v-col>
+            <v-col :cols="12" class="pb-0">
+              <div class="d-flex">
+                <div class="d-flex flex-column align-center pa-4">
+                  <v-icon icon="mdi-silverware-fork-knife" size="x-large" @click="currentTab = Menu" />
+                  <div class="explanation">меню</div>
+                </div>
+                <div class="d-flex flex-column align-center pa-4">
+                  <v-icon icon="mdi-table-chair" size="x-large" @click="currentTab = Reservation" />
+                  <div class="explanation text-center">бронь <br> столиков</div>
+                </div>
+                <div class="d-flex flex-column align-center pa-4">
+                  <v-icon icon="mdi-information-outline" size="x-large" @click="currentTab = InfoCard" />
+                  <div class="explanation">инфо</div>
+                </div>
+                <div class="d-flex flex-column align-center pa-4">
+                  <v-icon icon="mdi-truck-fast-outline" size="x-large" @click="currentTab = DeliveryCard" />
+                  <div class="explanation">доставка</div>
+                </div>
+                <div class="d-flex flex-column align-center pa-4">
+                  <v-icon icon="mdi-map-marker-outline" size="x-large" @click="currentTab = AddressCard" />
+                  <div class="explanation">адрес</div>
+                </div>
               </div>
-              <div class="d-flex flex-column align-center pa-4">
-                <v-icon icon="mdi-information-outline" size="x-large" @click="currentTab = InfoCard" />
-                <div class="explanation">инфо</div>
-              </div>
-              <div class="d-flex flex-column align-center pa-4">
-                <v-icon icon="mdi-truck-fast-outline" size="x-large" @click="currentTab = DeliveryCard" />
-                <div class="explanation">доставка</div>
-              </div>
-              <div class="d-flex flex-column align-center pa-4">
-                <v-icon icon="mdi-map-marker-outline" size="x-large" @click="currentTab = AddressCard" />
-                <div class="explanation">адрес</div>
-              </div>
-            </div>
-          </v-col>
-          <component :is="currentTab" :rest="rest" class="pa-4" ></component>
-        </v-row>
-      </v-col>
-    </v-row>
-  </v-container>
-</ClientOnly>
+            </v-col>
+            <component :is="currentTab" :rest="rest" ></component>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-container>
+  </ClientOnly>
 </template>
 <style lang="scss" scoped>
 .logo {
   border: 4px solid white;
+  position: absolute;
+  left: 20px;
+  bottom: -25%;
+  width: 20%;
+  border-radius: 50%;
+  overflow: hidden;
+  aspect-ratio: 1;
+  background: white;
+  box-shadow: 10px 14px 31px -16px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 10px 14px 31px -16px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 14px 31px -16px rgba(0, 0, 0, 0.75);
+
+  img {
+    width: 100%;
+
+  }
 }
+
 
 .title {
   font-size: clamp(1.5rem, 1.1023rem + 1.1364vw, 2rem);
   font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .phone {
@@ -97,4 +114,11 @@ rest.value = res.data.value
   bottom: 20px;
   z-index: 999;
 }
+.vk {
+    position: absolute;
+    right: 20px;
+    bottom: -20px;
+    z-index: 999;
+   
+  }
 </style>

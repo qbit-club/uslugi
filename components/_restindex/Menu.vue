@@ -63,7 +63,6 @@ let groupMealsByCategory = (meals: FoodListItemFromDb[]): CategoryMeals[] => {
 }
 
 watch(logoY, () => {
-    console.log(logo.value.style)
     logoY.value >= 100 ? logo.value.style.display = 'none' : logo.value.style.display = 'block'
 })
 
@@ -79,12 +78,8 @@ onMounted(() => {
 
     <v-container>
         <v-row>
-            <v-col cols="12" class="d-flex justify-space-between pb-0 pt-0">
-                <div>
-                    <h3>
-                        Меню
-                    </h3>
-                </div>
+            <!-- <v-col cols="12" class="d-flex justify-space-between pb-0 pt-0">
+            
                 <div class="d-flex align-center">
                     <transition name="fade">
                         <v-text-field min-width="200" v-model='filter' v-if="isShow" density="compact" variant="solo"
@@ -93,10 +88,9 @@ onMounted(() => {
                     </transition>
                     <v-icon icon="mdi-magnify" class="ma-2" @click="showSearch" />
                 </div>
-            </v-col>
-            <v-col cols="12">
-            </v-col>
-            <v-col ref="logo" cols="12" class="position-sticky pt-0" style="z-index:2; top:0px; ">
+            </v-col> -->
+          
+            <v-col ref="logo" cols="12" class="position-sticky pt-0 pb-0" style="z-index:2; top:0px; ">
                 <div class="d-flex align-center" style="background:white">
 
                     <ClientOnly>
@@ -111,17 +105,17 @@ onMounted(() => {
                         </v-chip>
                     </v-chip-group>
                 </div>
-                <div  class="d-flex align-center w-100 justify-end">
-                    <v-badge :content="cartStore.cart.length" color="primary" >
+              <div class="pr-2">
+                <v-badge :content="cartStore.cart.length" color="primary" class="float-right" >
                         <v-btn icon="mdi-cart" >
                         </v-btn>
                     </v-badge>
-                </div>
+              </div>
+                    
+               
             </v-col>
 
-            <!-- пока нет меню  используется foodList -->
-
-            <v-col :cols="12">
+            <v-col :cols="12" class="pt-0">
                 <div v-for="(item, index) in groupMeals">
                     <div class="text-center text-uppercase  font-weight-bold ma-4 " :id="item.category">
                         {{ item.category }}
