@@ -128,7 +128,7 @@ onMounted(() => {
                     </div>
                     <v-row>
                         <v-col cols="12" md="6" v-for="(meal, index) in item.meals">
-                            <MenuCard :meal="meal"></MenuCard>
+                            <MenuCard :meal="meal" :restId="rest._id"></MenuCard>
                         </v-col>
                     </v-row>
                 </div>

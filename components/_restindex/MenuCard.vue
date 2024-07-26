@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { FoodListItemFromDb } from '@/types/food-list-item-from-db.interface'
 
-let { meal } = defineProps<{
-    meal: FoodListItemFromDb
+let { meal, restId } = defineProps<{
+    meal: FoodListItemFromDb,
+    restId: string
 }>()
 
 const cartStore = useCart()
@@ -16,16 +17,16 @@ let amount = computed(() => {
 })
 
 function addToCart() {
-    cartStore.addToCart(meal)
+    cartStore.addToCart(meal, restId)
     mealCartCount.value = 1
 }
 function plusCart() {
-    let success = cartStore.plusCart(meal._id)
+    let success = cartStore.plusCart(meal._id, restId)
     if (success)
         mealCartCount.value += 1
 }
 function minusCart() {
-    let success = cartStore.minusCart(meal._id)
+    let success = cartStore.minusCart(meal._id, restId)
     if (success)
         mealCartCount.value -= 1
 }
