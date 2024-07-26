@@ -30,7 +30,7 @@ onMounted(async ()=>{
         label="Рестораны"
         :items="rest_ids"
         item-title="name"
-        item-value="id"
+        item-value="alias"
         v-model="chosen_rest"
       >
       </v-select>
@@ -40,7 +40,7 @@ onMounted(async ()=>{
       </v-text-field>
     </v-col>
   </v-row>
-  <v-btn variant="tonal" @click="setManager()">сделать менеджером</v-btn>
+  <v-btn variant="tonal" @click="setManager()">Cделать менеджером</v-btn>
 </template>
 
 <style scoped></style>
