@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import MenuCard from './MenuCard.vue'
+import CartCard from './CartCard.vue'
+
 import { useElementBounding } from '@vueuse/core'
 import type { FoodListItemFromDb } from "../../types/food-list-item-from-db.interface";
 import type { RestFromDb } from '~/types/rest-from-db.interface';
@@ -16,6 +18,8 @@ const { y: logoY }
     = useElementBounding(logo)
 
 const cartStore = useCart()
+
+let cartDialog = ref<boolean>(false)
 
 let groupMeals = ref<CategoryMeals[]>()
 let isShow = ref(false)
@@ -62,6 +66,13 @@ let groupMealsByCategory = (meals: FoodListItemFromDb[]): CategoryMeals[] => {
         }));
 }
 
+let cartLength = computed(() => {
+    let res = 0
+    for(let item of cartStore.cart) {
+        res += item.items.length
+    }
+    return res
+})
 watch(logoY, () => {
     console.log(logo.value.style)
     logoY.value >= 100 ? logo.value.style.display = 'none' : logo.value.style.display = 'block'
@@ -111,9 +122,9 @@ onMounted(() => {
                         </v-chip>
                     </v-chip-group>
                 </div>
-                <div  class="d-flex align-center w-100 justify-end">
-                    <v-badge :content="cartStore.cart.length" color="primary" >
-                        <v-btn icon="mdi-cart" >
+                <div class="d-flex align-center w-100 justify-end">
+                    <v-badge :content="cartLength" color="primary">
+                        <v-btn icon="mdi-cart" @click="cartDialog = true">
                         </v-btn>
                     </v-badge>
                 </div>
@@ -128,18 +139,15 @@ onMounted(() => {
                     </div>
                     <v-row>
                         <v-col cols="12" md="6" v-for="(meal, index) in item.meals">
-                            <MenuCard :meal="meal" :restId="rest._id"></MenuCard>
+                            <MenuCard :meal="meal" :rest="rest"></MenuCard>
                         </v-col>
                     </v-row>
                 </div>
             </v-col>
-
         </v-row>
-
+        <v-dialog v-model="cartDialog">
+            <CartCard />
+        </v-dialog>
     </v-container>
-
-
-
-
 </template>
 <style scoped></style>
