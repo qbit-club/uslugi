@@ -25,7 +25,7 @@ rest.value = res.data.value
     <v-row class="d-flex justify-center pb-16">
       <v-col :cols="12"  >
         <v-row>
-          <v-col :cols="12" style="position: relative; margin-bottom: 40px">
+          <v-col class="overflow-x-" :cols="12" style="position: relative; margin-bottom: 40px">
           <a :href="`tel:${rest?.phone}`"> <span class="phone"> <v-icon icon="mdi-phone" /> {{ rest?.phone }} </span></a> 
 <!-- убрать стили в стили -->
             <v-img :src="rest?.images.headerimage" max-height="25vh" cover alt="" />

@@ -79,13 +79,12 @@ onMounted(() => {
 
     <v-container>
         <v-row>
-            <v-col cols="12" class="d-flex justify-space-between">
+            <v-col cols="12" class="d-flex justify-space-between pb-0 pt-0">
                 <div>
                     <h3>
                         Меню
                     </h3>
                 </div>
-
                 <div class="d-flex align-center">
                     <transition name="fade">
                         <v-text-field min-width="200" v-model='filter' v-if="isShow" density="compact" variant="solo"
@@ -97,24 +96,27 @@ onMounted(() => {
             </v-col>
             <v-col cols="12">
             </v-col>
-            <v-col ref="logo" cols="12" class="d-flex align-center overflow-x-hide position-sticky pa-0"
-                style="z-index:2; top:0px; background:white">
-                <div class="mr-3 d-flex align-center">
-                    <v-badge :content="cartStore.cart.length" color="primary">
-                        <v-icon icon="mdi-cart" class="cursor-pointer"></v-icon>
+            <v-col ref="logo" cols="12" class="position-sticky pt-0" style="z-index:2; top:0px; ">
+                <div class="d-flex align-center" style="background:white">
+
+                    <ClientOnly>
+                        <transition name="fade">
+                            <img v-if="logoY < 100" :src="rest.images.logo" style="width: 50px;" class="ma-2"></img>
+                        </transition>
+                    </ClientOnly>
+                    <v-chip-group>
+                        <v-chip color="red" variant="outlined" v-for="(item, index) in groupMeals" :key="index"
+                            class="mb-2" @click="selectCategory(item.category)">
+                            {{ item.category }}
+                        </v-chip>
+                    </v-chip-group>
+                </div>
+                <div  class="d-flex align-center w-100 justify-end">
+                    <v-badge :content="cartStore.cart.length" color="primary" >
+                        <v-btn icon="mdi-cart" >
+                        </v-btn>
                     </v-badge>
                 </div>
-                <ClientOnly>
-                    <transition name="fade">
-                        <img v-if="logoY < 100" :src="rest.images.logo" style="width: 50px;" class="ma-2"></img>
-                    </transition>
-                </ClientOnly>
-                <v-chip-group>
-                    <v-chip color="red" variant="outlined" v-for="(item, index) in groupMeals" :key="index" class="mb-2"
-                        @click="selectCategory(item.category)">
-                        {{ item.category }}
-                    </v-chip>
-                </v-chip-group>
             </v-col>
 
             <!-- пока нет меню  используется foodList -->
