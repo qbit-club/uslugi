@@ -5,17 +5,24 @@ const props = defineProps<{
 }>()
 </script>
 <template>
-  <div>
-    <h3 class="mb-4 mt-4">
-      Адрес и контакты
-    </h3>
-    <p>
-      Адрес : {{ props.rest.location.name }}
-    </p>
-    <p>
-      Расписание : <span v-html="props.rest.schedule"></span>
-    </p>
-  </div>
+  <v-container>
+    <v-row>
+      <v-col>
+        <v-card class="pa-4 ma-4">
+          <p>
+            Адрес : {{ props.rest.location.name }}
+          </p>
+          <p>
+            Расписание : <span v-html="props.rest.schedule"></span>
+          </p>
+        </v-card>
+
+
+
+      </v-col>
+    </v-row>
+  </v-container>
+
 
 </template>
 <style lang="scss" scoped></style>
