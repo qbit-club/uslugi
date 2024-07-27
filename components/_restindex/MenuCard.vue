@@ -12,26 +12,31 @@ const cartStore = useCart()
 
 let price = parseFloat(meal.price)
 // количество порций в корзине
-let mealCartCount = ref(0)
+let mealCartCount = computed(() => {
+    let res = 0
+    for (let restItem of cartStore.cart) {
+        if (restItem.restId == rest._id) {
+            for (let item of restItem.items) {
+                if (item.menuItemId == meal._id) {
+                    res += item.count
+                }
+            }
+        }
+    }
+    return res
+})
 let amount = computed(() => {
     return (price * mealCartCount.value).toFixed(2)
 })
 
 function addToCart() {
     cartStore.addToCart(meal, rest)
-    mealCartCount.value = 1
 }
 function plusCart() {
     let success = cartStore.plusCart(meal._id, rest._id)
-    if (success)
-        mealCartCount.value += 1
 }
 function minusCart() {
     let success = cartStore.minusCart(meal._id, rest._id)
-    console.log(success);
-    
-    if (success)
-        mealCartCount.value -= 1
 }
 </script>
 <template>
@@ -84,10 +89,10 @@ function minusCart() {
 
 .cart-actions {
     background-color: #E4E4E4;
-    border-radius: 12px;
+    border-radius: 14px;
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 8px;
     width: fit-content;
 
     .cart-plus-minus {

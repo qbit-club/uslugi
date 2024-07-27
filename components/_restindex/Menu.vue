@@ -18,6 +18,7 @@ const { y: logoY }
     = useElementBounding(logo)
 
 const cartStore = useCart()
+const route = useRoute()
 
 let cartDialog = ref<boolean>(false)
 
@@ -82,15 +83,22 @@ let menuWithFilter = () => {
     }
 }
 
-watch(filter, () => {
+function closeCartDialogAndClearState() {
+    cartDialog.value = false
+    cartStore.cart = []
+    localStorage.removeItem('cart')
+}
 
+watch(filter, () => {
     menuWithFilter()
 })
 
 let cartLength = computed(() => {
     let res = 0
-    for (let item of cartStore.cart) {
-        res += item.items.length
+    for (let item of cartStore?.cart) {
+        if (item.restInfo.alias == route.params.alias) {
+            res += item.items.length
+        }
     }
     return res
 })
@@ -103,8 +111,6 @@ onMounted(() => {
     selectedCategory.value = groupMeals.value[0].category
     logo.value.style.display = 'none'
 })
-
-
 </script>
 
 <template>
@@ -133,7 +139,7 @@ onMounted(() => {
 
                         </v-btn>
                         <transition name="fade">
-                            <v-text-field min-width="200" v-model='filter' v-if="isShow" density="compact"
+                            <v-text-field min-width="200" v-model="filter" v-if="isShow" density="compact"
                                 variant="solo" hide-details single-line placeholder="поиск"
                                 clear-icon="mdi-close-circle" clearable></v-text-field>
                         </transition>
@@ -162,9 +168,10 @@ onMounted(() => {
                 </div>
             </v-col>
         </v-row>
-        <v-dialog v-model="cartDialog">
-            <CartCard />
+        <v-dialog v-model="cartDialog" width="auto">
+            <CartCard @close-dialog="closeCartDialogAndClearState" />
         </v-dialog>
     </v-container>
 </template>
-<style scoped></style>
+<style scoped>
+</style>

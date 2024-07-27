@@ -1,4 +1,7 @@
 import { defineStore } from "pinia"
+import { watch } from 'vue'
+
+import CartAPI from "~/api/CartAPI";
 
 // types
 import type { FoodListItemFromDb } from "~/types/food-list-item-from-db.interface"
@@ -8,15 +11,38 @@ interface CartItem {
     price: number,
     count: number,
     name: string,
-    health: object,
+    health: {
+      protein: number,
+      carb: number,
+      fat: number,
+      energy: string,
+      mass: string,
+      ingredients: string
+    },
     images: string[],
     menuItemId: string
   }]
   restId: string
-  restInfo: object
+  restInfo: {
+    title: string,
+    phone: string,
+    socialMedia: string,
+    schedule: string,
+    alias: string
+  }
 }
 export const useCart = defineStore('cart', () => {
   let cart = ref<CartItem[]>([])
+
+  if (process.client) {
+    cart.value = JSON.parse(String(localStorage.getItem('cart'))) ?? []
+  }
+
+  watch(cart, (newVal) => {
+    if (process.client) {
+      localStorage.setItem('cart', JSON.stringify(newVal))
+    }
+  }, { deep: true })
 
   function addToCart(meal: FoodListItemFromDb, rest: RestFromDb): void {
     const itemToPush = {
@@ -28,7 +54,7 @@ export const useCart = defineStore('cart', () => {
       menuItemId: meal._id,
     }
     // если нет такого ресторана в корзине, то создаем его
-    // ииначе добавляем в споисок товаров текущий товар
+    // иначе добавляем в список товаров текущий товар
     if (!cart.value.find((o) => o.restId == rest._id)) {
       cart.value.push({
         restId: rest._id,
@@ -36,7 +62,8 @@ export const useCart = defineStore('cart', () => {
           title: rest.title,
           phone: rest.phone,
           socialMedia: rest.socialMedia,
-          schedule: rest.schedule
+          schedule: rest.schedule,
+          alias: rest.alias
         },
         items: [itemToPush]
       })
@@ -93,12 +120,54 @@ export const useCart = defineStore('cart', () => {
     }
     return false
   }
+
+  function clearRestCart(restId: string) {
+    for (let i = 0; i < cart.value.length; i++) {
+      if (cart.value[i].restId == restId) {
+        cart.value.splice(i, 1)
+      }
+    }
+  }
+
+  async function order(targetAlias: string): Promise<any> {
+    for (let item of cart.value) {
+      if (item.restInfo.alias == targetAlias) {
+        let itemsToSend: {
+          price: number,
+          count: number,
+          menuItem: string
+        }[] = []
+
+        for (let i of item.items) {
+          itemsToSend.push({
+            price: i.price,
+            count: i.count,
+            menuItem: i.menuItemId
+          })
+        }
+        const userStore = useAuth()
+        let response = await CartAPI.order({
+          items: itemsToSend,
+          rest: item.restId,
+          user: String(userStore.user?._id)
+        })
+        
+        if (response.status.value == 'success') {
+          userStore.user = response.data.value
+        }
+        return response
+      }
+    }
+    return
+  }
   return {
     // variables:
     cart,
     // methods:
     addToCart,
     plusCart,
-    minusCart
+    minusCart,
+    clearRestCart,
+    order
   }
 })
