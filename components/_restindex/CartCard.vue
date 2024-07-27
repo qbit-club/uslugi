@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const emit = defineEmits(['closeDialog'])
+
 const cartStore = useCart()
 
 let { cart } = storeToRefs(cartStore)
@@ -34,6 +36,16 @@ let restItem = computed<any>(() => {
   }
   return {}
 })
+
+let loading = ref(false)
+async function order() {
+  loading.value = true
+  let response = await cartStore.order(String(route.params.alias))
+  if (response.status.value == 'success') {
+    loading.value = false
+    emit('closeDialog')
+  }
+}
 </script>
 <template>
   <v-card class="py-5 px-6">
@@ -83,11 +95,12 @@ let restItem = computed<any>(() => {
         </div>
       </div>
     </div>
-    <div v-else>
+    <div v-else class="d-flex justify-center align-center pb-6" style="font-weight: 600;">
+      <v-icon icon="mdi-cart-remove"></v-icon>
       пусто
     </div>
     <div class="d-flex justify-space-between">
-      <v-btn variant="tonal" size="large">купить</v-btn>
+      <v-btn variant="tonal" size="large" @click="order" :loading="loading">заказать</v-btn>
       <div class="amount d-flex align-center">
         {{ amount }}₽
       </div>

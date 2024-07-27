@@ -83,6 +83,12 @@ let menuWithFilter = () => {
     }
 }
 
+function closeCartDialogAndClearState() {
+    cartDialog.value = false
+    cartStore.cart = []
+    localStorage.removeItem('cart')
+}
+
 watch(filter, () => {
     menuWithFilter()
 })
@@ -105,8 +111,6 @@ onMounted(() => {
     selectedCategory.value = groupMeals.value[0].category
     logo.value.style.display = 'none'
 })
-
-
 </script>
 
 <template>
@@ -165,7 +169,7 @@ onMounted(() => {
             </v-col>
         </v-row>
         <v-dialog v-model="cartDialog" width="auto">
-            <CartCard />
+            <CartCard @close-dialog="closeCartDialogAndClearState" />
         </v-dialog>
     </v-container>
 </template>
