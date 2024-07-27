@@ -1,6 +1,8 @@
 import { defineStore } from "pinia"
 import { watch } from 'vue'
 
+import CartAPI from "~/api/CartAPI";
+
 // types
 import type { FoodListItemFromDb } from "~/types/food-list-item-from-db.interface"
 import type { RestFromDb } from './../types/rest-from-db.interface';
@@ -126,6 +128,38 @@ export const useCart = defineStore('cart', () => {
       }
     }
   }
+
+  async function order(targetAlias: string): Promise<any> {
+    for (let item of cart.value) {
+      if (item.restInfo.alias == targetAlias) {
+        let itemsToSend: {
+          price: number,
+          count: number,
+          menuItem: string
+        }[] = []
+
+        for (let i of item.items) {
+          itemsToSend.push({
+            price: i.price,
+            count: i.count,
+            menuItem: i.menuItemId
+          })
+        }
+        const userStore = useAuth()
+        let response = await CartAPI.order({
+          items: itemsToSend,
+          rest: item.restId,
+          user: String(userStore.user?._id)
+        })
+        
+        if (response.status.value == 'success') {
+          userStore.user = response.data.value
+        }
+        return response
+      }
+    }
+    return
+  }
   return {
     // variables:
     cart,
@@ -133,6 +167,7 @@ export const useCart = defineStore('cart', () => {
     addToCart,
     plusCart,
     minusCart,
-    clearRestCart
+    clearRestCart,
+    order
   }
 })
