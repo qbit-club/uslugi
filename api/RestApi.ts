@@ -16,7 +16,7 @@ export default {
     return useApiFetch('/rest/all', { method: 'GET' })
   },
   getManagersOfRest(alias: string): Promise<any> {
-    return useApiFetch(`/rest/get-managers?rest_id=${alias}`, { method: 'GET' })
+    return useApiFetch(`/rest/get-managers?alias=${alias}`, { method: 'GET' })
   },
   deleteRest(_id: string): Promise<any> {
     return useApiFetch(`/rest/delete?rest_id=${_id}`, { method: 'GET' })
