@@ -72,7 +72,7 @@ let menuWithFilter = () => {
         filter.value = ''
     }
     if (filter.value.length > 2) {
-        let tempMenu = props.rest?.menu.filter((meal: any) =>
+        let tempMenu:any = props.rest?.menu.filter((meal: any) =>
             meal.name.toLowerCase().includes(filter.value.toLowerCase()) ||
             meal.category.toLowerCase().includes(filter.value.toLowerCase())
         )
