@@ -7,6 +7,7 @@ import CartAPI from "~/api/CartAPI";
 // types
 import type { FoodListItemFromDb } from "~/types/food-list-item-from-db.interface"
 import type { RestFromDb } from './../types/rest-from-db.interface';
+import { SocketAPI } from "~/api/SocketAPI";
 interface CartItem {
   items: [{
     price: number,
@@ -152,9 +153,12 @@ export const useCart = defineStore('cart', () => {
           rest: item.restId,
           user: String(userStore.user?._id)
         })
-        
+
         if (response.status.value == 'success') {
-          userStore.user = response.data.value
+          userStore.user = response.data.value.user
+          
+          if (!SocketAPI.socket?.active) SocketAPI.createConnection()
+          SocketAPI.socket?.emit("server-create-order", { order: response.data.value.order })
         }
         return response
       }
