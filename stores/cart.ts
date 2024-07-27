@@ -3,6 +3,7 @@ import { watch } from 'vue'
 
 import CartAPI from "~/api/CartAPI";
 
+
 // types
 import type { FoodListItemFromDb } from "~/types/food-list-item-from-db.interface"
 import type { RestFromDb } from './../types/rest-from-db.interface';
@@ -160,6 +161,10 @@ export const useCart = defineStore('cart', () => {
     }
     return
   }
+  async function getOrdersByOrdersId (ordersId: number): Promise<any> {
+    CartAPI.getOrdersByOrdersId(ordersId)
+  }
+
   return {
     // variables:
     cart,
@@ -168,6 +173,7 @@ export const useCart = defineStore('cart', () => {
     plusCart,
     minusCart,
     clearRestCart,
-    order
+    order,
+    getOrdersByOrdersId
   }
 })

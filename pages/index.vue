@@ -7,7 +7,6 @@ useHead({
 const restStore = useRest()
 const router = useRouter()
 
-
 let { data } = await restStore.get()
 let rests = ref(data.value)
 
