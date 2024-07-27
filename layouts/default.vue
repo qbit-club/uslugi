@@ -62,9 +62,7 @@ await appStore.getAppState()
 
       </v-app-bar> -->
       <div class="d-none d-md-block ">
-        <div class="logo">
-          <img src="../assets/images/logo.svg" alt="logo" @click="router.push('/')"  height="100%" />
-        </div>
+       
        
         <v-icon icon="mdi-hamburger" class="menu-button"
           @click="navigationDrawer = !navigationDrawer" />

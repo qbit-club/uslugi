@@ -1,3 +1,24 @@
+<script setup lang="ts">
+definePageMeta({
+    middleware: 'auth'
+})
+
+const authStore = useAuth()
+let { user } = storeToRefs(authStore)
+
+</script>
 <template>
-    профиль юзера с редактирование
+    <v-container>
+        <v-row>
+            <v-col>
+                <h3> {{ user?.name }}</h3>
+                <h5>{{ user?.email }}</h5>
+                <h5>Tелефон: 1211212</h5>
+                <h5>Адрес доставки: 1211212</h5>
+            </v-col>
+        </v-row>
+    </v-container>
+
+
+
 </template>

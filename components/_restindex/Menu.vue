@@ -41,11 +41,8 @@ let selectCategory = (category: any) => {
         if (el) {
             el.scrollIntoView({ behavior: 'smooth', block: "center" });
         }
-
     }
-
 }
-
 
 let groupMealsByCategory = (meals: FoodListItemFromDb[]): CategoryMeals[] => {
     const grouped: { [key: string]: FoodListItemFromDb[] } = {};
