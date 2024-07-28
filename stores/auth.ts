@@ -49,6 +49,38 @@ export const useAuth = defineStore('auth', () => {
     }
   }
 
+  async function checkAdmin(): Promise<boolean|undefined> {
+    try {
+      const response = await AuthAPI.refresh()
+
+      if (response.data.value?._id) {
+        user = response.data
+        //array.some() проверяет, удовлетворяет ли хотя бы один элемент массива условию
+        const hasAdminRole = user.value?.roles.some(role => role.type === 'admin');
+        return hasAdminRole
+      } 
+    } catch (error) {
+      await logout()
+      return false
+    }
+  }
+  async function checkManager(): Promise<boolean|undefined> {
+    try {
+      const response = await AuthAPI.refresh()
+
+      if (response.data.value?._id) {
+        user = response.data
+        //array.some() проверяет, удовлетворяет ли хотя бы один элемент массива условию
+        const hasManagernRole = user.value?.roles.some(role => role.type === 'manager');
+  
+        return hasManagernRole
+      } 
+    } catch (error) {
+      await logout()
+      return false
+    }
+  }
+
   async function logout(): Promise<void> {
     try {
       let tokenCookie = useCookie('token')
@@ -72,9 +104,11 @@ export const useAuth = defineStore('auth', () => {
       user.value = (await AuthAPI.setManager(user_email, chosen_rest)).data
     } catch { }
   }
-  async function deleteManager(manager_email: string,manager_rest:string) {
+  
+
+  async function deleteManager(manager_email: string,restId:string) {
     try {
-      user.value = (await AuthAPI.deleteManager(manager_email,manager_rest)).data
+      user.value = (await AuthAPI.deleteManager(manager_email,restId)).data
     } catch { }
   }
   /**
@@ -103,7 +137,7 @@ export const useAuth = defineStore('auth', () => {
   }
 
   return {
-    user, registration, login, redirectTo, checkAuth, logout,
+    user, registration, login, redirectTo, checkAuth, checkAdmin, checkManager, logout,
     updateUser, setManager, deleteManager, getUserRests, chooseManagingRest
   }
 })

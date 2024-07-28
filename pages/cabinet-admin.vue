@@ -1,3 +1,9 @@
+<script setup>
+definePageMeta({
+  middleware: 'is-admin'
+})
+
+</script>
 <template>
     <v-container>
         <v-row>

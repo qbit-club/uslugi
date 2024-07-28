@@ -16,8 +16,11 @@ export const useRest = defineStore('rest', () => {
   async function get() {
     return await RestApi.get()
   }
-  async function getManagersOfRest(alias:string) {
-    return await RestApi.getManagersOfRest(alias)
+  async function getRestsName() {
+    return await RestApi.getRestsName()
+  }
+  async function getManagersOfRest(rest_id: string) {
+    return await RestApi.getManagersOfRest(rest_id)
   }
   async function deleteRest(rest_id: string) {
     return await RestApi.deleteRest(rest_id)
@@ -53,8 +56,9 @@ export const useRest = defineStore('rest', () => {
     return await RestApi.update(rest, restId)
   }
 
+
   return {
-    create, update, get, getByAlias, getById, uploadImages,getManagersOfRest,
+    create, update, get, getRestsName, getByAlias, getById, uploadImages,getManagersOfRest,
     changeFoodList, sendFoodListItemToMenu, deleteRest, createFoodListItem,
     uploadFoodListItemImages, moveFoodItemToMenu, deleteFromMenu
   }

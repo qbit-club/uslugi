@@ -1,4 +1,7 @@
 <script setup lang="ts">
+definePageMeta({
+  middleware: 'is-manager'
+})
 let rests = [
   {
     title: "Морковка",

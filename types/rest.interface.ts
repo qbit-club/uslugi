@@ -11,4 +11,5 @@ export interface Rest {
   tables?: Table[] 
   description: string
   schedule: string
+  managers?:[]
 }

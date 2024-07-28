@@ -130,19 +130,19 @@ onMounted(() => {
                         </v-chip>
                     </v-chip-group>
                 </div>
-                <div class=" w-100 ">
-                    <div class="d-flex align-center float-left">
-                        <v-btn icon="mdi-magnify" @click="showSearch" class="mr-2">
+                <div class=" w-100 d-flex justify-center">
+                    <div class="d-flex align-center">
+                        <v-btn icon="mdi-magnify" @click="showSearch" class="mr-2" >
 
                         </v-btn>
                         <transition name="fade">
                             <v-text-field min-width="200" v-model="filter" v-if="isShow" density="compact"
                                 variant="solo" hide-details single-line placeholder="поиск"
-                                clear-icon="mdi-close-circle" clearable></v-text-field>
+                                clear-icon="mdi-close-circle" clearable ></v-text-field>
                         </transition>
 
                     </div>
-                    <v-badge :content="cartLength" color="primary" class="d-flex align-center float-right">
+                    <v-badge v-if="cartLength" :content="cartLength" color="primary" class="d-flex align-center ml-2">
                     <v-btn icon="mdi-cart" @click="cartDialog = true">
                     </v-btn>
                     </v-badge>
