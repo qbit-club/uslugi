@@ -15,10 +15,8 @@ let rests = [
 
 const userStore = useAuth()
 
-let currentRest = ref<string>(userStore.user?.managingRest || "")
-watch(currentRest, async (newVal) => {
-  await userStore.chooseManagingRest(String(newVal))
-})
+
+
 </script>
 <template>
   <v-container>
@@ -26,9 +24,7 @@ watch(currentRest, async (newVal) => {
       <v-col :cols="12">
         <h2>Менеджер</h2>
       </v-col>
-      <v-col cols="12" md="6" xl="4" class="d-flex">
-        <v-select v-model="currentRest" :items="rests" variant="outlined" density="compact"></v-select>
-      </v-col>
+    
       <v-col :cols="12" class="d-flex overflow-x-auto">
         <NuxtLink to="/cabinet-manager/orders" class="d-flex">
           <div class="d-flex flex-column align-center pa-4">
@@ -90,8 +86,12 @@ watch(currentRest, async (newVal) => {
               для уведомлений
             </div>
           </div>
-        </NuxtLink>
+        </NuxtLink>  
       </v-col>
+      <v-col cols="12" md="6" xl="4">
+        <v-select v-model="currentRest" :items="rests" variant="outlined" density="compact"></v-select>
+      </v-col>
+{{ userStore.user }}
       <v-col :cols="12">
         <NuxtPage />
       </v-col>

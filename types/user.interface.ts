@@ -9,6 +9,5 @@ export interface User {
 	password: string
 	rests: RestFromDb[]
 	roles: Role[]
-	managingRest: string
 	orders: OrderFromDb[]
 }
