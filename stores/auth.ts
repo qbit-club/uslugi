@@ -72,6 +72,11 @@ export const useAuth = defineStore('auth', () => {
       user.value = (await AuthAPI.setManager(user_email, chosen_rest)).data
     } catch { }
   }
+  async function deleteManager(manager_email: string,manager_rest:string) {
+    try {
+      user.value = (await AuthAPI.deleteManager(manager_email,manager_rest)).data
+    } catch { }
+  }
   /**
    * get user's rests and set it to the user in pinia
    */
@@ -99,6 +104,6 @@ export const useAuth = defineStore('auth', () => {
 
   return {
     user, registration, login, redirectTo, checkAuth, logout,
-    updateUser, setManager, getUserRests, chooseManagingRest
+    updateUser, setManager, deleteManager, getUserRests, chooseManagingRest
   }
 })

@@ -2,8 +2,6 @@
 import type { Rest } from '~/types/rest.interface';
 import type { Role } from '~/types/role.interface';
 
-const auth = useAuth()
-
 const restStore = useRest()
 const authStore = useAuth()
 let { data } = await restStore.get()
