@@ -1,13 +1,33 @@
-import { io, type Socket } from "socket.io-client";
-
+import { io, type Socket, Manager } from "socket.io-client";
+const runtimeConfig = useRuntimeConfig()
 export class SocketAPI {
   static socket: null | Socket;
 
+  static ordersSocket: null | Socket;
+
+  static manager = new Manager(runtimeConfig.public.apiBase, {
+    reconnectionDelayMax: 10000,
+  })
+
+  static createOrdersConnection() {
+    if (!process.client) return
+    this.ordersSocket = this.manager.socket('/orders', {})
+
+    this.ordersSocket.on("connect", () => {
+      console.log('orders connected');
+    })
+
+    this.ordersSocket.on("clent-create-order", (data) => {
+      console.log(data);
+    })
+  }
+
   static createConnection() {
-    const runtimeConfig = useRuntimeConfig()
+    if (!process.client) return
+    
 
     this.socket = io(runtimeConfig.public.apiBase)
-    
+
     this.socket.on("connect", () => {
       console.log('connect');
     })
@@ -21,5 +41,8 @@ export class SocketAPI {
       console.log(data);
     })
 
+    this.socket.on('hello', (data) => {
+      console.log(data);
+    })
   }
 }
