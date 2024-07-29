@@ -16,13 +16,13 @@ export class SocketAPI {
     // connect to orders namespace
     this.ordersSocket = io(runtimeConfig.public.apiBase + '/orders')
 
-    this.ordersSocket.emit('connect-to-room', { room })
+    this.ordersSocket.emit('join-room', { room })
 
     this.ordersSocket.on("connect", () => {
       console.log('orders connected');
     })
 
-    this.ordersSocket.on("client-create-order", (data) => {
+    this.ordersSocket.on("create-order-to-client", (data) => {
       console.log(data);
     })
   }

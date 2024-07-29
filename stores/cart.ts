@@ -156,7 +156,6 @@ export const useCart = defineStore('cart', () => {
         if (response.status.value == 'success') {
           userStore.user = response.data.value.user
           
-          if (!SocketAPI.ordersSocket?.active) SocketAPI.createOrdersConnection(response.data.value.order.restId)
           SocketAPI.ordersSocket?.emit("create-order-to-server", { order: response.data.value.order })
         }
         return response

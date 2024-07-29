@@ -2,7 +2,9 @@
 import MenuCard from './MenuCard.vue'
 import CartCard from './CartCard.vue'
 
+import { SocketAPI } from '@/api/SocketAPI'
 import { useElementBounding } from '@vueuse/core'
+
 import type { FoodListItemFromDb } from "../../types/food-list-item-from-db.interface";
 import type { RestFromDb } from '~/types/rest-from-db.interface';
 const props = defineProps<{
@@ -72,7 +74,7 @@ let menuWithFilter = () => {
         filter.value = ''
     }
     if (filter.value.length > 2) {
-        let tempMenu:any = props.rest?.menu.filter((meal: any) =>
+        let tempMenu: any = props.rest?.menu.filter((meal: any) =>
             meal.name.toLowerCase().includes(filter.value.toLowerCase()) ||
             meal.category.toLowerCase().includes(filter.value.toLowerCase())
         )
@@ -110,6 +112,8 @@ onMounted(() => {
     groupMeals.value = groupMealsByCategory(props.rest?.menu)
     selectedCategory.value = groupMeals.value[0].category
     logo.value.style.display = 'none'
+
+    if (!SocketAPI.ordersSocket?.active) SocketAPI.createOrdersConnection(props.rest._id)
 })
 </script>
 
@@ -146,8 +150,8 @@ onMounted(() => {
 
                     </div>
                     <v-badge :content="cartLength" color="primary" class="d-flex align-center float-right">
-                    <v-btn icon="mdi-cart" @click="cartDialog = true">
-                    </v-btn>
+                        <v-btn icon="mdi-cart" @click="cartDialog = true">
+                        </v-btn>
                     </v-badge>
 
                 </div>
@@ -173,5 +177,4 @@ onMounted(() => {
         </v-dialog>
     </v-container>
 </template>
-<style scoped>
-</style>
+<style scoped></style>
