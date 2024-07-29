@@ -2,7 +2,7 @@
 import MenuCard from './MenuCard.vue'
 import CartCard from './CartCard.vue'
 
-import { SocketAPI } from '@/api/SocketAPI'
+import { OrdersSocketAPI } from '~/api/OrdersSocketAPI'
 import { useElementBounding } from '@vueuse/core'
 
 import type { FoodListItemFromDb } from "../../types/food-list-item-from-db.interface";
@@ -113,7 +113,7 @@ onMounted(() => {
     selectedCategory.value = groupMeals.value[0].category
     logo.value.style.display = 'none'
 
-    if (!SocketAPI.ordersSocket?.active) SocketAPI.createOrdersConnection(props.rest._id)
+    if (!OrdersSocketAPI.ordersSocket?.active) OrdersSocketAPI.createOrdersConnection(props.rest._id)
 })
 </script>
 

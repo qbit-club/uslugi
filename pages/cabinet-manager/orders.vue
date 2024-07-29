@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { SocketAPI } from '~/api/SocketAPI';
+import { OrdersSocketAPI } from '~/api/OrdersSocketAPI';
 const userStore = useAuth()
 
-SocketAPI.createOrdersConnection(String(userStore.user?.managingRest))
+OrdersSocketAPI.createOrdersConnection(String(userStore.user?.managingRest))
 </script>
 <template>заказы</template>
