@@ -33,6 +33,14 @@ export default {
       method: 'GET'
     })
   },
+  getByIds(_ids: string[]): Promise<any> {
+    return useApiFetch('/rest/by-ids', {
+      method: 'POST',
+      body: {    
+        _ids:_ids
+      }
+    })
+  },
   uploadImages(formData: FormData, _id: string): Promise<any> {
     return useApiFetch(`/rest/images?rest_id=${_id}`, { method: 'POST', headers: { 'Content-Type': 'multipart/form-data' }, body: formData })
   },

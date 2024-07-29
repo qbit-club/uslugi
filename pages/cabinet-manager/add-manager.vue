@@ -4,9 +4,9 @@ import type { Role } from '~/types/role.interface';
 
 const restStore = useRest()
 const authStore = useAuth()
-let { data } = await restStore.get()
+
 let user = authStore.user
-let rest_ids = ref<string[]>()
+let rests = ref<any>()
 let chosen_rest=ref("")
 let user_email = ref("")
 
@@ -14,10 +14,10 @@ async function setManager(){
     await authStore.setManager(user_email.value,chosen_rest.value)
 }
 
+
 onMounted(async ()=>{
-    // rest_ids=data.value.filter((rest:Rest) => user?.role.rest_ids.includes(rest.alias)).map( (rest:Rest) => ({name:rest.title, id:rest.alias}) )
-    let user_rests=authStore.user?.roles.find((role:Role) => role.type=="manager")?.rest_ids
-    rest_ids.value=data.value.filter((rest:Rest)=>user_rests?.includes(rest.alias)).map( (rest:Rest) => ({name:rest.title, alias:rest.alias}))
+    let res = await restStore.getByIds(user?.managerIn)
+    rests.value = res.data.value
 })
 </script>
 
@@ -26,15 +26,16 @@ onMounted(async ()=>{
     <v-col cols="4">
       <v-select
         label="Рестораны"
-        :items="rest_ids"
-        item-title="name"
-        item-value="alias"
+        :items="rests"
+        item-title="title"
+        item-value="_id"
         v-model="chosen_rest"
+         variant="outlined" density="compact"
       >
       </v-select>
     </v-col>
     <v-col cols="8">
-      <v-text-field v-model="user_email" placeholder="Электронная почта" type="email">
+      <v-text-field v-model="user_email" placeholder="Электронная почта" type="email"  variant="outlined" density="compact">
       </v-text-field>
     </v-col>
   </v-row>

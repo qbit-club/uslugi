@@ -56,7 +56,7 @@ export const useAuth = defineStore('auth', () => {
       if (response.data.value?._id) {
         user = response.data
         //array.some() проверяет, удовлетворяет ли хотя бы один элемент массива условию
-        const hasAdminRole = user.value?.roles.some(role => role.type === 'admin');
+        const hasAdminRole = user?.value?.roles.some(role => role === 'admin');
         return hasAdminRole
       } 
     } catch (error) {
@@ -71,7 +71,7 @@ export const useAuth = defineStore('auth', () => {
       if (response.data.value?._id) {
         user = response.data
         //array.some() проверяет, удовлетворяет ли хотя бы один элемент массива условию
-        const hasManagernRole = user.value?.roles.some(role => role.type === 'manager');
+        const hasManagernRole = user?.value?.roles.some(role => role === 'manager');
   
         return hasManagernRole
       } 

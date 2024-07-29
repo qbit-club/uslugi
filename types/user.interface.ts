@@ -8,6 +8,7 @@ export interface User {
 	email: string
 	password: string
 	rests: RestFromDb[]
-	roles: Role[]
+	roles: string[]
 	orders: OrderFromDb[]
+	managerIn?:string[]
 }

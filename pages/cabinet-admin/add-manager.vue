@@ -32,19 +32,15 @@ function showDialog(manager: string, rest_id: string) {
 
 async function deleteManager() {
 
+  console.log(selected_manager.value, restId.value)
   await authStore.deleteManager(selected_manager.value, restId.value)
   getRestsName()
   dialog.value = false
 }
 let getRestsName = async () => {
   let restResponse = await restStore.getRestsName()
-  rests.value = restResponse.data.value.map((item: any) => {
-    return {
-      value: item._id,
-      title: item.title,
-      managers: item.managers
-    };
-  });
+  rests.value = restResponse.data.value
+  authStore.checkAuth()
 }
 
 onMounted(async () => {
@@ -58,7 +54,8 @@ onMounted(async () => {
       <h3>Назначить менеджером</h3>
     </v-col>
     <v-col cols="12" md="4">
-      <v-select label="Рестораны" :items="rests" v-model="chosen_rest" variant="outlined" density="compact">
+      <v-select label="Рестораны" :items="rests" v-model="chosen_rest" item-title="title" item-value="_id"
+        variant="outlined" density="compact">
       </v-select>
     </v-col>
     <v-col cols="12" md="8">
@@ -74,11 +71,11 @@ onMounted(async () => {
       <h3>Управление менеджерами</h3>
     </v-col>
     <v-col cols="12" md="3" v-for="rest in rests">
-      <v-card class="pa-4" >
+      <v-card class="pa-4">
         <h4>{{ rest.title }}</h4>
         <!-- <v-divider></v-divider> -->
         <div class="d-flex flex-column">
-          <span v-for="manager in rest.managers" @click="showDialog(manager, rest.value)">{{ manager }}</span>
+          <span v-for="manager in rest.managers" @click="showDialog(manager, rest._id)">{{ manager }}</span>
         </div>
       </v-card>
     </v-col>

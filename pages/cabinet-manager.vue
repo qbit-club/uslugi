@@ -1,22 +1,8 @@
 <script setup lang="ts">
+
 definePageMeta({
   middleware: 'is-manager'
 })
-let rests = [
-  {
-    title: "Морковка",
-    value: "6694096e4901af87e35e23aa",
-  },
-  {
-    title: "Картошечка",
-    value: "669a6f5fefed0bac34a7e755",
-  },
-]
-
-const userStore = useAuth()
-
-
-
 </script>
 <template>
   <v-container>
@@ -24,7 +10,7 @@ const userStore = useAuth()
       <v-col :cols="12">
         <h2>Менеджер</h2>
       </v-col>
-    
+
       <v-col :cols="12" class="d-flex overflow-x-auto">
         <NuxtLink to="/cabinet-manager/orders" class="d-flex">
           <div class="d-flex flex-column align-center pa-4">
@@ -86,12 +72,10 @@ const userStore = useAuth()
               для уведомлений
             </div>
           </div>
-        </NuxtLink>  
+        </NuxtLink>
       </v-col>
-      <v-col cols="12" md="6" xl="4">
-        <v-select v-model="currentRest" :items="rests" variant="outlined" density="compact"></v-select>
-      </v-col>
-{{ userStore.user }}
+     
+
       <v-col :cols="12">
         <NuxtPage />
       </v-col>
