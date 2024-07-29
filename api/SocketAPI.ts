@@ -17,7 +17,7 @@ export class SocketAPI {
       console.log('orders connected');
     })
 
-    this.ordersSocket.on("clent-create-order", (data) => {
+    this.ordersSocket.on("client-create-order", (data) => {
       console.log(data);
     })
   }
