@@ -11,7 +11,31 @@ if (userStore.user?.managingRest) {
 }
 </script>
 <template>
-  <div>
-    {{ orders }}
-  </div>
+  <v-container>
+    <v-row class="justify-center pb-16">
+      <v-col :cols="12" sm="10" md="8" lg="6" class="pt-0">
+        <div v-for="(order, index) in orders">
+          <h3>Дата заказа</h3>
+          <div v-for="(item, j) in order.items" class="d-flex justify-space-between">
+            <span>{{ item.menuItem.name }}</span>
+            <span>{{ item.count }} * {{ item.price }} = {{ (item.count * item.price).toFixed(2) }} </span>
+          </div>
+          <v-divider></v-divider>
+          <div class="text-end">
+            <i>
+              <b>
+                Итого:
+                {{
+                  order.items.reduce(
+                    (accumulator: number, current: any) => accumulator + current.count * current.price,
+                    0
+                  )
+                }}
+              </b></i
+            >
+          </div>
+        </div>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
