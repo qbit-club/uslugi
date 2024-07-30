@@ -49,32 +49,35 @@ export const useAuth = defineStore('auth', () => {
     }
   }
 
-  async function checkAdmin(): Promise<boolean|undefined> {
+  async function checkAdmin(): Promise<boolean | undefined> {
     try {
-      const response = await AuthAPI.refresh()
+      if (!user.value?._id) {
+        const response = await AuthAPI.refresh()
+        if (response.data.value?._id) {
+          user.value = response.data.value
+        }
+      }
 
-      if (response.data.value?._id) {
-        user = response.data
-        //array.some() проверяет, удовлетворяет ли хотя бы один элемент массива условию
-        const hasAdminRole = user?.value?.roles.some(role => role === 'admin');
-        return hasAdminRole
-      } 
+      //array.some() проверяет, удовлетворяет ли хотя бы один элемент массива условию
+      const hasAdminRole = user?.value?.roles.some(role => role === 'admin');
+      return hasAdminRole
     } catch (error) {
       await logout()
       return false
     }
   }
-  async function checkManager(): Promise<boolean|undefined> {
+  async function checkManager(): Promise<boolean | undefined> {
     try {
-      const response = await AuthAPI.refresh()
-
-      if (response.data.value?._id) {
-        user = response.data
-        //array.some() проверяет, удовлетворяет ли хотя бы один элемент массива условию
-        const hasManagernRole = user?.value?.roles.some(role => role === 'manager');
-  
-        return hasManagernRole
-      } 
+      if (!user.value?._id) {
+        const response = await AuthAPI.refresh()
+        if (response.data.value?._id) {
+          user.value = response.data.value
+        }
+      }
+      
+      //array.some() проверяет, удовлетворяет ли хотя бы один элемент массива условию
+      const hasManagerRole = user?.value?.roles.some(role => role === 'manager');
+      return hasManagerRole
     } catch (error) {
       await logout()
       return false
@@ -104,11 +107,11 @@ export const useAuth = defineStore('auth', () => {
       user.value = (await AuthAPI.setManager(user_email, chosen_rest)).data
     } catch { }
   }
-  
 
-  async function deleteManager(manager_email: string,restId:string) {
+
+  async function deleteManager(manager_email: string, restId: string) {
     try {
-      user.value = (await AuthAPI.deleteManager(manager_email,restId)).data
+      user.value = (await AuthAPI.deleteManager(manager_email, restId)).data
     } catch { }
   }
   /**
