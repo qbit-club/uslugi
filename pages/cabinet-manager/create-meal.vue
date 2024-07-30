@@ -64,7 +64,7 @@ let loading = ref(false)
 async function submit() {
   loading.value = true
   // пусть пока в морковку создаются
-  let res = await restStore.createFoodListItem(String(managingRest.value), form.value)
+  let res = await restStore.createFoodListItem(String(userStore.user?.managingRest), form.value)
   if (res.status.value == "success") {
     // find foodItem
     let restId = res.data.value._id
@@ -149,7 +149,7 @@ async function submit() {
     </v-col>
 
     <v-col cols="12" class="d-flex justify-center">
-      <v-btn size="large" variant="tonal" :loading="loading" @click="submit">отправить</v-btn>
+      <v-btn size="large" variant="tonal" @click="submit">отправить</v-btn>
     </v-col>
   </v-row>
 </template>
