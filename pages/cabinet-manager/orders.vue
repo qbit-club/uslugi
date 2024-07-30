@@ -2,12 +2,13 @@
 import { OrdersSocketAPI } from "~/api/OrdersSocketAPI"
 const userStore = useAuth()
 
-OrdersSocketAPI.createOrdersConnection(String(userStore.user?.managingRest))
-
 const orderStore = useOrder()
 let { orders } = storeToRefs(orderStore)
 
-await orderStore.getOrdersByRestId(String(userStore.user?.managingRest))
+if (userStore.user?.managingRest) {
+  OrdersSocketAPI.createOrdersConnection(String(userStore.user?.managingRest))
+  await orderStore.getOrdersByRestId(String(userStore.user?.managingRest))
+}
 </script>
 <template>
   <div>
