@@ -2,11 +2,13 @@ import { defineStore } from "pinia";
 import { watch } from "vue";
 
 import CartAPI from "~/api/CartAPI";
+import { OrdersSocketAPI } from "~/api/OrdersSocketAPI";
 
 // types
 import type { FoodListItemFromDb } from "~/types/food-list-item-from-db.interface"
 import type { RestFromDb } from './../types/rest-from-db.interface';
-import { OrdersSocketAPI } from "~/api/OrdersSocketAPI";
+import type { OrderFromDb } from '../types/order-from-db.interface'
+
 interface CartItem {
   items: [
     {
@@ -161,7 +163,7 @@ export const useCart = defineStore("cart", () => {
 
         if (response.status.value == 'success') {
           userStore.user = response.data.value.user
-          
+
           OrdersSocketAPI.ordersSocket?.emit("create-order-to-server", { order: response.data.value.order })
         }
         return response;
