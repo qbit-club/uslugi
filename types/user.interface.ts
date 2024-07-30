@@ -1,6 +1,5 @@
 import type { RestFromDb } from "./rest-from-db.interface"
-import type { Role } from "./role.interface"
-import type {OrderFromDb} from "./order-from-db.interface"
+import type { OrderFromDb } from "./order-from-db.interface"
 
 export interface User {
 	_id: string
@@ -10,5 +9,6 @@ export interface User {
 	rests: RestFromDb[]
 	roles: string[]
 	orders: OrderFromDb[]
-	managerIn?:string[]
+	managerIn?: string[]
+	managingRest: string
 }

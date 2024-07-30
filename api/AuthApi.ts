@@ -47,5 +47,10 @@ export default {
         restId
       }
     })
+  },
+  getManagerInArray(userId: string): Promise<any> {
+    return useApiFetch(`/user/manager-in-array?user_id=${userId}`, {
+      method: 'GET'
+    })
   }
 }

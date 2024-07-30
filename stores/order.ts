@@ -9,7 +9,6 @@ export const useOrder = defineStore('order', () => {
 
   async function getOrdersByRestId(restId: string) {
     let res = await OrderAPI.getOrdersByRestId(restId)
-    console.log(res);
     
     if (res.status.value == 'success') {
       orders.value = res.data.value

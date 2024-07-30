@@ -74,7 +74,7 @@ export const useAuth = defineStore('auth', () => {
           user.value = response.data.value
         }
       }
-      
+
       //array.some() проверяет, удовлетворяет ли хотя бы один элемент массива условию
       const hasManagerRole = user?.value?.roles.some(role => role === 'manager');
       return hasManagerRole
@@ -139,8 +139,23 @@ export const useAuth = defineStore('auth', () => {
     }
   }
 
+  async function getManagerIn(): Promise<any> {
+    try {
+      if (user.value?._id) {
+        let res = await AuthAPI.getManagerInArray(user.value?._id)
+        return res.data.value
+      }
+      return {}
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return {
-    user, registration, login, redirectTo, checkAuth, checkAdmin, checkManager, logout,
-    updateUser, setManager, deleteManager, getUserRests, chooseManagingRest
+    // variables
+    user,
+    // functions
+    registration, login, redirectTo, checkAuth, checkAdmin, checkManager, logout,
+    updateUser, setManager, deleteManager, getUserRests, chooseManagingRest, getManagerIn
   }
 })
