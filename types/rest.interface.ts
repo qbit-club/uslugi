@@ -1,5 +1,6 @@
 import type { Location } from "./location.interface"
 import type { Table } from "./table.interface"
+import type { FoodListItemFromDb } from "./food-list-item-from-db.interface"
 
 export interface Rest {
   title: string
@@ -11,4 +12,7 @@ export interface Rest {
   tables?: Table[] 
   description: string
   schedule: string
+  managers?:[]
+  menu: string[] & FoodListItemFromDb[]
+ foodList: FoodListItemFromDb[]
 }

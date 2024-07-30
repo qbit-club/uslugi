@@ -35,7 +35,7 @@ export const useAuth = defineStore('auth', () => {
   async function checkAuth(): Promise<boolean> {
     try {
       const response = await AuthAPI.refresh()
-      
+
       if (response.data.value?._id) {
         // tokenCookie.value = response.data.value.accessToken
         user.value = response.data.value
@@ -43,6 +43,38 @@ export const useAuth = defineStore('auth', () => {
       } else {
         return false
       }
+    } catch (error) {
+      await logout()
+      return false
+    }
+  }
+
+  async function checkAdmin(): Promise<boolean|undefined> {
+    try {
+      const response = await AuthAPI.refresh()
+
+      if (response.data.value?._id) {
+        user = response.data
+        //array.some() проверяет, удовлетворяет ли хотя бы один элемент массива условию
+        const hasAdminRole = user?.value?.roles.some(role => role === 'admin');
+        return hasAdminRole
+      } 
+    } catch (error) {
+      await logout()
+      return false
+    }
+  }
+  async function checkManager(): Promise<boolean|undefined> {
+    try {
+      const response = await AuthAPI.refresh()
+
+      if (response.data.value?._id) {
+        user = response.data
+        //array.some() проверяет, удовлетворяет ли хотя бы один элемент массива условию
+        const hasManagernRole = user?.value?.roles.some(role => role === 'manager');
+  
+        return hasManagernRole
+      } 
     } catch (error) {
       await logout()
       return false
@@ -67,9 +99,16 @@ export const useAuth = defineStore('auth', () => {
       user.value = (await AuthAPI.updateUser(new_user)).data
     } catch { }
   }
-  async function setManager(user_email:string,chosen_rest:string) {
+  async function setManager(user_email: string, chosen_rest: string) {
     try {
-      user.value = (await AuthAPI.setManager(user_email,chosen_rest)).data
+      user.value = (await AuthAPI.setManager(user_email, chosen_rest)).data
+    } catch { }
+  }
+  
+
+  async function deleteManager(manager_email: string,restId:string) {
+    try {
+      user.value = (await AuthAPI.deleteManager(manager_email,restId)).data
     } catch { }
   }
   /**
@@ -98,6 +137,7 @@ export const useAuth = defineStore('auth', () => {
   }
 
   return {
-    user, registration, login, redirectTo, checkAuth, logout, updateUser, setManager, getUserRests, chooseManagingRest
+    user, registration, login, redirectTo, checkAuth, checkAdmin, checkManager, logout,
+    updateUser, setManager, deleteManager, getUserRests, chooseManagingRest
   }
 })

@@ -23,6 +23,9 @@ export default {
   setManager(user_email:string,chosen_rest:string): Promise<any>{
     return useApiFetch('/user/set-manager', { method: 'POST', body: { user_email,chosen_rest } })
   },
+  deleteManager(manager_email:string,restId:string): Promise<any>{
+    return useApiFetch('/user/delete-manager', { method: 'POST', body: { manager_email,restId } })
+  },
   /**
    * 
    * @param userId 

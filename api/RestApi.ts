@@ -15,6 +15,13 @@ export default {
   get(): Promise<any> {
     return useApiFetch('/rest/all', { method: 'GET' })
   },
+  getRestsName(): Promise<any> {
+    return useApiFetch('/rest/rests-name', { method: 'GET' })
+  },
+
+  getManagersOfRest(rest_id: string): Promise<any> {
+    return useApiFetch(`/rest/get-managers?rest_id=${rest_id}`, { method: 'GET' })
+  },
   deleteRest(_id: string): Promise<any> {
     return useApiFetch(`/rest/delete?rest_id=${_id}`, { method: 'GET' })
   },
@@ -24,6 +31,14 @@ export default {
   getById(_id: string): Promise<any> {
     return useApiFetch(`/rest/by-id?_id=${_id}`, {
       method: 'GET'
+    })
+  },
+  getByIds(_ids: string[]): Promise<any> {
+    return useApiFetch('/rest/by-ids', {
+      method: 'POST',
+      body: {    
+        _ids:_ids
+      }
     })
   },
   uploadImages(formData: FormData, _id: string): Promise<any> {

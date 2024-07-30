@@ -14,6 +14,7 @@ function minusCart(itemId: string, restId: string) {
 }
 function clearRestCart(restId: string) {
   cartStore.clearRestCart(restId)
+  emit('closeDialog')
 }
 
 let amount = computed(() => {

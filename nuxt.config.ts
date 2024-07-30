@@ -5,15 +5,18 @@ import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 export default defineNuxtConfig({
   css: ["~/assets/styles/main.scss"],
   devtools: { enabled: true },
+
   build: {
     transpile: ["vuetify"],
   },
+
   runtimeConfig: {
     public: {
       apiBase: process.env.NUXT_PUBLIC_API_BASE,
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL,
     },
   },
+
   modules: [
     (_options, nuxt) => {
       nuxt.hooks.hook("vite:extendConfig", (config) => {
@@ -31,6 +34,7 @@ export default defineNuxtConfig({
     ],
     "@pinia/nuxt",
   ],
+
   vite: {
     vue: {
       template: {
@@ -38,8 +42,10 @@ export default defineNuxtConfig({
       },
     },
   },
+
   devServer: {
     port: 3041,
   },
 
+  compatibilityDate: "2024-07-27",
 });

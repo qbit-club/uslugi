@@ -1,5 +1,5 @@
-import { defineStore } from "pinia"
-import { watch } from 'vue'
+import { defineStore } from "pinia";
+import { watch } from "vue";
 
 import CartAPI from "~/api/CartAPI";
 
@@ -8,42 +8,48 @@ import type { FoodListItemFromDb } from "~/types/food-list-item-from-db.interfac
 import type { RestFromDb } from './../types/rest-from-db.interface';
 import { OrdersSocketAPI } from "~/api/OrdersSocketAPI";
 interface CartItem {
-  items: [{
-    price: number,
-    count: number,
-    name: string,
-    health: {
-      protein: number,
-      carb: number,
-      fat: number,
-      energy: string,
-      mass: string,
-      ingredients: string
-    },
-    images: string[],
-    menuItemId: string
-  }]
-  restId: string
+  items: [
+    {
+      price: number;
+      count: number;
+      name: string;
+      health: {
+        protein: number;
+        carb: number;
+        fat: number;
+        energy: string;
+        mass: string;
+        ingredients: string;
+      };
+      images: string[];
+      menuItemId: string;
+    }
+  ];
+  restId: string;
   restInfo: {
-    title: string,
-    phone: string,
-    socialMedia: string,
-    schedule: string,
-    alias: string
-  }
+    title: string;
+    phone: string;
+    socialMedia: string;
+    schedule: string;
+    alias: string;
+  };
 }
-export const useCart = defineStore('cart', () => {
-  let cart = ref<CartItem[]>([])
+export const useCart = defineStore("cart", () => {
+  let cart = ref<CartItem[]>([]);
 
   if (process.client) {
-    cart.value = JSON.parse(String(localStorage.getItem('cart'))) ?? []
+    cart.value = JSON.parse(String(localStorage.getItem("cart"))) ?? [];
   }
 
-  watch(cart, (newVal) => {
-    if (process.client) {
-      localStorage.setItem('cart', JSON.stringify(newVal))
-    }
-  }, { deep: true })
+  watch(
+    cart,
+    (newVal) => {
+      if (process.client) {
+        localStorage.setItem("cart", JSON.stringify(newVal));
+      }
+    },
+    { deep: true }
+  );
 
   function addToCart(meal: FoodListItemFromDb, rest: RestFromDb): void {
     const itemToPush = {
@@ -53,7 +59,7 @@ export const useCart = defineStore('cart', () => {
       health: meal.health,
       images: meal.images,
       menuItemId: meal._id,
-    }
+    };
     // если нет такого ресторана в корзине, то создаем его
     // иначе добавляем в список товаров текущий товар
     if (!cart.value.find((o) => o.restId == rest._id)) {
@@ -64,22 +70,22 @@ export const useCart = defineStore('cart', () => {
           phone: rest.phone,
           socialMedia: rest.socialMedia,
           schedule: rest.schedule,
-          alias: rest.alias
+          alias: rest.alias,
         },
-        items: [itemToPush]
-      })
+        items: [itemToPush],
+      });
     } else {
       for (let i = 0; i < cart.value.length; i++) {
         if (cart.value[i].restId == rest._id) {
-          cart.value[i].items.push(itemToPush)
-          break
+          cart.value[i].items.push(itemToPush);
+          break;
         }
       }
     }
   }
   /**
-   * 
-   * @param menuItemId 
+   *
+   * @param menuItemId
    * @param restId
    * @returns true if success
    */
@@ -89,16 +95,16 @@ export const useCart = defineStore('cart', () => {
         for (let j = 0; j < cart.value[i].items.length; j++) {
           if (cart.value[i].items[j].menuItemId == menuItemId) {
             cart.value[i].items[j].count += 1;
-            return true
+            return true;
           }
         }
       }
     }
-    return false
+    return false;
   }
   /**
-   * 
-   * @param menuItemId 
+   *
+   * @param menuItemId
    * @param restId
    * @returns true if success
    */
@@ -109,23 +115,23 @@ export const useCart = defineStore('cart', () => {
           if (cart.value[i].items[j].menuItemId == menuItemId) {
             if (cart.value[i].items[j].count > 1) {
               cart.value[i].items[j].count -= 1;
-              return true
+              return true;
             }
             if (cart.value[i].items[j].count == 1) {
               cart.value[i].items.splice(j, 1);
-              return true
+              return true;
             }
           }
         }
       }
     }
-    return false
+    return false;
   }
 
   function clearRestCart(restId: string) {
     for (let i = 0; i < cart.value.length; i++) {
       if (cart.value[i].restId == restId) {
-        cart.value.splice(i, 1)
+        cart.value.splice(i, 1);
       }
     }
   }
@@ -134,35 +140,41 @@ export const useCart = defineStore('cart', () => {
     for (let item of cart.value) {
       if (item.restInfo.alias == targetAlias) {
         let itemsToSend: {
-          price: number,
-          count: number,
-          menuItem: string
-        }[] = []
+          price: number;
+          count: number;
+          menuItem: string;
+        }[] = [];
 
         for (let i of item.items) {
           itemsToSend.push({
             price: i.price,
             count: i.count,
-            menuItem: i.menuItemId
-          })
+            menuItem: i.name,
+          });
         }
-        const userStore = useAuth()
+        const userStore = useAuth();
         let response = await CartAPI.order({
           items: itemsToSend,
           rest: item.restId,
-          user: String(userStore.user?._id)
-        })
+          user: String(userStore.user?._id),
+        });
 
         if (response.status.value == 'success') {
           userStore.user = response.data.value.user
           
           OrdersSocketAPI.ordersSocket?.emit("create-order-to-server", { order: response.data.value.order })
         }
-        return response
+        return response;
       }
     }
-    return
+    return;
   }
+  async function getOrdersByOrdersId(
+    ordersId: OrderFromDb[] | undefined
+  ): Promise<any> {
+    return CartAPI.getOrdersByOrdersId(ordersId);
+  }
+
   return {
     // variables:
     cart,
@@ -171,6 +183,7 @@ export const useCart = defineStore('cart', () => {
     plusCart,
     minusCart,
     clearRestCart,
-    order
-  }
-})
+    order,
+    getOrdersByOrdersId,
+  };
+});
