@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import InfoCard from '../../components/_restindex/InfoCard.vue'
-import DeliveryCard from '../../components/_restindex/DeliveryCard.vue'
-import AddressCard from '../../components/_restindex/AddressCard.vue'
-import Menu from '~/components/_restindex/Menu.vue';
-import Reservation from '~/components/_restindex/Reservation.vue'
+import InfoCard from '../../components/restindex/InfoCard.vue'
+import DeliveryCard from '../../components/restindex/DeliveryCard.vue'
+import AddressCard from '../../components/restindex/AddressCard.vue'
+import Menu from '~/components/restindex/Menu.vue';
+import Reservation from '~/components/restindex/Reservation.vue'
 import type { RestFromDb } from "../../types/rest-from-db.interface.ts"
 
 const restStore = useRest()
