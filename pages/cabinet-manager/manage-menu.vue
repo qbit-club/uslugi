@@ -50,7 +50,7 @@ watch(user, () => {
     </v-col>
     <TransitionGroup name="fade" v-if="menu.length > 0">
       <v-col cols="12" sm="6" md="4" lg="3" xl="2.5" xxl="2" v-for="item of menu" :key="item._id">
-        <ManagerMenuItemCard :item="item" @delete-from-menu="deleteFromMenu" />
+        <ManagerMenuItemCard :item="item" @delete-from-menu="deleteFromMenu(item._id)" />
       </v-col>
     </TransitionGroup>
     <v-col v-else cols="12"> Пусто </v-col>
@@ -58,7 +58,8 @@ watch(user, () => {
       <h3>Список блюд</h3>
     </v-col>
     <v-col v-if="Number(rest?.foodList?.length) > 0" cols="12" md="4" lg="3" xl="2" v-for="item of rest?.foodList">
-      <ManagerFoodListItemCard :item="item" @move-to-menu="moveToMenu" />
+      {{ item._id }}
+      <ManagerFoodListItemCard :item="item" @move-to-menu="moveToMenu(item._id)" />
     </v-col>
     <v-col v-else cols="12"> Пусто </v-col>
   </v-row>
