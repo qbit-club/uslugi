@@ -1,7 +1,16 @@
 <script setup lang="ts">
-import { OrdersSocketAPI } from '~/api/OrdersSocketAPI';
+import { OrdersSocketAPI } from "~/api/OrdersSocketAPI"
 const userStore = useAuth()
 
 OrdersSocketAPI.createOrdersConnection(String(userStore.user?.managingRest))
+
+const orderStore = useOrder()
+let { orders } = storeToRefs(orderStore)
+
+await orderStore.getOrdersByRestId(String(userStore.user?.managingRest))
 </script>
-<template>заказы</template>
+<template>
+  <div>
+    {{ orders }}
+  </div>
+</template>
