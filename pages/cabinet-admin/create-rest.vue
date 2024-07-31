@@ -34,6 +34,8 @@ const { meta, handleSubmit, validate } = useForm({
     alias: '',
     phone: '',
     socialMedia: '',
+    menu:[],
+    foodList:[]
     // description: '',
     // schedule: ''
     // price: '',
