@@ -98,7 +98,7 @@ let cartLength = computed(() => {
         if (item.restInfo.alias == route.params.alias) {
             res += item.items.length
         }
-    }    
+    }
     return res
 })
 watch(logoY, () => {
@@ -106,8 +106,10 @@ watch(logoY, () => {
 })
 
 onMounted(() => {
-    groupMeals.value = groupMealsByCategory(props.rest?.menu)
-    selectedCategory.value = groupMeals.value[0].category
+    if (props.rest.menu.length > 0) {
+        groupMeals.value = groupMealsByCategory(props.rest?.menu)
+        selectedCategory.value = groupMeals.value[0]?.category
+    }
     logo.value.style.display = 'none'
 
     if (!OrdersSocketAPI.ordersSocket?.active) OrdersSocketAPI.createOrdersConnection(props.rest._id)
