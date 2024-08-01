@@ -17,7 +17,7 @@ if (userStore.user?.managingRest) {
         <div v-for="(order, index) in orders">
           <h3>Дата заказа</h3>
           <div v-for="(item, j) in order.items" class="d-flex justify-space-between">
-            <span>{{ item.menuItem.name }}</span>
+            <span>{{ item.menuItem }}</span>
             <span>{{ item.count }} * {{ item.price }} = {{ (item.count * item.price).toFixed(2) }} </span>
           </div>
           <v-divider></v-divider>
