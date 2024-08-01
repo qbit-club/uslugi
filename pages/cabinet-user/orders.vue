@@ -9,6 +9,15 @@ const cartStore = useCart()
 let { user } = storeToRefs(authStore)
 let orders = ref<any[]>()
 
+let getDate = (d: string) => {
+    let t = new Date(d)
+    return t.toLocaleString('ru-RU', {
+        month: 'long',
+        day: "numeric",
+        hour: 'numeric',
+        minute: 'numeric',
+    })
+}
 
 onMounted(async () => {
 
@@ -30,16 +39,16 @@ onMounted(async () => {
                     </div>
 
                     <div v-for="(order, i) in item.orders">
-                        <h3>Дата заказа</h3>
+                        <h3>{{ getDate(order.date) }}</h3>
                         <div v-for="item, j in order.items" class="d-flex justify-space-between">
                             <span>{{ item.menuItem }}</span> <span>{{ item.count }} * {{ item.price }} = {{ (item.count
-                * item.price).toFixed(2) }}
+                                * item.price).toFixed(2) }}
                             </span>
 
                         </div>
                         <v-divider></v-divider>
                         <div class="text-end"><i> <b> Итого: {{ order.items.reduce((accumulator: number,
-                current: any) => accumulator + current.count * current.price, 0) }} </b></i> 
+                            current: any) => accumulator + current.count * current.price, 0) }} </b></i>
                         </div>
                     </div>
 

@@ -10,7 +10,7 @@ let reversedOrders = computed(() => orders.value.reverse())
 let getDate = (d: string) => {
   let t = new Date(d)
   return t.toLocaleString('ru-RU', {
-    month: 'short',
+    month: 'long',
     day: "numeric",
     hour: 'numeric',
     minute: 'numeric',
