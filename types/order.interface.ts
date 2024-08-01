@@ -4,6 +4,7 @@ export interface Order {
     count: number,
     menuItem: string
   }]
+  date: string,
   rest: string,
   user: string
 }

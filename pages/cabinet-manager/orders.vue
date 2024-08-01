@@ -7,6 +7,16 @@ let { orders } = storeToRefs(orderStore)
 
 let reversedOrders = computed(() => orders.value.reverse())
 
+let getDate = (d: string) => {
+  let t = new Date(d)
+  return t.toLocaleString('ru-RU', {
+    month: 'short',
+    day: "numeric",
+    hour: 'numeric',
+    minute: 'numeric',
+  })
+}
+
 if (userStore.user?.managingRest) {
   OrdersSocketAPI.createOrdersConnection(String(userStore.user?.managingRest))
   await orderStore.getOrdersByRestId(String(userStore.user?.managingRest))
@@ -19,9 +29,9 @@ if (userStore.user?.managingRest) {
         <TransitionGroup name="list">
           <div v-for="(order, index) in reversedOrders" :key="order._id">
             <v-badge floating dot color="success" v-if="order.new">
-              <h3>Дата заказа</h3>
+              <h3>{{ getDate(order.date) }}</h3>
             </v-badge>
-            <h3 v-else>Дата заказа</h3>
+            <h3 v-else>{{ getDate(order.date) }}</h3>
             <div v-for="(item, j) in order.items" class="d-flex justify-space-between">
               <span>{{ item.menuItem }}</span>
               <span>{{ item.count }} * {{ item.price }} = {{ (item.count * item.price).toFixed(2) }} </span>
