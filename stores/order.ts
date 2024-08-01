@@ -1,5 +1,6 @@
 import { defineStore } from "pinia"
 import CartAPI from "~/api/CartAPI";
+import type { OrderFromDb } from "~/types/order-from-db.interface";
 const OrderAPI = CartAPI
 // interfaces
 
@@ -15,9 +16,14 @@ export const useOrder = defineStore('order', () => {
     }
     return res
   }
+
+  function pushOrder(order: OrderFromDb) {
+    orders.value.push({...order, new: true})
+  }
   return {
     // functions
     getOrdersByRestId,
+    pushOrder,
     // variables
     orders,
   }

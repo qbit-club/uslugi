@@ -21,7 +21,8 @@ export class OrdersSocketAPI {
     })
 
     this.ordersSocket.on("create-order-to-client", (data) => {
-      console.log(data);
+      const orderStore = useOrder()
+      orderStore.pushOrder(data)
     })
   }
 }
