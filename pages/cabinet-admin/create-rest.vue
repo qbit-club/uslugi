@@ -3,6 +3,7 @@ import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import getPossibleLocations from "../../composables/dadata";
 import type { Location } from "../../types/location.interface"
+import { toast } from 'vue3-toastify'
 
 // meta
 useHead({
@@ -140,6 +141,12 @@ function uploadHallImage(file: File, index: Number) {
   reader.readAsDataURL(file);
 }
 const submit = handleSubmit(async values => {
+  if (!logoPreview.value || !headerImagePreview.value) {
+    
+    toast('Добавьте фото!', { type: 'warning' })
+    return
+  }
+
   loading.value = true
 
   let toSend = {
@@ -147,7 +154,9 @@ const submit = handleSubmit(async values => {
     location: locationToSend.value,
     description: description.value,
     schedule: schedule.value,
-    author: String(authStore.user?._id)
+    author: String(authStore.user?._id),
+    menu: [],
+    foodList: []
   }
 
   let res = await restStore.create(toSend)
@@ -243,17 +252,9 @@ watch(locationSearchRequest, async (value) => {
                   <v-img :src="headerImagePreview" max-height="25vh" cover alt="" />
                 </div>
 
-                <div style="
-                position: absolute;
-                bottom: -50px;
-                display: flex;
-                justify-content: start;
-                aspect-ratio: 1;
-                width: 100%;
-                align-items: end;
-              ">
-                  <v-avatar v-if="logoPreview" :image="logoPreview" size="20%" class="logo" color="white"></v-avatar>
-                </div>
+                <div class="logo" v-if="logoPreview">
+                    <img :src="logoPreview" alt="">
+                  </div>
               </v-col>
 
 
@@ -290,5 +291,22 @@ watch(locationSearchRequest, async (value) => {
 
 .logo {
   border: 4px solid white;
+  position: absolute;
+  left: 5%;
+  bottom: -15%;
+  width: 20%;
+  max-width: 230px;
+  border-radius: 50%;
+  overflow: hidden;
+  aspect-ratio: 1;
+  background: white;
+  box-shadow: 10px 14px 13px -14px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 10px 14px 13px -14px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 14px 13px -14px rgba(0, 0, 0, 0.75);
+
+  img {
+    width: 100%;
+
+  }
 }
 </style>

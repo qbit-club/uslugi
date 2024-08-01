@@ -224,11 +224,14 @@ watch(locationSearchRequest, async (value) => {
               <v-col :cols="12" style="margin-bottom: 80px;" v-if="logoPreview || headerImagePreview">
                 <div style="height:30vh; position: relative;">
                   <v-img :src="headerImagePreview" max-height="25vh" cover alt="" />
-                  <v-avatar v-if="logoPreview" :image="logoPreview" size="200px" class="logo" color="white" style="
+                  <div class="logo" v-if="logoPreview">
+                    <img :src="logoPreview" alt="">
+                  </div>
+                  <!-- <v-avatar v-if="logoPreview" :image="logoPreview" size="200px" class="logo" color="white" style="
                 position: absolute;
                 top: 0px;
                 aspect-ratio: 1;
-              "></v-avatar>
+              "></v-avatar> -->
                 </div>
               </v-col>
 
@@ -264,5 +267,22 @@ watch(locationSearchRequest, async (value) => {
 
 .logo {
   border: 4px solid white;
+  position: absolute;
+  left: 5%;
+  bottom: -15%;
+  width: 20%;
+  max-width: 230px;
+  border-radius: 50%;
+  overflow: hidden;
+  aspect-ratio: 1;
+  background: white;
+  box-shadow: 10px 14px 13px -14px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 10px 14px 13px -14px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 14px 13px -14px rgba(0, 0, 0, 0.75);
+
+  img {
+    width: 100%;
+
+  }
 }
 </style>

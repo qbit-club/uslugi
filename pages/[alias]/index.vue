@@ -97,13 +97,14 @@ rest.value = res.data.value
   left: 5%;
   bottom: -15%;
   width: 20%;
+  max-width: 230px;
   border-radius: 50%;
   overflow: hidden;
   aspect-ratio: 1;
   background: white;
-  box-shadow: 10px 14px 13px -14px rgba(0,0,0,0.75);
--webkit-box-shadow: 10px 14px 13px -14px rgba(0,0,0,0.75);
--moz-box-shadow: 10px 14px 13px -14px rgba(0,0,0,0.75);
+  box-shadow: 10px 14px 13px -14px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 10px 14px 13px -14px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 14px 13px -14px rgba(0, 0, 0, 0.75);
 
   img {
     width: 100%;
