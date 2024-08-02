@@ -136,7 +136,7 @@ onMounted(() => {
                         </v-chip>
                     </v-chip-group>
                 </div>
-                <div class=" w-100 d-flex justify-center">
+                <div class=" w-100 d-flex justify-end">
                     <div class="d-flex align-center">
                         <v-btn icon="mdi-magnify" @click="showSearch" class="mr-2">
 
@@ -148,7 +148,7 @@ onMounted(() => {
                         </transition>
 
                     </div>
-                    <v-badge v-if="cartLength" :content="cartLength" color="primary" class="d-flex align-center ml-2">
+                    <v-badge :content="cartLength" color="primary" class="d-flex align-center ml-2">
                         <v-btn icon="mdi-cart" @click="cartDialog = true">
                         </v-btn>
                     </v-badge>
