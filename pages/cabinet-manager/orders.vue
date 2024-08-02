@@ -9,11 +9,11 @@ let reversedOrders = computed(() => orders.value.reverse())
 
 let getDate = (d: string) => {
   let t = new Date(d)
-  return t.toLocaleString('ru-RU', {
-    month: 'long',
+  return t.toLocaleString("ru-RU", {
+    month: "long",
     day: "numeric",
-    hour: 'numeric',
-    minute: 'numeric',
+    hour: "numeric",
+    minute: "numeric",
   })
 }
 
@@ -32,6 +32,11 @@ if (userStore.user?.managingRest) {
               <h3>{{ getDate(order.date) }}</h3>
             </v-badge>
             <h3 v-else>{{ getDate(order.date) }}</h3>
+            <div class="user-info"><v-icon icon="mdi-account-outline"></v-icon>{{ order.user.name }}</div>
+            <div class="user-info">
+              <v-icon icon="mdi-phone-outline"></v-icon><a :href="'tel:' + order.user.phone" class="font-weight-medium">{{ order.user.phone }}</a>
+            </div>
+            <div class="user-info"><v-icon icon="mdi-home-city-outline"></v-icon>{{ order.user.address }}</div>
             <div v-for="(item, j) in order.items" class="d-flex justify-space-between">
               <span>{{ item.menuItem }}</span>
               <span>{{ item.count }} * {{ item.price }} = {{ (item.count * item.price).toFixed(2) }} </span>
@@ -47,7 +52,8 @@ if (userStore.user?.managingRest) {
                       0
                     )
                   }}
-                </b></i>
+                </b></i
+              >
             </div>
           </div>
         </TransitionGroup>
@@ -65,5 +71,15 @@ if (userStore.user?.managingRest) {
 .list-leave-to {
   opacity: 0;
   transform: translateX(30px);
+}
+
+.user-info {
+  display: flex;
+
+  align-items: center;
+  .v-icon {
+    font-size: 16px;
+    margin-right: 4px;
+  }
 }
 </style>
