@@ -10,6 +10,7 @@ const route = useRoute()
 let name = ref<string>(localStorage.getItem("name") || userStore.user?.name || "")
 let phone = ref<string>(localStorage.getItem("phone") ?? "")
 let address = ref<string>(localStorage.getItem("address") ?? "")
+let comment = ref<string>('')
 
 function plusCart(itemId: string, restId: string) {
   let success = cartStore.plusCart(itemId, restId)
@@ -50,6 +51,7 @@ async function order() {
     name: name.value,
     phone: phone.value,
     address: address.value,
+    comment: comment.value
   })
   if (response.status.value == "success") {
     loading.value = false
@@ -84,9 +86,13 @@ watch(address, (newAddress) => {
           <div class="caption">Телефон</div>
           <v-text-field density="compact" variant="outlined" :hide-details="true" v-model="phone"></v-text-field>
         </v-col>
-        <v-col cols="12" class="pt-1">
+        <v-col cols="12" class="py-1">
           <div class="caption">Адрес доставки / Столик</div>
           <v-text-field density="compact" variant="outlined" :hide-details="true" v-model="address"></v-text-field>
+        </v-col>
+        <v-col cols="12" class="pt-1">
+          Комментарии
+          <v-textarea variant="outlined" auto-grow rows="2" :hide-details="true" v-model="comment"></v-textarea>
         </v-col>
       </v-row>
       <div class="rest-info">

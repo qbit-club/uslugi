@@ -37,6 +37,7 @@ if (userStore.user?.managingRest) {
               <v-icon icon="mdi-phone-outline"></v-icon><a :href="'tel:' + order.user.phone" class="font-weight-medium">{{ order.user.phone }}</a>
             </div>
             <div class="user-info"><v-icon icon="mdi-home-city-outline"></v-icon>{{ order.user.address }}</div>
+            <div class="user-info"><v-icon icon="mdi-paperclip"></v-icon>{{ order.user.comment }}</div>
             <div v-for="(item, j) in order.items" class="d-flex justify-space-between">
               <span>{{ item.menuItem }}</span>
               <span>{{ item.count }} * {{ item.price }} = {{ (item.count * item.price).toFixed(2) }} </span>
