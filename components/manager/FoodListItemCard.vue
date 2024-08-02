@@ -6,6 +6,8 @@ const props = defineProps<{
   inMenu: boolean | undefined
 }>()
 const emit = defineEmits(['moveToMenu', 'deleteFromMenu'])
+const router = useRouter()
+let confirmDeleteDialog = ref<boolean>(false)
 
 let isMenuItem = ref(false)
 
@@ -44,13 +46,13 @@ onMounted(() => {
 
         <div class="d-flex align-center justify-center cursor-pointer">
 
-          <div class="d-flex flex-column align-center pa-2 " @click="">
+          <div class="d-flex flex-column align-center pa-2 " @click="router.push(`/cabinet-manager/edit-meal?item_id=${item._id}`)">
             <v-icon icon="mdi-pencil" size="x-large" />
             <div class="explanation text-center">редактировать</div>
 
           </div>
 
-          <div class="d-flex flex-column align-center pa-2" @click="">
+          <div class="d-flex flex-column align-center pa-2" @click="confirmDeleteDialog = true">
             <v-icon icon="mdi-trash-can-outline" size="x-large" />
             <div class="explanation text-center">удалить</div>
 
@@ -60,6 +62,15 @@ onMounted(() => {
             <div class="text-center text-uppercase" v-if="isMenuItem">в меню</div>
 
           </div>
+          <v-dialog v-model="confirmDeleteDialog" max-width="300" persistent>
+                            <v-card>
+                                <v-card-title>Удалить?</v-card-title>
+                                <v-card-actions>
+                                    <v-btn @click="confirmDeleteDialog = false">нет</v-btn>
+                                    <v-btn @click="deleteMenuItem(rest._id)" color="error">да</v-btn>
+                                </v-card-actions>
+                            </v-card>
+          </v-dialog>
         </div>
       </div>
     </v-col>
