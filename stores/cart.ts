@@ -158,6 +158,7 @@ export const useCart = defineStore("cart", () => {
         let response = await CartAPI.order({
           items: itemsToSend,
           rest: item.restId,
+          date: new Date(),
           user: String(userStore.user?._id),
         });
 

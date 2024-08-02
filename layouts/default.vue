@@ -3,33 +3,9 @@ import { useWindowSize } from '@vueuse/core'
 const { width } = useWindowSize()
 
 const router = useRouter()
-let auth = useAuth()
+let userStore = useAuth()
 
 let navigationDrawer = ref<boolean>(false)
-
-const routes = [
-  {
-    value: '/',
-    title: "Выбор ресторана",
-    icon: "mdi-home-outline"
-  },
-  {
-    value: '/cabinet-user/profile',
-    title: "Пользователь",
-    icon: "mdi-account-outline"
-  },
-  {
-    value: '/cabinet-admin',
-    title: "Администратор",
-    icon: "mdi-account-outline"
-  },
-  {
-    value: '/cabinet-manager',
-    title: "Менеджер",
-    icon: "mdi-account-outline"
-  },
-
-]
 
 // создает timeout, после которого можно нажать на кнопку,
 // без этой функции анимация открытия ломается
@@ -44,8 +20,39 @@ function ensureCanClick() {
 }
 
 let appStore = useApp()
-await auth.checkAuth()
+await userStore.checkAuth()
 await appStore.getAppState()
+
+let isAdmin = computed(() => userStore.user?.roles.includes("admin"))
+let isManager = computed(() => userStore.user?.roles.includes("manager"))
+
+const routes = [
+  {
+    value: '/',
+    title: "Выбор ресторана",
+    icon: "mdi-home-outline",
+    show: true
+  },
+  {
+    value: '/cabinet-user/profile',
+    title: "Пользователь",
+    icon: "mdi-account-outline",
+    show: true
+  },
+  {
+    value: '/cabinet-admin/rest-list',
+    title: "Администратор",
+    icon: "mdi-shield-crown-outline",
+    show: isAdmin.value
+  },
+  {
+    value: '/cabinet-manager/orders',
+    title: "Менеджер",
+    icon: "mdi-account-tie-outline",
+    show: isManager.value
+  },
+
+]
 </script>
 <template>
   <v-responsive>
@@ -62,10 +69,9 @@ await appStore.getAppState()
 
       </v-app-bar> -->
       <div class="d-none d-md-block ">
-       
-       
-        <v-icon icon="mdi-hamburger" class="menu-button"
-          @click="navigationDrawer = !navigationDrawer" />
+
+
+        <v-icon icon="mdi-hamburger" class="menu-button" @click="navigationDrawer = !navigationDrawer" />
       </div>
 
       <v-speed-dial transition="fade-transition" class="d-flex d-md-none">
@@ -75,23 +81,22 @@ await appStore.getAppState()
             class="d-flex d-md-none" @click="ensureCanClick"></v-btn>
         </template>
 
-        <v-btn key="2" to="/" icon="mdi-home-outline"></v-btn>
-        <v-btn key="2" to="/cabinet" icon="mdi-account-outline"></v-btn>
-        <v-btn key="2" to="/cabinet-admin" icon="mdi-account-outline"></v-btn>
-        <v-btn key="2" to="/cabinet-manager" icon="mdi-account-outline"></v-btn>
+        <v-btn key="1" to="/" icon="mdi-home-outline"></v-btn>
+        <v-btn key="2" to="/cabinet-user/profile" icon="mdi-account-outline"></v-btn>
+        <v-btn key="3" to="/cabinet-admin/rest-list" icon="mdi-shield-crown-outline" v-if="isAdmin"></v-btn>
+        <v-btn key="4" to="/cabinet-manager/orders" icon="mdi-account-tie-outline" v-if="isManager"></v-btn>
 
       </v-speed-dial>
 
 
       <ClientOnly>
         <!-- только на экранах md и больше, потому что на телефоне можно свайпнуть и navigation-drawer появится -->
-        <v-navigation-drawer v-if="width > 960" :model-value="navigationDrawer" location="right" temporary persistent
-          >
-          
+        <v-navigation-drawer v-if="width > 960" :model-value="navigationDrawer" location="right" temporary>
+
 
           <v-list nav>
             <v-list-item v-for="route of routes" :prepend-icon="route.icon" :to="route.value" :title="route.title"
-              :value="route.value" @click="navigationDrawer=false"></v-list-item>
+              :value="route.value" @click="navigationDrawer = false" v-show="route.show"></v-list-item>
           </v-list>
         </v-navigation-drawer>
       </ClientOnly>
@@ -106,26 +111,24 @@ await appStore.getAppState()
 </template>
 
 <style scoped lang="scss">
-.menu-button{
-position: fixed;
-top: 25px;
-right: 25px;
+.menu-button {
+  position: fixed;
+  top: 25px;
+  right: 25px;
 }
+
 .logo {
-position: fixed;
-top: 25px;
-left: 25px;
-padding: 5px;
-border-radius: 50%;
-width:50px;
-aspect-ratio: 1;
-display:flex;
-justify-content: center;
-align-items: center;
+  position: fixed;
+  top: 25px;
+  left: 25px;
+  padding: 5px;
+  border-radius: 50%;
+  width: 50px;
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.7);
 }
-
-
-
 </style>

@@ -21,6 +21,10 @@ let menu = computed(() => {
   }
   return result
 })
+function inMenu(itemId: string) {
+  return rest.value?.menu.some(item => { return item === itemId });
+}
+
 async function moveToMenu(_id: string) {
   let res = await restStore.moveFoodItemToMenu(String(rest.value?._id), _id)
   if (res.status.value == "success") {
@@ -44,23 +48,19 @@ watch(user, () => {
 })
 </script>
 <template>
-  <v-row>
-    <v-col cols="12">
-      <h3>Меню</h3>
-    </v-col>
-    <TransitionGroup name="fade" v-if="menu.length > 0">
-      <v-col cols="12" sm="6" md="4" lg="3" xl="2.5" xxl="2" v-for="item of menu" :key="item._id">
-        <ManagerMenuItemCard :item="item" @delete-from-menu="deleteFromMenu(item._id)" />
+  <v-container>
+    <v-row class="justify-center pb-16">
+      <v-col :cols="12" sm="10"   class="pa-0">
+
+        <h3 class="text-center ma-4">Список блюд</h3>
+
+        <div v-if="Number(rest?.foodList?.length) > 0" v-for="item of rest?.foodList" class="w-100">
+          <ManagerFoodListItemCard :item="item" :inMenu="inMenu(item._id)" @move-to-menu="moveToMenu"
+            @delete-from-menu="deleteFromMenu" />
+        </div>
+        <div v-else cols="12"> Пусто </div>
       </v-col>
-    </TransitionGroup>
-    <v-col v-else cols="12"> Пусто </v-col>
-    <v-col cols="12">
-      <h3>Список блюд</h3>
-    </v-col>
-    <v-col v-if="Number(rest?.foodList?.length) > 0" cols="12" md="4" lg="3" xl="2" v-for="item of rest?.foodList">
-      {{ item._id }}
-      <ManagerFoodListItemCard :item="item" @move-to-menu="moveToMenu(item._id)" />
-    </v-col>
-    <v-col v-else cols="12"> Пусто </v-col>
-  </v-row>
+
+    </v-row>
+  </v-container>
 </template>

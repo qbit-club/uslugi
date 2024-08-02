@@ -106,8 +106,10 @@ watch(logoY, () => {
 })
 
 onMounted(() => {
-    groupMeals.value = groupMealsByCategory(props.rest?.menu)
-    selectedCategory.value = groupMeals.value[0].category
+    if (props.rest.menu.length > 0) {
+        groupMeals.value = groupMealsByCategory(props.rest?.menu)
+        selectedCategory.value = groupMeals.value[0]?.category
+    }
     logo.value.style.display = 'none'
 
     if (!OrdersSocketAPI.ordersSocket?.active) OrdersSocketAPI.createOrdersConnection(props.rest._id)
@@ -136,19 +138,19 @@ onMounted(() => {
                 </div>
                 <div class=" w-100 d-flex justify-center">
                     <div class="d-flex align-center">
-                        <v-btn icon="mdi-magnify" @click="showSearch" class="mr-2" >
+                        <v-btn icon="mdi-magnify" @click="showSearch" class="mr-2">
 
                         </v-btn>
                         <transition name="fade">
                             <v-text-field min-width="200" v-model="filter" v-if="isShow" density="compact"
                                 variant="solo" hide-details single-line placeholder="поиск"
-                                clear-icon="mdi-close-circle" clearable ></v-text-field>
+                                clear-icon="mdi-close-circle" clearable></v-text-field>
                         </transition>
 
                     </div>
                     <v-badge v-if="cartLength" :content="cartLength" color="primary" class="d-flex align-center ml-2">
-                    <v-btn icon="mdi-cart" @click="cartDialog = true">
-                    </v-btn>
+                        <v-btn icon="mdi-cart" @click="cartDialog = true">
+                        </v-btn>
                     </v-badge>
 
                 </div>

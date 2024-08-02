@@ -12,6 +12,7 @@ const router = useRouter()
 
 let rests = ref<RestFromDb[] | []>()
 
+let confirmDeleteDialog = ref<boolean>(false)
 let isShow = ref(false)
 let filter = ref<string>('')
 
@@ -36,6 +37,7 @@ let getRestList = async () => {
 let deleteRest = async (id: string) => {
     await restStore.deleteRest(id)
     await getRestList()
+    confirmDeleteDialog.value = false
 }
 
 let showSearch = () => {
@@ -74,22 +76,32 @@ getRestList()
                         <h4 class="ma-4"> {{ rest.title }}</h4>
                     </div>
                     <div class="d-flex">
-                        <div class="d-flex flex-column align-center pa-4 cursor-pointer"
+                        <div class="d-flex flex-column align-center pa-4"
                             @click="router.push(`/cabinet-admin/rest-info?rest_id=${rest._id}`)">
-                            <v-icon icon="mdi-pencil" size="x-large" />
+                            <v-icon icon="mdi-pencil" size="x-large" class="cursor-pointer" />
                             <div class="explanation text-center">редактировать</div>
 
                         </div>
                         <div class="d-flex flex-column align-center pa-4">
-                            <v-icon icon="mdi-eye-off-outline" size="x-large" />
+                            <v-icon icon="mdi-eye-off-outline" size="x-large" class="cursor-pointer" />
                             <div class="explanation text-center">спрятать</div>
 
                         </div>
-                        <div class="d-flex flex-column align-center pa-4" @click="deleteRest(rest._id)">
-                            <v-icon icon="mdi-trash-can-outline" size="x-large" />
+                        <div class="d-flex flex-column align-center pa-4">
+                            <v-icon icon="mdi-trash-can-outline" size="x-large" class="cursor-pointer"
+                                @click="confirmDeleteDialog = true" />
                             <div class="explanation text-center">удалить</div>
 
                         </div>
+                        <v-dialog v-model="confirmDeleteDialog" max-width="300" persistent>
+                            <v-card>
+                                <v-card-title>Удалить?</v-card-title>
+                                <v-card-actions>
+                                    <v-btn @click="confirmDeleteDialog = false">нет</v-btn>
+                                    <v-btn @click="deleteRest(rest._id)" color="error">да</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
                     </div>
                 </div>
                 <v-divider></v-divider>
