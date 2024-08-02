@@ -84,8 +84,8 @@ export default {
     restId: string,
     foodListItemId: string
   }) {
-    return useApiFetch('/rest/move-food-list-item-to-menu', {
-      method: 'PATCH',
+    return useApiFetch('/rest/menu', {
+      method: 'POST',
       body: body
     })
   },
