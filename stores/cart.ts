@@ -138,7 +138,7 @@ export const useCart = defineStore("cart", () => {
     }
   }
 
-  async function order(targetAlias: string): Promise<any> {
+  async function order(targetAlias: string, userInfo: any): Promise<any> {
     for (let item of cart.value) {
       if (item.restInfo.alias == targetAlias) {
         let itemsToSend: {
@@ -155,11 +155,14 @@ export const useCart = defineStore("cart", () => {
           });
         }
         const userStore = useAuth();
+        if (userStore.user?._id) {
+          userInfo._id = String(userStore.user?._id)
+        }
         let response = await CartAPI.order({
           items: itemsToSend,
           rest: item.restId,
           date: new Date(),
-          user: String(userStore.user?._id),
+          user: userInfo,
         });
 
         if (response.status.value == 'success') {

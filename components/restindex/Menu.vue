@@ -171,7 +171,7 @@ onMounted(() => {
                 </div>
             </v-col>
         </v-row>
-        <v-dialog v-model="cartDialog" width="auto">
+        <v-dialog v-model="cartDialog" max-width="550">
             <CartCard @close-dialog="closeCartDialogAndClearState" />
         </v-dialog>
     </v-container>
