@@ -96,13 +96,13 @@ let cartLength = computed(() => {
     let res = 0
     for (let item of cartStore?.cart) {
         if (item.restInfo.alias == route.params.alias) {
-            res += item.items.length
+            res += Number(item.items.length)
         }
     }
     return res
 })
 watch(logoY, () => {
-    logoY.value >= 100 ? logo.value.style.display = 'none' : logo.value.style.display = 'block'
+    logoY.value >= 400 ? logo.value.style.display = 'none' : logo.value.style.display = 'block'
 })
 
 onMounted(() => {
@@ -122,7 +122,7 @@ onMounted(() => {
         <v-row>
 
             <v-col ref="logo" cols="12" class="position-sticky pt-0 pb-0" style="z-index:2; top:0px; ">
-                <div class="d-flex align-center" style="background:white">
+                <div class="d-flex align-center" style="background: white;">
 
                     <ClientOnly>
                         <transition name="fade">
