@@ -20,10 +20,15 @@ export const useOrder = defineStore('order', () => {
   function pushOrder(order: OrderFromDb) {
     orders.value.push({...order, new: true})
   }
+  
+  async function changeStatus(orderId: string, status: string) {
+    return await OrderAPI.changeStatus(orderId, status)
+  }
   return {
     // functions
     getOrdersByRestId,
     pushOrder,
+    changeStatus,
     // variables
     orders,
   }

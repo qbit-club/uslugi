@@ -7,15 +7,6 @@ let { orders } = storeToRefs(orderStore)
 
 let reversedOrders = computed(() => orders.value.reverse())
 
-let getDate = (d: string) => {
-  let t = new Date(d)
-  return t.toLocaleString("ru-RU", {
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-  })
-}
 async function getOrders() {
   if (userStore.user?.managingRest) {
     OrdersSocketAPI.createOrdersConnection(String(userStore.user?.managingRest))
@@ -28,9 +19,6 @@ watch(() => userStore.user?.managingRest, () => {
 
 
 await getOrders()
-
-
-
 </script>
 <template>
   <v-container>
@@ -38,34 +26,7 @@ await getOrders()
       <v-col :cols="12" sm="10" md="8" lg="6" class="pt-0">
         <TransitionGroup name="list">
           <div v-for="(order, index) in reversedOrders" :key="order._id">
-            <v-badge floating dot color="success" v-if="order.new">
-              <h3>{{ getDate(order.date) }}</h3>
-            </v-badge>
-            <h3 v-else>{{ getDate(order.date) }}</h3>
-            <div class="user-info"><v-icon icon="mdi-account-outline"></v-icon>{{ order.user.name }}</div>
-            <div class="user-info">
-              <v-icon icon="mdi-phone-outline"></v-icon><a :href="'tel:' + order.user.phone"
-                class="font-weight-medium">{{ order.user.phone }}</a>
-            </div>
-            <div class="user-info"><v-icon icon="mdi-home-city-outline"></v-icon>{{ order.user.address }}</div>
-            <div class="user-info"><v-icon icon="mdi-paperclip"></v-icon>{{ order.user.comment }}</div>
-            <div v-for="(item, j) in order.items" class="d-flex justify-space-between">
-              <span>{{ item.menuItem }}</span>
-              <span>{{ item.count }} * {{ item.price }} = {{ (item.count * item.price).toFixed(2) }} </span>
-            </div>
-            <v-divider></v-divider>
-            <div class="text-end">
-              <i>
-                <b>
-                  Итого:
-                  {{
-        order.items.reduce(
-          (accumulator: number, current: any) => accumulator + current.count * current.price,
-          0
-                  )
-                  }}
-                </b></i>
-            </div>
+            <ManagerOrderCard :order="order" />
           </div>
         </TransitionGroup>
       </v-col>
