@@ -36,28 +36,13 @@ export default {
   getByIds(_ids: string[]): Promise<any> {
     return useApiFetch('/rest/by-ids', {
       method: 'POST',
-      body: {    
-        _ids:_ids
+      body: {
+        _ids: _ids
       }
     })
   },
   uploadImages(formData: FormData, _id: string): Promise<any> {
     return useApiFetch(`/rest/images?rest_id=${_id}`, { method: 'POST', headers: { 'Content-Type': 'multipart/form-data' }, body: formData })
-  },
-  /**
-   * updates food list
-   * @param restId 
-   * @param foodListItem 
-   * @returns 
-   */
-  changeFoodList(restId: string, foodListItem: FoodListItem | FoodListItemFromDb): Promise<any> {
-    return useApiFetch('/rest/food-list', {
-      method: 'PUT',
-      body: {
-        restId,
-        foodListItem
-      }
-    })
   },
   sendFoodListItemToMenu(_id: string, restId: string): Promise<any> {
     return useApiFetch('/rest/menu', {
@@ -77,6 +62,7 @@ export default {
       body: body
     })
   },
+
   uploadFoodListItemImages(restId: string, foodListItemId: string, fd: FormData): Promise<any> {
     return useApiFetch(`/rest/food-list-images?rest_id=${restId}&item_id=${foodListItemId}`, { method: 'POST', headers: { 'Content-Type': 'multipart/form-data' }, body: fd })
   },
@@ -89,6 +75,24 @@ export default {
       body: body
     })
   },
+  updateFoodListItem(
+    restId: string,
+    foodListItemId: string,
+    foodListItem: FoodListItem
+  ) {
+    return useApiFetch(`/rest/update-food-list?rest_id=${restId}&item_id=${foodListItemId}`, {
+      method: 'PUT',
+      body: {foodListItem}
+    })
+  },
+  // updateFoodListItemImages(restId: string, foodListItemId: string, fd: FormData): Promise<any> {
+  //   return useApiFetch(`/rest/update-food-list-images?rest_id=${restId}&item_id=${foodListItemId}`, {
+  //     method: 'PUT',
+  //     headers: { 'Content-Type': 'multipart/form-data' },
+  //     body: fd
+  //   })
+  // },
+
   deleteFromMenu(menuItemId: string, restId: string) {
     return useApiFetch(`/rest/delete-from-menu?rest_id=${restId}&menu_item_id=${menuItemId}`, { method: 'DELETE' })
   },
