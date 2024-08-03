@@ -96,13 +96,13 @@ let cartLength = computed(() => {
     let res = 0
     for (let item of cartStore?.cart) {
         if (item.restInfo.alias == route.params.alias) {
-            res += item.items.length
+            res += Number(item.items.length)
         }
     }
     return res
 })
 watch(logoY, () => {
-    logoY.value >= 100 ? logo.value.style.display = 'none' : logo.value.style.display = 'block'
+    logoY.value >= 400 ? logo.value.style.display = 'none' : logo.value.style.display = 'block'
 })
 
 onMounted(() => {
@@ -122,7 +122,7 @@ onMounted(() => {
         <v-row>
 
             <v-col ref="logo" cols="12" class="position-sticky pt-0 pb-0" style="z-index:2; top:0px; ">
-                <div class="d-flex align-center" style="background:white">
+                <div class="d-flex align-center" style="background: white;">
 
                     <ClientOnly>
                         <transition name="fade">
@@ -136,7 +136,7 @@ onMounted(() => {
                         </v-chip>
                     </v-chip-group>
                 </div>
-                <div class=" w-100 d-flex justify-center">
+                <div class=" w-100 d-flex justify-end">
                     <div class="d-flex align-center">
                         <v-btn icon="mdi-magnify" @click="showSearch" class="mr-2">
 
@@ -148,7 +148,7 @@ onMounted(() => {
                         </transition>
 
                     </div>
-                    <v-badge v-if="cartLength" :content="cartLength" color="primary" class="d-flex align-center ml-2">
+                    <v-badge :content="cartLength" color="primary" class="d-flex align-center ml-2">
                         <v-btn icon="mdi-cart" @click="cartDialog = true">
                         </v-btn>
                     </v-badge>
@@ -171,7 +171,7 @@ onMounted(() => {
                 </div>
             </v-col>
         </v-row>
-        <v-dialog v-model="cartDialog" width="auto">
+        <v-dialog v-model="cartDialog" max-width="550">
             <CartCard @close-dialog="closeCartDialogAndClearState" />
         </v-dialog>
     </v-container>

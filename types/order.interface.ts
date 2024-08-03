@@ -6,5 +6,5 @@ export interface Order {
   }]
   date: string,
   rest: string,
-  user: string
+  user: object
 }

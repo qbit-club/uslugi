@@ -1,10 +1,16 @@
 <script setup lang="ts">
-const emit = defineEmits(['closeDialog'])
+const emit = defineEmits(["closeDialog"])
 
 const cartStore = useCart()
+const userStore = useAuth()
 
 let { cart } = storeToRefs(cartStore)
 const route = useRoute()
+
+let name = ref<string>(localStorage.getItem("name") || userStore.user?.name || "")
+let phone = ref<string>(localStorage.getItem("phone") ?? "")
+let address = ref<string>(localStorage.getItem("address") ?? "")
+let comment = ref<string>('')
 
 function plusCart(itemId: string, restId: string) {
   let success = cartStore.plusCart(itemId, restId)
@@ -14,7 +20,7 @@ function minusCart(itemId: string, restId: string) {
 }
 function clearRestCart(restId: string) {
   cartStore.clearRestCart(restId)
-  emit('closeDialog')
+  emit("closeDialog")
 }
 
 let amount = computed(() => {
@@ -41,16 +47,54 @@ let restItem = computed<any>(() => {
 let loading = ref(false)
 async function order() {
   loading.value = true
-  let response = await cartStore.order(String(route.params.alias))
-  if (response.status.value == 'success') {
+  let response = await cartStore.order(String(route.params.alias), {
+    name: name.value,
+    phone: phone.value,
+    address: address.value,
+    comment: comment.value
+  })
+  if (response.status.value == "success") {
     loading.value = false
-    emit('closeDialog')
+    emit("closeDialog")
   }
 }
+watch(phone, (newPhone) => {
+  if (process.client) {
+    localStorage.setItem("phone", newPhone)
+  }
+})
+watch(name, (newName) => {
+  if (process.client) {
+    localStorage.setItem("name", newName)
+  }
+})
+watch(address, (newAddress) => {
+  if (process.client) {
+    localStorage.setItem("address", newAddress)
+  }
+})
 </script>
 <template>
   <v-card class="py-5 px-6">
     <div class="cart-item" v-if="restItem?.restId">
+      <v-row class="mb-3">
+        <v-col cols="12" class="pb-1">
+          <div class="caption">Имя</div>
+          <v-text-field density="compact" variant="outlined" :hide-details="true" v-model="name"></v-text-field>
+        </v-col>
+        <v-col cols="12" class="py-1">
+          <div class="caption">Телефон</div>
+          <v-text-field density="compact" variant="outlined" :hide-details="true" v-model="phone"></v-text-field>
+        </v-col>
+        <v-col cols="12" class="py-1">
+          <div class="caption">Адрес доставки / Столик</div>
+          <v-text-field density="compact" variant="outlined" :hide-details="true" v-model="address"></v-text-field>
+        </v-col>
+        <v-col cols="12" class="pt-1">
+          Комментарии
+          <v-textarea variant="outlined" auto-grow rows="2" :hide-details="true" v-model="comment"></v-textarea>
+        </v-col>
+      </v-row>
       <div class="rest-info">
         <div class="d-flex flex-column justify-space-between">
           <h3 style="line-height: 1">{{ restItem.restInfo.title }}</h3>
@@ -96,19 +140,20 @@ async function order() {
         </div>
       </div>
     </div>
-    <div v-else class="d-flex justify-center align-center pb-6" style="font-weight: 600;">
+    <div v-else class="d-flex justify-center align-center pb-6" style="font-weight: 600">
       <v-icon icon="mdi-cart-remove"></v-icon>
       пусто
     </div>
     <div class="d-flex justify-space-between">
       <v-btn variant="tonal" size="large" @click="order" :loading="loading">заказать</v-btn>
-      <div class="amount d-flex align-center">
-        {{ amount }}₽
-      </div>
+      <div class="amount d-flex align-center">{{ amount }}₽</div>
     </div>
   </v-card>
 </template>
 <style scoped lang="scss">
+.caption {
+  font-size: 13px;
+}
 .cart-item {
   margin-bottom: 38px;
   width: 100%;
