@@ -111,6 +111,7 @@ async function submit() {
     );
     if (uploadRes.status.value == "success") {
       loading.value = false;
+      router.push('/')
     } else {
       console.log(uploadRes);
     }

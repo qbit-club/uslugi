@@ -96,6 +96,9 @@ export default {
   deleteFromMenu(menuItemId: string, restId: string) {
     return useApiFetch(`/rest/delete-from-menu?rest_id=${restId}&menu_item_id=${menuItemId}`, { method: 'DELETE' })
   },
+  deleteFoodListItem(foodListItemId: string, restId: string) {
+    return useApiFetch(`/rest/delete-food-list-item?rest_id=${restId}&food_list_item_id=${foodListItemId}`, { method: 'DELETE' })
+  },
   update(rest: Rest, restId: string) {
     return useApiFetch(`/rest?rest_id=${restId}`, {
       method: 'PUT',

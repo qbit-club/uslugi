@@ -5,7 +5,7 @@ const props = defineProps<{
   item: FoodListItemFromDb
   inMenu: boolean | undefined
 }>()
-const emit = defineEmits(['moveToMenu', 'deleteFromMenu'])
+const emit = defineEmits(['moveToMenu', 'deleteFromMenu','deleteFoodListItem'])
 const router = useRouter()
 let confirmDeleteDialog = ref<boolean>(false)
 
@@ -13,6 +13,10 @@ let isMenuItem = ref(false)
 
 function toggleMenu() {
   isMenuItem.value ? emit('moveToMenu', props.item._id) : emit('deleteFromMenu', props.item._id)
+}
+
+function deleteFoodListItem(){
+  emit('deleteFoodListItem',props.item._id)
 }
 
 watch(isMenuItem, () => {
@@ -57,7 +61,7 @@ onMounted(() => {
             <div class="explanation text-center">удалить</div>
 
           </div>
-          <div class="d-flex  align-center pa-2">
+          <div class="d-flex align-center pa-2">
             <v-checkbox v-model="isMenuItem" hide-details class="pa-0"></v-checkbox>
             <div class="text-center text-uppercase" v-if="isMenuItem">в меню</div>
 
@@ -67,7 +71,7 @@ onMounted(() => {
                                 <v-card-title>Удалить?</v-card-title>
                                 <v-card-actions>
                                     <v-btn @click="confirmDeleteDialog = false">нет</v-btn>
-                                    <v-btn @click="deleteMenuItem(rest._id)" color="error">да</v-btn>
+                                    <v-btn @click="deleteFoodListItem()" color="error">да</v-btn>
                                 </v-card-actions>
                             </v-card>
           </v-dialog>
