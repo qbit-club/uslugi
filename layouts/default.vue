@@ -23,8 +23,6 @@ let appStore = useApp()
 await userStore.checkAuth()
 await appStore.getAppState()
 
-let isAdmin = computed(() => userStore.user?.roles.includes("admin"))
-let isManager = computed(() => userStore.user?.roles.includes("manager"))
 
 const routes = [
   {
@@ -43,13 +41,15 @@ const routes = [
     value: '/cabinet-admin/rest-list',
     title: "Администратор",
     icon: "mdi-shield-crown-outline",
-    show: isAdmin.value
+    show: userStore.checkAdmin()
+
   },
   {
     value: '/cabinet-manager/orders',
     title: "Менеджер",
     icon: "mdi-account-tie-outline",
-    show: isManager.value
+    show: userStore.checkManager()
+
   },
 
 ]
@@ -83,8 +83,8 @@ const routes = [
 
         <v-btn key="1" to="/" icon="mdi-home-outline"></v-btn>
         <v-btn key="2" to="/cabinet-user/profile" icon="mdi-account-outline"></v-btn>
-        <v-btn key="3" to="/cabinet-admin/rest-list" icon="mdi-shield-crown-outline" v-if="isAdmin"></v-btn>
-        <v-btn key="4" to="/cabinet-manager/orders" icon="mdi-account-tie-outline" v-if="isManager"></v-btn>
+        <v-btn key="3" to="/cabinet-admin/rest-list" icon="mdi-shield-crown-outline"></v-btn>
+        <v-btn key="4" to="/cabinet-manager/orders" icon="mdi-account-tie-outline"></v-btn>
 
       </v-speed-dial>
 
@@ -95,8 +95,14 @@ const routes = [
 
 
           <v-list nav>
-            <v-list-item v-for="route of routes" :prepend-icon="route.icon" :to="route.value" :title="route.title"
-              :value="route.value" @click="navigationDrawer = false" v-show="route.show"></v-list-item>
+            <div>
+
+            </div>
+            <v-list-item v-for="route of routes" :prepend-icon="route.icon" :to="route.value" :value="route.value"
+              @click="navigationDrawer = false">
+              <div v-if="route.show" style="font-size: 0.8rem;
+    font-weight: 500;"> {{ route.title }}</div>
+            </v-list-item>
           </v-list>
         </v-navigation-drawer>
       </ClientOnly>
