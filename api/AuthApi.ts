@@ -52,5 +52,10 @@ export default {
     return useApiFetch(`/user/manager-in-array?user_id=${userId}`, {
       method: 'GET'
     })
+  },
+  getTemporaryOrder(userId: string): Promise<any> {
+    return useApiFetch(`/user/tmp-order?user_id=${userId}`, {
+      method: 'GET'
+    })
   }
 }
