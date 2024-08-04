@@ -31,7 +31,7 @@ rest.value = res.data.value
               <a :href="rest?.socialMedia" target="_blank">
                 <img src="../../assets/icons/vk.svg" class="vk" />
               </a>
-              <v-img :src="rest?.images.headerimage"  cover alt="">
+              <v-img :src="rest?.images.headerimage" max-height="25vh"  cover alt="">
 
               </v-img>
             
