@@ -75,14 +75,14 @@ export default {
       body: body
     })
   },
-  updateFoodListItem(
+  updateMeal(
     restId: string,
-    foodListItemId: string,
-    foodListItem: FoodListItem
+    mealId: string,
+    meal: FoodListItem
   ) {
-    return useApiFetch(`/rest/update-food-list?rest_id=${restId}&item_id=${foodListItemId}`, {
+    return useApiFetch(`/rest/update-meal?rest_id=${restId}&meal_id=${mealId}`, {
       method: 'PUT',
-      body: {foodListItem}
+      body: {meal}
     })
   },
   // updateFoodListItemImages(restId: string, foodListItemId: string, fd: FormData): Promise<any> {
@@ -96,8 +96,8 @@ export default {
   deleteFromMenu(menuItemId: string, restId: string) {
     return useApiFetch(`/rest/delete-from-menu?rest_id=${restId}&menu_item_id=${menuItemId}`, { method: 'DELETE' })
   },
-  deleteFoodListItem(foodListItemId: string, restId: string) {
-    return useApiFetch(`/rest/delete-food-list-item?rest_id=${restId}&food_list_item_id=${foodListItemId}`, { method: 'DELETE' })
+  deleteMeal(mealId: string, restId: string) {
+    return useApiFetch(`/rest/delete-meal?rest_id=${restId}&meal_id=${mealId}`, { method: 'DELETE' })
   },
   update(rest: Rest, restId: string) {
     return useApiFetch(`/rest?rest_id=${restId}`, {

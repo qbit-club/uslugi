@@ -5,7 +5,7 @@ const props = defineProps<{
   item: FoodListItemFromDb
   inMenu: boolean | undefined
 }>()
-const emit = defineEmits(['moveToMenu', 'deleteFromMenu','deleteFoodListItem'])
+const emit = defineEmits(['moveToMenu', 'deleteFromMenu','deleteMeal'])
 const router = useRouter()
 let confirmDeleteDialog = ref<boolean>(false)
 
@@ -15,8 +15,9 @@ function toggleMenu() {
   isMenuItem.value ? emit('moveToMenu', props.item._id) : emit('deleteFromMenu', props.item._id)
 }
 
-function deleteFoodListItem(){
-  emit('deleteFoodListItem',props.item._id)
+function deleteMeal(){
+  emit('deleteMeal',props.item._id)
+  confirmDeleteDialog.value=false
 }
 
 watch(isMenuItem, () => {
@@ -71,7 +72,7 @@ onMounted(() => {
                                 <v-card-title>Удалить?</v-card-title>
                                 <v-card-actions>
                                     <v-btn @click="confirmDeleteDialog = false">нет</v-btn>
-                                    <v-btn @click="deleteFoodListItem()" color="error">да</v-btn>
+                                    <v-btn @click="deleteMeal()" color="error">да</v-btn>
                                 </v-card-actions>
                             </v-card>
           </v-dialog>

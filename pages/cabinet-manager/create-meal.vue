@@ -5,6 +5,7 @@ let appStore = useApp()
 const CATEGORIES = appStore.appState?.foodCategory || []
 
 const userStore = useAuth()
+const router = useRouter();
 let restStore = useRest()
 
 let { user } = storeToRefs(userStore)
@@ -79,6 +80,7 @@ async function submit() {
     let uploadRes = await restStore.uploadFoodListItemImages(restId, itemId, imagesFormData)
     if (uploadRes.status.value == "success") {
       loading.value = false
+      router.push('/cabinet-manager/manage-menu')
     }
   }
 }

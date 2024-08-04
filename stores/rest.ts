@@ -49,8 +49,8 @@ export const useRest = defineStore('rest', () => {
   async function moveFoodItemToMenu(restId: string, foodListItemId: string): Promise<any> {
     return await RestApi.moveFoodItemToMenu({ restId, foodListItemId })
   }
-  async function updateFoodListItem(restId: string, foodListItemId: string, foodListItem :FoodListItemFromDb | FoodListItem): Promise<any> {
-    return await RestApi.updateFoodListItem( restId, foodListItemId, foodListItem )
+  async function updateMeal(restId: string, mealId: string, mealItem :FoodListItemFromDb | FoodListItem): Promise<any> {
+    return await RestApi.updateMeal( restId, mealId, mealItem )
   }
   // async function updateFoodListItemImages(restId: string, foodListItemId: string, fd:FormData): Promise<any> {
   //   return await RestApi.updateFoodListItemImages( restId, foodListItemId, fd)
@@ -58,8 +58,8 @@ export const useRest = defineStore('rest', () => {
   async function deleteFromMenu(menuItemId: string, restId: string): Promise<any> {
     return await RestApi.deleteFromMenu(menuItemId, restId)
   }
-  async function deleteFoodListItem(foodListItemId: string, restId: string): Promise<any> {
-    return await RestApi.deleteFoodListItem(foodListItemId, restId)
+  async function deleteMeal(mealId: string, restId: string): Promise<any> {
+    return await RestApi.deleteMeal(mealId, restId)
   }
   async function update(rest: any, restId: string): Promise<any> {
     return await RestApi.update(rest, restId)
@@ -69,7 +69,7 @@ export const useRest = defineStore('rest', () => {
   return {
     create, update, get, getRestsName, getByAlias, getById, getByIds, uploadImages,getManagersOfRest,
     sendFoodListItemToMenu, deleteRest, createFoodListItem,
-    uploadFoodListItemImages, moveFoodItemToMenu,updateFoodListItem, deleteFromMenu,deleteFoodListItem
+    uploadFoodListItemImages, moveFoodItemToMenu,updateMeal, deleteFromMenu,deleteMeal
   }
   //updateFoodListItemImages
 })

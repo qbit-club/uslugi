@@ -37,8 +37,8 @@ async function deleteFromMenu(menuItemId: string) {
     rest.value = res.data.value
   }
 }
-async function deleteFoodListItem(foodListItemId: string) {
-  let res = await restStore.deleteFoodListItem(foodListItemId, String(rest.value?._id))
+async function deleteMeal(foodListItemId: string) {
+  let res = await restStore.deleteMeal(foodListItemId, String(rest.value?._id))
   if (res.status.value == "success") {
     rest.value = res.data.value
   }
@@ -62,7 +62,7 @@ watch(user, () => {
 
         <div v-if="Number(rest?.foodList?.length) > 0" v-for="item of rest?.foodList" class="w-100">
           <ManagerFoodListItemCard :item="item" :inMenu="inMenu(item._id)" @move-to-menu="moveToMenu"
-            @delete-from-menu="deleteFromMenu" @delete-food-list-item="deleteFoodListItem"/>
+            @delete-from-menu="deleteFromMenu" @delete-meal="deleteMeal"/>
         </div>
         <div v-else cols="12"> Пусто </div>
       </v-col>

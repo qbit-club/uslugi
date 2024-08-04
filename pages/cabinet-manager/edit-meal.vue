@@ -1,10 +1,5 @@
 <script lang="ts" setup>
-import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
-import getPossibleLocations from "../../composables/dadata";
-import type { Location } from "../../types/location.interface";
-import { toast } from "vue3-toastify";
-import type { FoodListItem } from "~/types/food-list-item.interface";
 import type { FoodListItemFromDb } from "~/types/food-list-item-from-db.interface";
 
 // meta
@@ -14,7 +9,6 @@ useHead({
 definePageMeta({
   middleware: "auth",
 });
-const config = useRuntimeConfig();
 const restStore = useRest();
 const userStore = useAuth();
 const router = useRouter();
@@ -70,9 +64,10 @@ menuItem.value = restFromDb.foodList.filter(
 )[0];
 Object.assign(form.value, menuItem.value);
 
-let previews = ref<string[]>([]);
-let headerImagePreview = ref(menuItem.value.images[0]);
+let imagePreview = ref(menuItem.value.images[0]);
+let imgChanged=false
 function uploadImage(file: File) {
+  imgChanged=true
   // example filename: headerimage_216262666_best-burger.jpg
   imagesFormData.set(
     "menuitemimage",
@@ -82,14 +77,14 @@ function uploadImage(file: File) {
   // make a preview
   let reader = new FileReader();
   reader.onloadend = function () {
-    headerImagePreview.value = reader.result;
+    imagePreview.value = reader.result;
   };
   reader.readAsDataURL(file);
 }
 
 async function submit() {
   loading.value = true;
-  let res = await restStore.updateFoodListItem(
+  let res = await restStore.updateMeal(
     managingRest.value,
     String(router.currentRoute.value?.query?.item_id),
     form.value
@@ -104,25 +99,30 @@ async function submit() {
         break;
       }
     }
-    let uploadRes = await restStore.uploadFoodListItemImages(
-      restId,
-      itemId,
-      imagesFormData
-    );
-    if (uploadRes.status.value == "success") {
+    if(imgChanged==true){
+      let uploadRes = await restStore.uploadFoodListItemImages(
+        restId,
+        itemId,
+        imagesFormData
+      );
+      if (uploadRes.status.value == "success") {
+        loading.value = false;
+        router.push('/')
+      } else {
+        console.log(uploadRes);
+      }
+    }
+    else{
       loading.value = false;
-      router.push('/')
-    } else {
-      console.log(uploadRes);
+      router.push('/cabinet-manager/manage-menu')
     }
   } else {
     console.log(res);
   }
 }
-
-onMounted(() => {});
 </script>
 <template>
+    <ClientOnly>
   <v-row class="mb-16">
     <v-col cols="12">
       <h3>Редактировать блюдо</h3>
@@ -131,10 +131,10 @@ onMounted(() => {});
     <v-col cols="12" class="d-flex justify-space-between align-center">
       <MenuItemImageInput @upload-menu-item-image="uploadImage" />
       <v-img
-        :src="headerImagePreview"
+        :src="imagePreview"
         class="img-preview"
         alt=""
-        v-if="headerImagePreview"
+        v-if="imagePreview"
       />
     </v-col>
 
@@ -248,6 +248,7 @@ onMounted(() => {});
       >
     </v-col>
   </v-row>
+</ClientOnly>
 </template>
 <style scoped>
 .img-preview {
