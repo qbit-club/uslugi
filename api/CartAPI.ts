@@ -9,5 +9,14 @@ export default {
     return useApiFetch(`/order/by-rest-id?rest_id=${restId}`, {
       method: 'GET'
     })
+  },
+  changeStatus(orderId: string, status: string): Promise<any> {
+    return useApiFetch('/order/status', {
+      method: 'PUT',
+      body: {
+        orderId,
+        status
+      }
+    })
   }
 }

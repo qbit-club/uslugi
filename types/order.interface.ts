@@ -1,3 +1,10 @@
+export enum StatusEnum {
+  'created',
+  'inWork',
+  'inDelivery',
+  'delivered'
+}
+
 export interface Order {
   items: [{
     price: number,
@@ -6,5 +13,15 @@ export interface Order {
   }]
   date: string,
   rest: string,
-  user: object
+  user: {
+    name: string,
+    phone: string,
+    address: string,
+    comment: string,
+    _id: string | undefined
+  },
+  status: StatusEnum,
+  // нужно для красивого отображения нового заказа,
+  // в базу не сохраняется
+  new: boolean | undefined,
 }

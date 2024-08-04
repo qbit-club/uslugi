@@ -31,23 +31,23 @@ rest.value = res.data.value
               <a :href="rest?.socialMedia" target="_blank">
                 <img src="../../assets/icons/vk.svg" class="vk" />
               </a>
-              <v-img :src="rest?.images.headerimage" max-height="25vh" cover alt="">
+              <v-img :src="rest?.images.headerimage" max-height="25vh"  cover alt="">
 
               </v-img>
-              <div>
+            
 
                 <div class="logo">
                   <img :src="rest?.images.logo" alt="">
                 </div>
 
-              </div>
+           
             </v-col>
             <v-col :cols="12" class="ma-0 pa-0">
               <div class="title">{{ rest?.title }}</div>
             </v-col>
             <v-col :cols="12" class="pb-0">
-              <div class="d-flex">
-                <v-btn-toggle v-model="activMenu">
+       
+                <v-btn-toggle v-model="activMenu" class="d-flex overflow-x-auto">
                   <v-btn @click="currentTab = Menu" size="x-large">
                     <div class="d-flex flex-column align-center">
                       <v-icon icon="mdi-silverware-fork-knife" size="x-large" />
@@ -55,12 +55,6 @@ rest.value = res.data.value
                     </div>
                   </v-btn>
 
-                  <v-btn @click="currentTab = Reservation" size="x-large">
-                    <div class="d-flex flex-column align-center">
-                      <v-icon icon="mdi-table-chair" size="x-large" />
-                      <div class="explanation text-center">бронь <br> столиков</div>
-                    </div>
-                  </v-btn>
                   <v-btn @click="currentTab = InfoCard" size="x-large">
                     <div class="d-flex flex-column align-center">
                       <v-icon icon="mdi-information-outline" size="x-large" />
@@ -80,8 +74,14 @@ rest.value = res.data.value
                       <div class="explanation">адрес</div>
                     </div>
                   </v-btn>
+                  <v-btn @click="" size="x-large" style="opacity: 0.5;">
+                    <div class="d-flex flex-column align-center">
+                      <v-icon icon="mdi-table-chair" size="x-large" />
+                      <div class="explanation text-center">столики</div>
+                    </div>
+                  </v-btn>
                 </v-btn-toggle>
-              </div>
+       
             </v-col>
             <component :is="currentTab" :rest="rest"></component>
           </v-row>
@@ -97,7 +97,7 @@ rest.value = res.data.value
   left: 5%;
   bottom: -15%;
   width: 20%;
-  max-width: 230px;
+  max-width: 200px;
   border-radius: 50%;
   overflow: hidden;
   aspect-ratio: 1;
@@ -129,14 +129,14 @@ rest.value = res.data.value
   position: absolute;
   right: 20px;
   bottom: 20px;
-  z-index: 999;
+  z-index: 2;
 }
 
 .vk {
   position: absolute;
   right: 20px;
   bottom: -20px;
-  z-index: 999;
+  z-index: 2;
 
 }
 </style>

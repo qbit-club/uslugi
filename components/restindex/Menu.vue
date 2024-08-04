@@ -136,22 +136,22 @@ onMounted(() => {
                         </v-chip>
                     </v-chip-group>
                 </div>
-                <div class=" w-100 d-flex justify-end">
-                    <div class="d-flex align-center">
-                        <v-btn icon="mdi-magnify" @click="showSearch" class="mr-2">
-
-                        </v-btn>
+                <div class=" w-100 d-flex justify-end ga-4">
+                    <v-badge :content="cartLength" color="primary" class="d-flex align-center ml-2" >
+                        <v-icon icon="mdi-cart-outline" size="x-large" @click="cartDialog = true"  style="background: white;">
+                        </v-icon>
+                    </v-badge>
+                    <div class="d-flex align-center"  style="background: white;">
                         <transition name="fade">
                             <v-text-field min-width="200" v-model="filter" v-if="isShow" density="compact"
                                 variant="solo" hide-details single-line placeholder="поиск"
                                 clear-icon="mdi-close-circle" clearable></v-text-field>
                         </transition>
+                        <v-icon icon="mdi-magnify" size="x-large" @click="showSearch" class="mr-2">
 
+                        </v-icon>
                     </div>
-                    <v-badge :content="cartLength" color="primary" class="d-flex align-center ml-2">
-                        <v-btn icon="mdi-cart" @click="cartDialog = true">
-                        </v-btn>
-                    </v-badge>
+
 
                 </div>
 
@@ -164,7 +164,7 @@ onMounted(() => {
                         {{ item.category }}
                     </div>
                     <v-row>
-                        <v-col cols="12" md="6" v-for="(meal, index) in item.meals">
+                        <v-col cols="12" md="6"  v-for="(meal, index) in item.meals">
                             <MenuCard :meal="meal" :rest="rest"></MenuCard>
                         </v-col>
                     </v-row>

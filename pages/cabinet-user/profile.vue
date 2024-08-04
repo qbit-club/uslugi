@@ -13,8 +13,6 @@ let { user } = storeToRefs(authStore)
             <v-col>
                 <h3> {{ user?.name }}</h3>
                 <h5>{{ user?.email }}</h5>
-                <h5>Tелефон: 1211212</h5>
-                <h5>Адрес доставки: 1211212</h5>
             </v-col>
         </v-row>
     </v-container>

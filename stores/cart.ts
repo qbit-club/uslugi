@@ -163,6 +163,7 @@ export const useCart = defineStore("cart", () => {
           rest: item.restId,
           date: new Date(),
           user: userInfo,
+          status: 'created'
         });
 
         if (response.status.value == 'success') {
