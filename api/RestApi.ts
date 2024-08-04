@@ -25,6 +25,9 @@ export default {
   deleteRest(_id: string): Promise<any> {
     return useApiFetch(`/rest/delete?rest_id=${_id}`, { method: 'GET' })
   },
+  hideRest(_id: string): Promise<any> {
+    return useApiFetch(`/rest/change-hide?rest_id=${_id}`, { method: 'PUT' })
+  },
   getByAlias(alias: string): Promise<any> {
     return useApiFetch('/rest/one-by-alias', { method: 'POST', body: { alias } })
   },

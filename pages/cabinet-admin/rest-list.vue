@@ -13,6 +13,7 @@ const router = useRouter()
 let rests = ref<RestFromDb[] | []>()
 
 let confirmDeleteDialog = ref<boolean>(false)
+let confirmHideDialog = ref<boolean>(false)
 let isShow = ref(false)
 let filter = ref<string>('')
 
@@ -38,6 +39,11 @@ let deleteRest = async (id: string) => {
     await restStore.deleteRest(id)
     await getRestList()
     confirmDeleteDialog.value = false
+}
+let hideRest = async (id: any) => {
+    await restStore.hideRest(id)
+    await getRestList()
+    confirmHideDialog.value = false
 }
 
 let showSearch = () => {
@@ -83,7 +89,8 @@ getRestList()
 
                         </div>
                         <div class="d-flex flex-column align-center pa-4">
-                            <v-icon icon="mdi-eye-off-outline" size="x-large" class="cursor-pointer" />
+                            <v-icon icon="mdi-eye-off-outline" size="x-large" class="cursor-pointer" 
+                            @click="confirmHideDialog = true"/>
                             <div class="explanation text-center">спрятать</div>
 
                         </div>
@@ -99,6 +106,15 @@ getRestList()
                                 <v-card-actions>
                                     <v-btn @click="confirmDeleteDialog = false">нет</v-btn>
                                     <v-btn @click="deleteRest(rest._id)" color="error">да</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
+                        <v-dialog v-model="confirmHideDialog" max-width="300" persistent>
+                            <v-card>
+                                <v-card-title>{{ rest.isHidden ? "убрать скрытие" : "скрыть" }}</v-card-title>
+                                <v-card-actions>
+                                    <v-btn @click="confirmHideDialog = false">нет</v-btn>
+                                    <v-btn @click="hideRest(rest._id)" color="error">да</v-btn>
                                 </v-card-actions>
                             </v-card>
                         </v-dialog>
