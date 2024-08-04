@@ -31,16 +31,16 @@ rest.value = res.data.value
               <a :href="rest?.socialMedia" target="_blank">
                 <img src="../../assets/icons/vk.svg" class="vk" />
               </a>
-              <v-img :src="rest?.images.headerimage" max-height="25vh" cover alt="">
+              <v-img :src="rest?.images.headerimage"  cover alt="">
 
               </v-img>
-              <div>
+            
 
                 <div class="logo">
                   <img :src="rest?.images.logo" alt="">
                 </div>
 
-              </div>
+           
             </v-col>
             <v-col :cols="12" class="ma-0 pa-0">
               <div class="title">{{ rest?.title }}</div>
@@ -55,12 +55,6 @@ rest.value = res.data.value
                     </div>
                   </v-btn>
 
-                  <v-btn @click="currentTab = Reservation" size="x-large">
-                    <div class="d-flex flex-column align-center">
-                      <v-icon icon="mdi-table-chair" size="x-large" />
-                      <div class="explanation text-center">столики</div>
-                    </div>
-                  </v-btn>
                   <v-btn @click="currentTab = InfoCard" size="x-large">
                     <div class="d-flex flex-column align-center">
                       <v-icon icon="mdi-information-outline" size="x-large" />
@@ -78,6 +72,12 @@ rest.value = res.data.value
                     <div class="d-flex flex-column align-center">
                       <v-icon icon="mdi-map-marker-outline" size="x-large" />
                       <div class="explanation">адрес</div>
+                    </div>
+                  </v-btn>
+                  <v-btn @click="" size="x-large" style="opacity: 0.5;">
+                    <div class="d-flex flex-column align-center">
+                      <v-icon icon="mdi-table-chair" size="x-large" />
+                      <div class="explanation text-center">столики</div>
                     </div>
                   </v-btn>
                 </v-btn-toggle>

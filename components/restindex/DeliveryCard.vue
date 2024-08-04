@@ -9,12 +9,11 @@ defineProps<{
   <v-container>
     <v-row>
       <v-col>
-        <h3 class="mb-4 mt-4">
-          Доставка
-        </h3>
-        <p>
-          Доставка за 1000000000000000руб
-        </p>
+      
+          <p>
+            Расписание : <span v-html="rest.schedule"></span>
+          </p>
+
 
       </v-col>
     </v-row>
