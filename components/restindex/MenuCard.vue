@@ -41,19 +41,18 @@ function minusCart() {
 </script>
 <template>
     <div class="font-weight-bold mb-2">{{ meal.name }}</div>
+    <div class="text-caption">жиры {{ meal.health.fat }}г белки {{ meal.health.protein }}г углеводы
+        {{ meal.health.carb }}г </div>
     <v-card class="w-100 meal-card d-flex">
         <div class="w-100 ">
             <v-img :src="meal.images[0]" class="ml-1 mt-1" v-if="meal.images[0]">
             </v-img>
 
         </div>
+
         <div class="w-100 pa-2 d-flex flex-column justify-space-between">
-
             <div>
-                <div class="text-caption text-right">жиры {{ meal.health.fat }}г бел. {{ meal.health.protein }}г угл.
-                    {{ meal.health.carb }}г </div>
-
-                <div class="text-caption text-right font-weight-medium">{{ meal.health.energy }}</div>
+                <div class="text-caption text-right font-weight-medium">{{ meal.health.energy }}/100г</div>
                 <div class="text-caption text-right font-weight-medium">{{ meal.health.mass }}</div>
             </div>
 
@@ -92,8 +91,9 @@ function minusCart() {
 
 .price {
     font-size: clamp(0.875rem, 0.675rem + 0.8vw, 1.125rem);
-    font-weight: 700; 
+    font-weight: 700;
 }
+
 .ingredients {
     font-size: clamp(0.625rem, 0.425rem + 0.8vw, 0.875rem);
     padding: 5px;
