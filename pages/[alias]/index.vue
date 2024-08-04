@@ -46,8 +46,8 @@ rest.value = res.data.value
               <div class="title">{{ rest?.title }}</div>
             </v-col>
             <v-col :cols="12" class="pb-0">
-              <div class="d-flex">
-                <v-btn-toggle v-model="activMenu">
+       
+                <v-btn-toggle v-model="activMenu" class="d-flex overflow-x-auto">
                   <v-btn @click="currentTab = Menu" size="x-large">
                     <div class="d-flex flex-column align-center">
                       <v-icon icon="mdi-silverware-fork-knife" size="x-large" />
@@ -58,7 +58,7 @@ rest.value = res.data.value
                   <v-btn @click="currentTab = Reservation" size="x-large">
                     <div class="d-flex flex-column align-center">
                       <v-icon icon="mdi-table-chair" size="x-large" />
-                      <div class="explanation text-center">бронь <br> столиков</div>
+                      <div class="explanation text-center">столики</div>
                     </div>
                   </v-btn>
                   <v-btn @click="currentTab = InfoCard" size="x-large">
@@ -81,7 +81,7 @@ rest.value = res.data.value
                     </div>
                   </v-btn>
                 </v-btn-toggle>
-              </div>
+       
             </v-col>
             <component :is="currentTab" :rest="rest"></component>
           </v-row>
@@ -97,7 +97,7 @@ rest.value = res.data.value
   left: 5%;
   bottom: -15%;
   width: 20%;
-  max-width: 230px;
+  max-width: 200px;
   border-radius: 50%;
   overflow: hidden;
   aspect-ratio: 1;
@@ -129,14 +129,14 @@ rest.value = res.data.value
   position: absolute;
   right: 20px;
   bottom: 20px;
-  z-index: 999;
+  z-index: 2;
 }
 
 .vk {
   position: absolute;
   right: 20px;
   bottom: -20px;
-  z-index: 999;
+  z-index: 2;
 
 }
 </style>

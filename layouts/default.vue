@@ -68,17 +68,15 @@ const routes = [
         </div>
 
       </v-app-bar> -->
-      <div class="d-none d-md-block ">
-
-
-        <v-icon icon="mdi-hamburger" class="menu-button" @click="navigationDrawer = !navigationDrawer" />
+      <div >
+        <v-btn icon="mdi-menu" density="comfortable" outlined class="menu-button" @click="navigationDrawer = !navigationDrawer" />
       </div>
 
-      <v-speed-dial transition="fade-transition" class="d-flex d-md-none">
+      <!-- <v-speed-dial transition="fade-transition" class="d-flex d-md-none">
         <template v-slot:activator="{ props: activatorProps }">
           <v-btn v-bind="canClickOnSpeedDial ? activatorProps : null"
-            style="position: fixed; bottom: 40px; right:20px; z-index: 999;" icon="mdi-hamburger"
-            class="d-flex d-md-none" @click="ensureCanClick"></v-btn>
+            style="position: fixed; bottom: 40px; right:20px; z-index: 999;" icon="mdi-menu" class="d-flex d-md-none"
+            @click="ensureCanClick"></v-btn>
         </template>
 
         <v-btn key="1" to="/" icon="mdi-home-outline"></v-btn>
@@ -86,25 +84,29 @@ const routes = [
         <v-btn key="3" to="/cabinet-admin/rest-list" icon="mdi-shield-crown-outline"></v-btn>
         <v-btn key="4" to="/cabinet-manager/orders" icon="mdi-account-tie-outline"></v-btn>
 
-      </v-speed-dial>
+      </v-speed-dial> -->
 
 
       <ClientOnly>
-        <!-- только на экранах md и больше, потому что на телефоне можно свайпнуть и navigation-drawer появится -->
-        <v-navigation-drawer v-if="width > 960" :model-value="navigationDrawer" location="right" temporary>
 
+        <v-navigation-drawer :model-value="navigationDrawer" location="bottom" :mobile="false" elevation="22">
+          <v-container>
+            <v-row class="justify-center">
+              <v-col cols="12" md="6">
 
-          <v-list nav>
-            <div>
-
-            </div>
-            <v-list-item v-for="route of routes" :prepend-icon="route.icon" :to="route.value" :value="route.value"
-              @click="navigationDrawer = false">
-              <div v-if="route.show" style="font-size: 0.8rem;
-    font-weight: 500;"> {{ route.title }}</div>
-            </v-list-item>
-          </v-list>
+                <v-list nav>
+                  <v-list-item v-for="route of routes" :prepend-icon="route.icon" :to="route.value" :value="route.value"
+                    @click="navigationDrawer = false">
+                    <div v-if="route.show" style="font-size: 0.8rem;font-weight: 500;"> {{ route.title }}</div>
+                  </v-list-item>
+                </v-list>
+              </v-col>
+            </v-row>
+          </v-container>
         </v-navigation-drawer>
+
+
+
       </ClientOnly>
 
       <v-main class="main">
@@ -119,8 +121,9 @@ const routes = [
 <style scoped lang="scss">
 .menu-button {
   position: fixed;
-  top: 25px;
-  right: 25px;
+  top: 20px;
+  right: 20px;
+  z-index: 999;
 }
 
 .logo {

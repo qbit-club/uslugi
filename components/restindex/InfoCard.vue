@@ -7,14 +7,18 @@ defineProps<{
 
 </script>
 <template>
-  <div>
-    <h3 class="mb-4 mt-4">
-      Информация
-    </h3>
-    <p>
-      Описание: <span v-html="rest.description"></span>
-    </p>
-   
-  </div>
+  <v-container>
+    <v-row>
+      <v-col>
+        <h3 class="mb-4 mt-4">
+          Информация
+        </h3>
+        <p>
+          Описание: <span v-html="rest.description"></span>
+        </p>
+
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 <style lang="scss" scoped></style>

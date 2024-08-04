@@ -55,7 +55,7 @@ let showSearch = () => {
         <!-- <v-icon icon="mdi-magnify" class="ma-2" @click="showSearch" /> -->
       </v-col>
 
-      <v-col cols="12" sm="6" md="4" lg="3" v-for="rest, index in restsWithFilter" :key="index">
+      <v-col cols="6" md="4" lg="3" v-for="rest, index in restsWithFilter" :key="index">
         <NuxtLink :to="`/${rest.alias}`">
           <div class="h-100 d-flex flex-column align-center pa-4 ">
             <h3>{{ rest.title }}</h3>

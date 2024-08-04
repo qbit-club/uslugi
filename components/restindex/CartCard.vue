@@ -115,8 +115,10 @@ watch(address, (newAddress) => {
         <div class="info">
           <div class="name">{{ item.name }}</div>
           <div class="numbers">
+            <span style="font-weight: 300">{{ `${item.price} * ${item.count} = `}}</span>&nbsp;
+         
             <span style="font-weight: 600">{{ (item.count * item.price).toFixed(2) }}₽</span>&nbsp;
-            <span style="font-weight: 300">{{ item.health.mass }}</span>
+           
           </div>
         </div>
         <div class="d-flex justify-start align-center ml-4">
