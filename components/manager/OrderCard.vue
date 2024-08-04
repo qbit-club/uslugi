@@ -29,6 +29,12 @@ watch(orderStatus, async (newStatus) => {
     <h3>{{ getDate(order.date) }}</h3>
   </v-badge>
   <h3 v-else>{{ getDate(order.date) }}</h3>
+  <v-radio-group inline v-model="orderStatus" :hide-details="true" :disabled="loading">
+    <v-radio label="Создан" value="created" color="" ></v-radio>
+    <v-radio label="В работе" value="inWork" color="info" ></v-radio>
+    <v-radio label="В пути" value="inDelivery" color="warning" ></v-radio>
+    <v-radio label="Доставлен" value="delivered" color="success" ></v-radio>
+  </v-radio-group>
   <div class="d-flex flex-wrap mt-4 mb-4">
     <div class="user-info"><v-icon icon="mdi-account-outline"></v-icon>{{ order.user.name }}</div>
     <div class="user-info">
@@ -40,16 +46,11 @@ watch(orderStatus, async (newStatus) => {
   </div>
 
  
-  <div v-for="(item, j) in order.items" class="d-flex justify-space-between">
+  <div v-for="(item, j) in order.items" class="d-flex justify-space-between font-italic font-weight-medium">
     <span>{{ item.menuItem }}</span>
     <span>{{ item.count }} * {{ item.price }} = {{ (item.count * item.price).toFixed(2) }} </span>
   </div>
-  <v-radio-group inline v-model="orderStatus" :hide-details="true" :disabled="loading">
-    <v-radio label="Создан" value="created" color="" ></v-radio>
-    <v-radio label="В работе" value="inWork" color="info" ></v-radio>
-    <v-radio label="Доставляется" value="inDelivery" color="warning" ></v-radio>
-    <v-radio label="Доставлено" value="delivered" color="success" ></v-radio>
-  </v-radio-group>
+  
   <v-divider></v-divider>
   <div class="text-end">
     <i>
@@ -59,7 +60,7 @@ watch(orderStatus, async (newStatus) => {
     order.items.reduce(
       (accumulator: number, current: any) => accumulator + current.count * current.price,
       0
-    )
+    ).toFixed(2)
   }}
       </b></i>
   </div>
