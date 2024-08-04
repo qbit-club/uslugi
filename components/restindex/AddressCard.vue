@@ -7,16 +7,12 @@ const props = defineProps<{
 <template>
   <v-container>
     <v-row>
-      <v-col>
-        <v-card class="pa-4 ma-4">
+      <v-col >
+      
           <p>
             Адрес : {{ props.rest.location.name }}
           </p>
-          <p>
-            Расписание : <span v-html="props.rest.schedule"></span>
-          </p>
-        </v-card>
-
+         
 
 
       </v-col>
