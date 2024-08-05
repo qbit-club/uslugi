@@ -157,10 +157,10 @@ watch(address, (newAddress) => {
 
     <div v-else class="pb-6 text-center" style="font-weight: 600">
       <v-icon icon="mdi-close" class="cursor-pointer float-right" @click="emit('close')"></v-icon>
-      пусто
+      в корзине пусто
     </div>
 
-    <div class="d-flex justify-space-between">
+    <div class="d-flex justify-space-between" v-if="restItem?.restId">
       <v-btn variant="tonal" size="large" @click="order" :loading="loading">заказать</v-btn>
       <div class="amount d-flex align-center">{{ amount }}₽</div>
     </div>
