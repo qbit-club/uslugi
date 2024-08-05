@@ -113,7 +113,7 @@ rest.value = res.data.value
 
 
 .title {
-  font-size: clamp(0.875rem, -0.025rem + 3.6vw, 2rem);
+  font-size: clamp(1rem, 0.2rem + 3.2vw, 2rem);
   margin-top: 20px;
   font-weight: 700;
   text-align: center;
