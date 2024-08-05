@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const emit = defineEmits(["closeDialog"])
+const emit = defineEmits(["buy", 'close'])
 
 const cartStore = useCart()
 const userStore = useAuth()
@@ -20,7 +20,7 @@ function minusCart(itemId: string, restId: string) {
 }
 function clearRestCart(restId: string) {
   cartStore.clearRestCart(restId)
-  emit("closeDialog")
+  emit("buy")
 }
 
 let amount = computed(() => {
@@ -55,7 +55,7 @@ async function order() {
   })
   if (response.status.value == "success") {
     loading.value = false
-    emit("closeDialog")
+    emit("buy")
   }
 }
 watch(phone, (newPhone) => {
@@ -77,6 +77,10 @@ watch(address, (newAddress) => {
 <template>
   <v-card class="py-5 px-6">
     <div class="cart-item" v-if="restItem?.restId">
+      <div class="text-right">
+        <v-icon icon="mdi-close" class="cursor-pointer" @click="emit('close')"></v-icon>
+      </div>
+
       <v-row class="mb-3">
         <v-col cols="12" class="pb-1">
           <div class="caption">Имя</div>
@@ -92,13 +96,15 @@ watch(address, (newAddress) => {
         </v-col>
         <v-col cols="12" class="pt-1">
           Комментарии
-          <v-textarea variant="outlined" auto-grow rows="2" :hide-details="true" v-model="comment"></v-textarea>
+          <v-textarea variant="outlined" auto-grow rows="1" :hide-details="true" v-model="comment"></v-textarea>
         </v-col>
       </v-row>
+      <h3 >{{ restItem.restInfo.title }}</h3>
       <div class="rest-info">
+
         <div class="d-flex flex-column justify-space-between">
-          <h3 style="line-height: 1">{{ restItem.restInfo.title }}</h3>
-          <span class="text-caption" style="line-height: 1" v-html="restItem.restInfo.schedule"></span>
+
+          <span class="text-caption"  v-html="restItem.restInfo.schedule"></span>
         </div>
         <div class="d-flex align-center">
           <a :href="restItem.restInfo.socialMedia" target="_blank" class="d-flex align-center ml-4">
@@ -107,45 +113,53 @@ watch(address, (newAddress) => {
           <a :href="`tel:${restItem.restInfo.phone}`"><v-icon icon="mdi-phone" class="ml-4" size="20" /></a>
         </div>
         <div class="d-flex align-center ml-6">
-          <v-btn variant="plain" @click="clearRestCart(restItem.restId)"> очистить </v-btn>
+          <v-btn icon="mdi-cart-remove" variant="plain" @click="clearRestCart(restItem.restId)"> </v-btn>
         </div>
       </div>
-      <div class="item" v-for="item of restItem.items">
-        <img :src="item.images[0]" style="width: 80px; aspect-ratio: 1" />
-        <div class="info">
-          <div class="name">{{ item.name }}</div>
-          <div class="numbers">
-            <span style="font-weight: 300">{{ `${item.price} * ${item.count} = `}}</span>&nbsp;
-         
-            <span style="font-weight: 600">{{ (item.count * item.price).toFixed(2) }}₽</span>&nbsp;
-           
+      <div v-for="item of restItem.items">
+        <div class="item">
+          <div style="width: 80px;" aspect-ratio="1">
+            <v-img :src="item.images[0]" />
           </div>
-        </div>
-        <div class="d-flex justify-start align-center ml-4">
-          <div class="cart-actions">
-            <div class="cart-plus-minus">
-              <v-icon
-                icon="mdi-minus"
-                class="cursor-pointer"
-                @click="minusCart(item.menuItemId, restItem.restId)"
-              ></v-icon>
-              <div class="cart-count">
-                {{ item.count }}
+
+          <div class="info">
+            <div class="name text-right">{{ item.name }}</div>
+            <div lass="d-flex justify-space-between">
+
+
+              <div class="numbers">
+                <span style="font-weight: 300">{{ `${item.price} * ${item.count} = ` }}</span>&nbsp;
+
+                <span style="font-weight: 600">{{ (item.count * item.price).toFixed(2) }}₽</span>&nbsp;
+
               </div>
-              <v-icon
-                icon="mdi-plus"
-                class="cursor-pointer"
-                @click="plusCart(item.menuItemId, restItem.restId)"
-              ></v-icon>
+
+              <div class="d-flex justify-end align-center ml-4">
+                <div class="cart-actions">
+                  <div class="cart-plus-minus">
+                    <v-icon icon="mdi-minus" class="cursor-pointer"
+                      @click="minusCart(item.menuItemId, restItem.restId)"></v-icon>
+                    <div class="cart-count">
+                      {{ item.count }}
+                    </div>
+                    <v-icon icon="mdi-plus" class="cursor-pointer"
+                      @click="plusCart(item.menuItemId, restItem.restId)"></v-icon>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        <v-divider class="ma-1"></v-divider>
       </div>
+
     </div>
-    <div v-else class="d-flex justify-center align-center pb-6" style="font-weight: 600">
-      <v-icon icon="mdi-cart-remove"></v-icon>
+
+    <div v-else class="pb-6 text-center" style="font-weight: 600">
+      <v-icon icon="mdi-close" class="cursor-pointer float-right" @click="emit('close')"></v-icon>
       пусто
     </div>
+
     <div class="d-flex justify-space-between">
       <v-btn variant="tonal" size="large" @click="order" :loading="loading">заказать</v-btn>
       <div class="amount d-flex align-center">{{ amount }}₽</div>
@@ -156,6 +170,7 @@ watch(address, (newAddress) => {
 .caption {
   font-size: 13px;
 }
+
 .cart-item {
   margin-bottom: 38px;
   width: 100%;
@@ -163,20 +178,20 @@ watch(address, (newAddress) => {
   .item {
     display: flex;
     justify-content: space-between;
+
+
     .info {
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
       font-size: 16px;
       margin-left: 10px;
 
-      .name {
-        margin-top: 8px;
-      }
+
 
       .numbers {
-        margin-bottom: 12px;
+        // margin-bottom: px;
         font-size: 12px;
+        text-align: right;
       }
     }
   }
@@ -211,11 +226,13 @@ watch(address, (newAddress) => {
     }
   }
 }
+
 .amount {
   font-size: 20px !important;
   font-weight: 500 !important;
   margin-left: 8px;
 }
+
 .vk {
   height: 20px;
 }
