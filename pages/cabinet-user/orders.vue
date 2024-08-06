@@ -18,18 +18,28 @@ let getDate = (d: string) => {
         minute: 'numeric',
     })
 }
-onMounted(async () => {
 
+function getStatus(status: string) {
+    switch(status) {
+        case 'created':
+            return 'Создан'
+        case 'inWork':
+            return 'В работе'
+        case 'inDelivery':
+            return 'Доставляется'
+        case 'delivered':
+            return 'Доставлен'
+    }
+}
+
+onMounted(async () => {
     let res = await cartStore.getOrdersByOrdersId(user.value?.orders)
     orders.value = res.data.value
 })
-
-
 </script>
 
 <template>
     <v-container>
-        <UserTemporaryOrder />
         <v-row class="justify-center pb-16">
             <v-col cols="12" sm="10" md="8" lg="6">
                 <div v-for="(item, index) in orders">
@@ -39,6 +49,7 @@ onMounted(async () => {
 
                     <div v-for="(order, i) in item.orders">
                         <h3>{{ getDate(order.date) }}</h3>
+                        {{ getStatus(order.status) }}
                         <div v-for="item, j in order.items" class="d-flex justify-space-between">
                             <span>{{ item.menuItem }}</span> <span>{{ item.count }} * {{ item.price }} = {{ (item.count
                                 * item.price).toFixed(2) }}
@@ -47,7 +58,7 @@ onMounted(async () => {
                         </div>
                         <v-divider></v-divider>
                         <div class="text-end"><i> <b> Итого: {{ order.items.reduce((accumulator: number,
-                            current: any) => accumulator + current.count * current.price, 0) }} </b></i>
+                            current: any) => accumulator + current.count * current.price, 0).toFixed(2) }}₽ </b></i>
                         </div>
                     </div>
 

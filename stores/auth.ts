@@ -84,16 +84,14 @@ export const useAuth = defineStore('auth', () => {
     }
   }
 
-  async function logout(): Promise<void> {
+  async function logout(): Promise<any> {
     try {
-      let tokenCookie = useCookie('token')
-      tokenCookie.value = null
-
-      await AuthAPI.logout()
+     let res = await AuthAPI.logout()
 
       user.value = null
 
       localStorage.removeItem('newUser')
+      return res
     } catch { }
   }
 

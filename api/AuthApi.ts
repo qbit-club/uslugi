@@ -14,7 +14,7 @@ export default {
   forgotPassword(email: string) {
     return useApiFetch('/auth/forgot-password', { method: 'POST', body: { email } })
   },
-  logout() {
+  logout(): Promise<any> {
     return useApiFetch('/auth/logout', { method: 'POST' })
   },
   updateUser(user: any): Promise<any> {
