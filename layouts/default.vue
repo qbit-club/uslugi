@@ -24,11 +24,6 @@ let isLoggedIn = computed(() => {
   return false
 })
 
-watch(user, (newUser) => {
-  isManager.value = newUser?.roles.includes("manager") ?? false
-  isAdmin.value = newUser?.roles.includes("admin") ?? false
-})
-
 async function logout() {
   let res = await userStore.logout()
   if (res.status.value == "success") navigationDrawer.value = false
