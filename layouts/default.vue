@@ -89,7 +89,7 @@ async function logout() {
                   <v-list-item @click="logout" prepend-icon="mdi-logout" v-if="isLoggedIn">
                     <div style="font-size: 0.8rem; font-weight: 500">Выйти</div>
                   </v-list-item>
-                  <v-list-item @click="router.push('login')" prepend-icon="mdi-login" v-else>
+                  <v-list-item @click="router.push('/login')" prepend-icon="mdi-login" v-else>
                     <div style="font-size: 0.8rem; font-weight: 500">Войти</div>
                   </v-list-item>
                 </v-list>
