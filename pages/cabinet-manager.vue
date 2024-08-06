@@ -4,12 +4,25 @@ definePageMeta({
 })
 
 const userStore = useAuth()
+const restStore = useRest()
 
 let managerIn = await userStore.getManagerIn()
 let currentRest = ref<string>(userStore.user?.managingRest || "")
+let isHidden = ref<boolean>(managerIn.find((rest:any)=>rest.id=currentRest).isHidden)
+
+async function refreshHide(){
+  managerIn = await userStore.getManagerIn()
+  isHidden.value=managerIn.find((rest:any)=>rest.id=currentRest).isHidden
+}
+async function hideRest(){
+  await restStore.hideRest(currentRest.value)
+  await refreshHide()
+}
 
 watch(currentRest, async (newVal) => {
   await userStore.chooseManagingRest(String(newVal))
+  currentRest.value = userStore.user?.managingRest || ""
+  await refreshHide()
 })
 </script>
 <template>
@@ -23,13 +36,13 @@ watch(currentRest, async (newVal) => {
       </v-col>
       <v-col :cols="12" class="d-flex overflow-x-auto">
         <NuxtLink to="/cabinet-manager/orders" class="d-flex">
-          <div class="d-flex flex-column align-center pa-4">
+          <div class="tab pa-4">
             <v-icon icon="mdi-cart-check" size="x-large" />
             <div class="explanation text-center">заказы</div>
           </div>
         </NuxtLink>
         <NuxtLink to="/cabinet-manager/table-reservation" class="d-flex">
-          <div class="d-flex flex-column align-center pa-4">
+          <div class="tab pa-4">
             <v-icon icon="mdi-table-chair" size="x-large" />
             <div class="explanation text-center">
               бронирование <br />
@@ -38,7 +51,7 @@ watch(currentRest, async (newVal) => {
           </div>
         </NuxtLink>
         <NuxtLink to="/cabinet-manager/create-meal" class="d-flex">
-          <div class="d-flex flex-column align-center pa-4">
+          <div class="tab pa-4">
             <v-icon icon="mdi-bowl-mix-outline" size="x-large" />
             <div class="explanation text-center">
               создать <br />
@@ -47,7 +60,7 @@ watch(currentRest, async (newVal) => {
           </div>
         </NuxtLink>
         <NuxtLink to="/cabinet-manager/manage-menu" class="d-flex">
-          <div class="d-flex flex-column align-center pa-4">
+          <div class="tab pa-4">
             <v-icon icon="mdi-food-outline" size="x-large" />
             <div class="explanation text-center">
               управлять <br />
@@ -56,7 +69,7 @@ watch(currentRest, async (newVal) => {
           </div>
         </NuxtLink>
         <NuxtLink to="/cabinet-manager/rest-info" class="d-flex">
-          <div class="d-flex flex-column align-center pa-4">
+          <div class="tab pa-4">
             <v-icon icon="mdi-tune-variant" size="x-large" />
             <div class="explanation text-center">
               информация <br />
@@ -66,7 +79,7 @@ watch(currentRest, async (newVal) => {
         </NuxtLink>
 
         <NuxtLink to="/cabinet-manager/add-manager" class="d-flex">
-          <div class="d-flex flex-column align-center pa-4">
+          <div class="tab pa-4">
             <v-icon icon="mdi-account-plus-outline" size="x-large" />
             <div class="explanation text-center">
               добавить <br />
@@ -75,7 +88,7 @@ watch(currentRest, async (newVal) => {
           </div>
         </NuxtLink>
         <NuxtLink to="/cabinet-manager/manage-email-list" class="d-flex">
-          <div class="d-flex flex-column align-center pa-4">
+          <div class="tab pa-4">
             <v-icon icon="mdi-email-fast-outline" size="x-large" />
             <div class="explanation text-center">
               email список <br />
@@ -83,6 +96,14 @@ watch(currentRest, async (newVal) => {
             </div>
           </div>
         </NuxtLink>
+
+          <div class="tab pa-4 cursor-pointer" :class="{'show-hide': isHidden}" @click="hideRest()">
+            <v-icon :icon="isHidden ?'mdi-eye-off-outline': 'mdi-eye-outline'" size="x-large" />
+            <div class="explanation text-center">
+               {{isHidden ? 'показать' : 'скрыть'}} <br />
+            </div>
+          </div>
+
       </v-col>
      
 
@@ -92,3 +113,13 @@ watch(currentRest, async (newVal) => {
     </v-row>
   </v-container>
 </template>
+<style scoped>
+.tab{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.show-hide{
+  color: red;
+}
+</style>
