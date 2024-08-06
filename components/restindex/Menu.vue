@@ -87,6 +87,9 @@ function closeCartDialogAndClearState() {
     cartStore.cart = []
     localStorage.removeItem('cart')
 }
+function closeDialog () {
+    cartDialog.value = false
+}
 
 watch(filter, () => {
     menuWithFilter()
@@ -172,7 +175,7 @@ onMounted(() => {
             </v-col>
         </v-row>
         <v-dialog v-model="cartDialog" max-width="550">
-            <CartCard @close-dialog="closeCartDialogAndClearState" />
+            <CartCard @buy="closeCartDialogAndClearState" @close="closeDialog" />
         </v-dialog>
     </v-container>
 </template>

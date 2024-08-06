@@ -15,15 +15,8 @@ interface CartItem {
       price: number;
       count: number;
       name: string;
-      health: {
-        protein: number;
-        carb: number;
-        fat: number;
-        energy: string;
-        mass: string;
-        ingredients: string;
-      };
       images: string[];
+      health: any,
       menuItemId: string;
     }
   ];
@@ -58,10 +51,11 @@ export const useCart = defineStore("cart", () => {
       price: parseFloat(meal.price),
       count: 1,
       name: meal.name,
-      health: meal.health,
       images: meal.images,
+      health: meal.health,
       menuItemId: meal._id,
     };
+    
     // если нет такого ресторана в корзине, то создаем его
     // иначе добавляем в список товаров текущий товар
     if (!cart.value.find((o) => o.restId == rest._id)) {
@@ -145,6 +139,7 @@ export const useCart = defineStore("cart", () => {
           price: number;
           count: number;
           menuItem: string;
+          images: string[];
         }[] = [];
 
         for (let i of item.items) {
@@ -152,6 +147,7 @@ export const useCart = defineStore("cart", () => {
             price: i.price,
             count: i.count,
             menuItem: i.name,
+            images: i.images,
           });
         }
         const userStore = useAuth();

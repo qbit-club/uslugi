@@ -9,7 +9,8 @@ export interface Order {
   items: [{
     price: number,
     count: number,
-    menuItem: string
+    menuItem: string,
+    images: string[]
   }]
   date: string,
   rest: string,

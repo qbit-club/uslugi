@@ -36,8 +36,8 @@ rest.value = res.data.value
               </v-img>
             
 
-                <div class="logo">
-                  <img :src="rest?.images.logo" alt="">
+             <div class="logo">
+                  <v-img :src="rest?.images.logo" alt="" cover aspect-ratio="1"></v-img>
                 </div>
 
            
@@ -96,11 +96,10 @@ rest.value = res.data.value
   position: absolute;
   left: 5%;
   bottom: -15%;
-  width: 20%;
-  max-width: 200px;
+  width: 18%;
+  max-width: 180px;
   border-radius: 50%;
   overflow: hidden;
-  aspect-ratio: 1;
   background: white;
   box-shadow: 10px 14px 13px -14px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: 10px 14px 13px -14px rgba(0, 0, 0, 0.75);
@@ -114,7 +113,8 @@ rest.value = res.data.value
 
 
 .title {
-  font-size: clamp(1.5rem, 1.1023rem + 1.1364vw, 2rem);
+  font-size: clamp(1rem, 0.2rem + 3.2vw, 2rem);
+  margin-top: 20px;
   font-weight: 700;
   text-align: center;
   text-transform: uppercase;

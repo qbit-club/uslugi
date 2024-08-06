@@ -151,11 +151,20 @@ export const useAuth = defineStore('auth', () => {
     }
   }
 
+  async function getTemporaryOrder(): Promise<any> {
+    try {
+      return await AuthAPI.getTemporaryOrder(String(user.value?._id))
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return {
     // variables
     user,
     // functions
     registration, login, redirectTo, checkAuth, checkAdmin, checkManager, logout,
-    updateUser, setManager, deleteManager, getUserRests, chooseManagingRest, getManagerIn
+    updateUser, setManager, deleteManager, getUserRests, chooseManagingRest, getManagerIn,
+    getTemporaryOrder
   }
 })
