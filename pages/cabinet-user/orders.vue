@@ -29,11 +29,7 @@ onMounted(async () => {
 
 <template>
     <v-container>
-        <v-row class="justify-center">
-            <v-col cols="12" sm="10" md="8" lg="6">
-                <UserTemporaryOrder />
-            </v-col>
-        </v-row>
+        <UserTemporaryOrder />
         <v-row class="justify-center pb-16">
             <v-col cols="12" sm="10" md="8" lg="6">
                 <div v-for="(item, index) in orders">
