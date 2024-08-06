@@ -39,6 +39,7 @@ async function deleteManager() {
 }
 let getRestsName = async () => {
   let restResponse = await restStore.getRestsName()
+  console.log(restResponse)
   rests.value = restResponse.data.value
   authStore.checkAuth()
 }
