@@ -1,7 +1,7 @@
 <script setup lang="ts">
-
 import { useWindowSize } from '@vueuse/core'
 const { width } = useWindowSize()
+import { toast } from 'vue3-toastify'
 
 const router = useRouter()
 let userStore = useAuth()
@@ -24,7 +24,28 @@ let appStore = useApp()
 await userStore.checkAuth()
 await appStore.getAppState()
 
+let tmpOrder = ref<any>()
+if (userStore.user?._id) {
+  let tmpOrderRes = await userStore.getTemporaryOrder()
+  if (tmpOrderRes.status.value == 'success') tmpOrder.value = tmpOrderRes.data.value
+}
 
+function displayOrderAlert() {
+  if (tmpOrder.value._id && process.client) {
+    toast(`Заказ №${tmpOrder.value._id.slice(0, 4)} готовится`, {
+      "type": "success",
+      "closeOnClick": false,
+      "autoClose": false,
+      "hideProgressBar": true,
+      "dangerouslyHTMLString": true,
+      "toastId": tmpOrder.value?._id,
+      containerId: 'A'
+    })
+  }
+}
+
+watch(router.currentRoute, displayOrderAlert)
+displayOrderAlert()
 const routes = [
   {
     value: '/',
