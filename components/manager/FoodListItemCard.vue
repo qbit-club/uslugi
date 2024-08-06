@@ -5,12 +5,19 @@ const props = defineProps<{
   item: FoodListItemFromDb
   inMenu: boolean | undefined
 }>()
-const emit = defineEmits(['moveToMenu', 'deleteFromMenu'])
+const emit = defineEmits(['moveToMenu', 'deleteFromMenu','deleteMeal'])
+const router = useRouter()
+let confirmDeleteDialog = ref<boolean>(false)
 
 let isMenuItem = ref(false)
 
 function toggleMenu() {
   isMenuItem.value ? emit('moveToMenu', props.item._id) : emit('deleteFromMenu', props.item._id)
+}
+
+function deleteMeal(){
+  emit('deleteMeal',props.item._id)
+  confirmDeleteDialog.value=false
 }
 
 watch(isMenuItem, () => {
@@ -44,22 +51,31 @@ onMounted(() => {
 
         <div class="d-flex align-center justify-center cursor-pointer">
 
-          <div class="d-flex flex-column align-center pa-2 " @click="">
+          <div class="d-flex flex-column align-center pa-2 " @click="router.push(`/cabinet-manager/edit-meal?item_id=${item._id}`)">
             <v-icon icon="mdi-pencil" size="x-large" />
             <div class="explanation text-center">редактировать</div>
 
           </div>
 
-          <div class="d-flex flex-column align-center pa-2" @click="">
+          <div class="d-flex flex-column align-center pa-2" @click="confirmDeleteDialog = true">
             <v-icon icon="mdi-trash-can-outline" size="x-large" />
             <div class="explanation text-center">удалить</div>
 
           </div>
-          <div class="d-flex  align-center pa-2">
+          <div class="d-flex align-center pa-2">
             <v-checkbox v-model="isMenuItem" hide-details class="pa-0"></v-checkbox>
             <div class="text-center text-uppercase" v-if="isMenuItem">в меню</div>
 
           </div>
+          <v-dialog v-model="confirmDeleteDialog" max-width="300" persistent>
+                            <v-card>
+                                <v-card-title>Удалить?</v-card-title>
+                                <v-card-actions>
+                                    <v-btn @click="confirmDeleteDialog = false">нет</v-btn>
+                                    <v-btn @click="deleteMeal()" color="error">да</v-btn>
+                                </v-card-actions>
+                            </v-card>
+          </v-dialog>
         </div>
       </div>
     </v-col>

@@ -112,6 +112,7 @@ function uploadLogo(file: File) {
   }
   reader.readAsDataURL(file);
 }
+
 // base64 img
 let headerImagePreview = ref(restFromDb.images?.headerimage)
 function uploadHeaderImage(file: File) {

@@ -25,6 +25,9 @@ export const useRest = defineStore('rest', () => {
   async function deleteRest(rest_id: string) {
     return await RestApi.deleteRest(rest_id)
   }
+  async function hideRest(rest_id: string) {
+    return await RestApi.hideRest(rest_id)
+  }
   async function getByAlias(alias: string) {
     return await RestApi.getByAlias(alias)
   }
@@ -36,9 +39,6 @@ export const useRest = defineStore('rest', () => {
   }
   async function uploadImages(formData: FormData, restId: string) {
     return await RestApi.uploadImages(formData, restId)
-  }
-  async function changeFoodList(restId: string, foodListItem: FoodListItemFromDb | FoodListItem) {
-    return await RestApi.changeFoodList(restId, foodListItem)
   }
   async function sendFoodListItemToMenu(_id: string, restId: string) {
     return await RestApi.sendFoodListItemToMenu(_id, restId)
@@ -52,8 +52,17 @@ export const useRest = defineStore('rest', () => {
   async function moveFoodItemToMenu(restId: string, foodListItemId: string): Promise<any> {
     return await RestApi.moveFoodItemToMenu({ restId, foodListItemId })
   }
+  async function updateMeal(restId: string, mealId: string, mealItem :FoodListItemFromDb | FoodListItem): Promise<any> {
+    return await RestApi.updateMeal( restId, mealId, mealItem )
+  }
+  // async function updateFoodListItemImages(restId: string, foodListItemId: string, fd:FormData): Promise<any> {
+  //   return await RestApi.updateFoodListItemImages( restId, foodListItemId, fd)
+  // }
   async function deleteFromMenu(menuItemId: string, restId: string): Promise<any> {
     return await RestApi.deleteFromMenu(menuItemId, restId)
+  }
+  async function deleteMeal(mealId: string, restId: string): Promise<any> {
+    return await RestApi.deleteMeal(mealId, restId)
   }
   async function update(rest: any, restId: string): Promise<any> {
     return await RestApi.update(rest, restId)
@@ -62,7 +71,8 @@ export const useRest = defineStore('rest', () => {
 
   return {
     create, update, get, getRestsName, getByAlias, getById, getByIds, uploadImages,getManagersOfRest,
-    changeFoodList, sendFoodListItemToMenu, deleteRest, createFoodListItem,
-    uploadFoodListItemImages, moveFoodItemToMenu, deleteFromMenu
+    sendFoodListItemToMenu, deleteRest, hideRest,createFoodListItem,
+    uploadFoodListItemImages, moveFoodItemToMenu,updateMeal, deleteFromMenu,deleteMeal
   }
+  //updateFoodListItemImages
 })

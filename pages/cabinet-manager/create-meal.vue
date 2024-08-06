@@ -5,6 +5,7 @@ let appStore = useApp()
 const CATEGORIES = appStore.appState?.foodCategory || []
 
 const userStore = useAuth()
+const router = useRouter();
 let restStore = useRest()
 
 let { user } = storeToRefs(userStore)
@@ -58,6 +59,7 @@ function uploadImage(file: File) {
 
   }
   reader.readAsDataURL(file);
+  // console.log(previews.value)
 }
 
 let loading = ref(false)
@@ -78,6 +80,7 @@ async function submit() {
     let uploadRes = await restStore.uploadFoodListItemImages(restId, itemId, imagesFormData)
     if (uploadRes.status.value == "success") {
       loading.value = false
+      router.push('/cabinet-manager/manage-menu')
     }
   }
 }
@@ -149,7 +152,7 @@ async function submit() {
     </v-col>
 
     <v-col cols="12" class="d-flex justify-center">
-      <v-btn size="large" variant="tonal" @click="submit">отправить</v-btn>
+      <v-btn size="large" variant="tonal" :loading="loading" @click="submit">отправить</v-btn>
     </v-col>
   </v-row>
 </template>
