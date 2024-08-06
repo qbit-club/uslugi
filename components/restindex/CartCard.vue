@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const emit = defineEmits(["buy", 'close'])
+import { toast } from "vue3-toastify"
+
+const emit = defineEmits(["buy", "close"])
 
 const cartStore = useCart()
 const userStore = useAuth()
@@ -10,7 +12,7 @@ const route = useRoute()
 let name = ref<string>(localStorage.getItem("name") || userStore.user?.name || "")
 let phone = ref<string>(localStorage.getItem("phone") ?? "")
 let address = ref<string>(localStorage.getItem("address") ?? "")
-let comment = ref<string>('')
+let comment = ref<string>("")
 
 function plusCart(itemId: string, restId: string) {
   let success = cartStore.plusCart(itemId, restId)
@@ -51,10 +53,17 @@ async function order() {
     name: name.value,
     phone: phone.value,
     address: address.value,
-    comment: comment.value
+    comment: comment.value,
   })
   if (response.status.value == "success") {
     loading.value = false
+    let orderId = response.data.value.order._id
+    let tmpId = orderId.slice(orderId.length - 5, orderId.length)
+    toast(`Заказ №${tmpId} принят!`, {
+      type: 'success',
+      autoClose: false,
+      toastId: orderId
+    })
     emit("buy")
   }
 }
@@ -99,12 +108,10 @@ watch(address, (newAddress) => {
           <v-textarea variant="outlined" auto-grow rows="1" :hide-details="true" v-model="comment"></v-textarea>
         </v-col>
       </v-row>
-      <h3 >{{ restItem.restInfo.title }}</h3>
+      <h3>{{ restItem.restInfo.title }}</h3>
       <div class="rest-info">
-
         <div class="d-flex flex-column justify-space-between">
-
-          <span class="text-caption"  v-html="restItem.restInfo.schedule"></span>
+          <span class="text-caption" v-html="restItem.restInfo.schedule"></span>
         </div>
         <div class="d-flex align-center">
           <a :href="restItem.restInfo.socialMedia" target="_blank" class="d-flex align-center ml-4">
@@ -118,32 +125,36 @@ watch(address, (newAddress) => {
       </div>
       <div v-for="item of restItem.items">
         <div class="item">
-          <div style="width: 80px;" aspect-ratio="1">
+          <div style="width: 80px" aspect-ratio="1">
             <v-img :src="item.images[0]" />
           </div>
 
           <div class="info">
             <div class="name text-right">{{ item.name }}</div>
             <div lass="d-flex justify-space-between">
-
-
               <div class="numbers">
-                <span style="font-weight: 300">{{ `${item.price} * ${item.count} = ` }}</span>&nbsp;
+                <span style="font-weight: 300">{{ `${item.price} * ${item.count} = ` }}</span
+                >&nbsp;
 
                 <span style="font-weight: 600">{{ (item.count * item.price).toFixed(2) }}₽</span>&nbsp;
-
               </div>
 
               <div class="d-flex justify-end align-center ml-4">
                 <div class="cart-actions">
                   <div class="cart-plus-minus">
-                    <v-icon icon="mdi-minus" class="cursor-pointer"
-                      @click="minusCart(item.menuItemId, restItem.restId)"></v-icon>
+                    <v-icon
+                      icon="mdi-minus"
+                      class="cursor-pointer"
+                      @click="minusCart(item.menuItemId, restItem.restId)"
+                    ></v-icon>
                     <div class="cart-count">
                       {{ item.count }}
                     </div>
-                    <v-icon icon="mdi-plus" class="cursor-pointer"
-                      @click="plusCart(item.menuItemId, restItem.restId)"></v-icon>
+                    <v-icon
+                      icon="mdi-plus"
+                      class="cursor-pointer"
+                      @click="plusCart(item.menuItemId, restItem.restId)"
+                    ></v-icon>
                   </div>
                 </div>
               </div>
@@ -152,7 +163,6 @@ watch(address, (newAddress) => {
         </div>
         <v-divider class="ma-1"></v-divider>
       </div>
-
     </div>
 
     <div v-else class="pb-6 text-center" style="font-weight: 600">
@@ -179,14 +189,11 @@ watch(address, (newAddress) => {
     display: flex;
     justify-content: space-between;
 
-
     .info {
       display: flex;
       flex-direction: column;
       font-size: 16px;
       margin-left: 10px;
-
-
 
       .numbers {
         // margin-bottom: px;
