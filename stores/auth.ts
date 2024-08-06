@@ -49,30 +49,37 @@ export const useAuth = defineStore('auth', () => {
     }
   }
 
-  function checkAdmin(): boolean {
+  async function checkAdmin(): Promise<boolean | undefined> {
     try {
       if (!user.value?._id) {
-        return false
+        const response = await AuthAPI.refresh()
+        if (response.data.value?._id) {
+          user.value = response.data.value
+        }
       }
 
       //array.some() проверяет, удовлетворяет ли хотя бы один элемент массива условию
       const hasAdminRole = user?.value?.roles.some(role => role === 'admin');
-      
       return hasAdminRole
     } catch (error) {
+      await logout()
       return false
     }
   }
-  function checkManager(): boolean {
+  async function checkManager(): Promise<boolean | undefined> {
     try {
       if (!user.value?._id) {
-        return false
+        const response = await AuthAPI.refresh()
+        if (response.data.value?._id) {
+          user.value = response.data.value
+        }
       }
 
       //array.some() проверяет, удовлетворяет ли хотя бы один элемент массива условию
       const hasManagerRole = user?.value?.roles.some(role => role === 'manager');
       return hasManagerRole
     } catch (error) {
+      await logout()
       return false
     }
   }
