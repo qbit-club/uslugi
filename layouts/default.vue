@@ -89,16 +89,19 @@ const routes = [
 
 
       <ClientOnly>
-
-        <v-navigation-drawer :model-value="navigationDrawer" location="bottom" :mobile="false" elevation="22">
+        <v-navigation-drawer :model-value="navigationDrawer" location="top" elevation="0" :temporary="true" :mobile="true" :scrim="false">
           <v-container>
             <v-row class="justify-center">
+              <v-col cols="12" md="6" class="d-flex justify-end py-2 mt-2 px-4">
+                <v-icon icon="mdi-close" @click="navigationDrawer = false"></v-icon>
+              </v-col>
+            </v-row>
+            <v-row class="justify-center">
               <v-col cols="12" md="6">
-
                 <v-list nav>
                   <v-list-item v-for="route of routes" :prepend-icon="route.icon" :to="route.value" :value="route.value"
-                    @click="navigationDrawer = false">
-                    <div v-if="route.show" style="font-size: 0.8rem;font-weight: 500;"> {{ route.title }}</div>
+                    @click="navigationDrawer = false" v-show="route.show">
+                    <div style="font-size: 0.8rem; font-weight: 500;">{{ route.title }}</div>
                   </v-list-item>
                 </v-list>
               </v-col>
