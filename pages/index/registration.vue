@@ -66,7 +66,7 @@ const submit = handleSubmit(async values => {
 
 <template>
   <v-container>
-    <BackButton />
+    <!-- <BackButton /> -->
 
     <v-col 
       cols="12" xs="12" sm="10" md="7" lg="5" 

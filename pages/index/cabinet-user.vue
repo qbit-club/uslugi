@@ -12,7 +12,7 @@ await authStore.getUserRests()
   <v-container>
     <v-row>
       <v-col :cols="12">
-        <h2>Пользователь</h2>
+        <h2>Кабинет</h2>
       </v-col>
       <v-col :cols="12" class="d-flex overflow-x-auto">
         <NuxtLink to="/cabinet-user/profile" class="d-flex">
@@ -27,12 +27,12 @@ await authStore.getUserRests()
             <div class="explanation text-center">Мои заказы</div>
           </div>
         </NuxtLink>
-        <NuxtLink to="/cabinet-user/table-reservation" class="d-flex">
+        <!-- <NuxtLink to="/cabinet-user/table-reservation" class="d-flex">
           <div class="d-flex flex-column align-center pa-4">
             <v-icon icon="mdi-table-chair" size="x-large" />
             <div class="explanation text-center">Бронирования</div>
           </div>
-        </NuxtLink>
+        </NuxtLink> -->
       </v-col>
       <v-col :cols="12">
         <NuxtPage />

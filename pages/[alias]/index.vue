@@ -74,12 +74,12 @@ rest.value = res.data.value
                       <div class="explanation">адрес</div>
                     </div>
                   </v-btn>
-                  <v-btn @click="" size="x-large" style="opacity: 0.5;">
+                  <!-- <v-btn @click="" size="x-large" style="opacity: 0.5;">
                     <div class="d-flex flex-column align-center">
                       <v-icon icon="mdi-table-chair" size="x-large" />
                       <div class="explanation text-center">столики</div>
                     </div>
-                  </v-btn>
+                  </v-btn> -->
                 </v-btn-toggle>
        
             </v-col>

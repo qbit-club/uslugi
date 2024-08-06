@@ -29,7 +29,7 @@ watch(currentRest, async (newVal) => {
   <v-container>
     <v-row>
       <v-col :cols="12">
-        <h2>Менеджер</h2>
+        <h2>Кабинет менеджера</h2>
       </v-col>
       <v-col cols="12" md="6" xl="4" class="d-flex">
         <v-select v-model="currentRest" :items="managerIn" item-title="title" item-value="_id" variant="outlined" density="compact"></v-select>
@@ -41,7 +41,7 @@ watch(currentRest, async (newVal) => {
             <div class="explanation text-center">заказы</div>
           </div>
         </NuxtLink>
-        <NuxtLink to="/cabinet-manager/table-reservation" class="d-flex">
+        <!-- <NuxtLink to="/cabinet-manager/table-reservation" class="d-flex">
           <div class="tab pa-4">
             <v-icon icon="mdi-table-chair" size="x-large" />
             <div class="explanation text-center">
@@ -49,7 +49,7 @@ watch(currentRest, async (newVal) => {
               столиков
             </div>
           </div>
-        </NuxtLink>
+        </NuxtLink> -->
         <NuxtLink to="/cabinet-manager/create-meal" class="d-flex">
           <div class="tab pa-4">
             <v-icon icon="mdi-bowl-mix-outline" size="x-large" />
@@ -98,9 +98,12 @@ watch(currentRest, async (newVal) => {
         </NuxtLink>
 
           <div class="tab pa-4 cursor-pointer" :class="{'show-hide': isHidden}" @click="hideRest()">
+            <div class="explanation text-center">
+               ресторан
+            </div>
             <v-icon :icon="isHidden ?'mdi-eye-off-outline': 'mdi-eye-outline'" size="x-large" />
             <div class="explanation text-center">
-               {{isHidden ? 'показать' : 'скрыть'}} <br />
+               {{isHidden ? 'показать' : 'скрыть'}} 
             </div>
           </div>
 

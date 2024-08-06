@@ -23,7 +23,7 @@ await getOrders()
 <template>
   <v-container>
     <v-row class="justify-center pb-16">
-      <v-col :cols="12" sm="10" md="8" lg="6" class="pt-0">
+      <v-col :cols="12" sm="10"  class="pt-0">
         <TransitionGroup name="list">
           <div v-for="(order, index) in reversedOrders" :key="order._id">
             <ManagerOrderCard :order="order" />

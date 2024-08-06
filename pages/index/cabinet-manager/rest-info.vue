@@ -1,13 +1,12 @@
 <script lang="ts" setup>
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
-import getPossibleLocations from "../../composables/dadata";
-import type { Location } from "../../types/location.interface"
-import { toast } from 'vue3-toastify'
+import getPossibleLocations from "~/composables/dadata";
+import type { Location } from "~/types/location.interface"
 
 // meta
 useHead({
-  title: 'Создать ресторан'
+  title: 'Редактировать ресторан'
 })
 definePageMeta({
   middleware: 'auth'
@@ -23,20 +22,19 @@ const restStore = useRest()
 const authStore = useAuth()
 const router = useRouter()
 
+let response = await restStore.getById(String(authStore.user?.managingRest))
+let restFromDb = response.data.value
+
 let loading = ref(false)
-let schedule = ref('')
-let description = ref('')
-
-
+let schedule = ref(restFromDb.schedule)
+let description = ref(restFromDb.description)
 
 const { meta, handleSubmit, validate } = useForm({
   initialValues: {
-    title: '',
-    alias: '',
-    phone: '',
-    socialMedia: '',
-    menu:[],
-    foodList:[]
+    title: restFromDb.title,
+    alias: restFromDb.alias,
+    phone: restFromDb.phone,
+    socialMedia: restFromDb.socialMedia,
     // description: '',
     // schedule: ''
     // price: '',
@@ -86,8 +84,7 @@ let socialMedia = useField<string>('socialMedia')
 
 let imagesFormData = new FormData()
 
-let location = ref<any>(
-)
+let location = ref<any>(restFromDb.location)
 const locationSearchRequest = ref<string>('');
 const possibleLocations = ref<Location[] | undefined>(undefined);
 
@@ -104,7 +101,7 @@ let locationToSend = computed(() => {
 
 
 // base64 img
-let logoPreview = ref()
+let logoPreview = ref(restFromDb.images?.logo)
 function uploadLogo(file: File) {
   // example filename: logo_216262666_best-burger.jpg
   imagesFormData.set('logo', file, 'logo_' + String(Date.now()) + '_' + String(alias.value.value) + '.jpg')
@@ -116,7 +113,7 @@ function uploadLogo(file: File) {
   reader.readAsDataURL(file);
 }
 // base64 img
-let headerImagePreview = ref()
+let headerImagePreview = ref(restFromDb.images?.headerimage)
 function uploadHeaderImage(file: File) {
   // example filename: headerimage_216262666_best-burger.jpg
   imagesFormData.set('headerimage', file, 'headerimage_' + String(Date.now()) + '_' + String(alias.value.value) + '.jpg')
@@ -127,39 +124,18 @@ function uploadHeaderImage(file: File) {
   }
   reader.readAsDataURL(file);
 }
-
-// base64 img
-let hallImagePreviews = ref<string[]>([])
-function uploadHallImage(file: File, index: Number) {
-  // example filename: headerimage_0_216262666_best-burger.svg
-  imagesFormData.set('hallimage_' + String(index), file, 'hallimage_' + String(index) + '_' + String(Date.now()) + '_' + String(alias.value.value) + '.svg')
-  // make a preview
-  let reader = new FileReader();
-  reader.onloadend = function () {
-    hallImagePreviews.value.push(String(reader.result))
-  }
-  reader.readAsDataURL(file);
-}
 const submit = handleSubmit(async values => {
-  if (!logoPreview.value || !headerImagePreview.value) {
-    
-    toast('Добавьте фото!', { type: 'warning' })
-    return
-  }
-
   loading.value = true
 
   let toSend = {
-    ...values, 
+    ...values,
     location: locationToSend.value,
     description: description.value,
     schedule: schedule.value,
-    author: String(authStore.user?._id),
-    menu: [],
-    foodList: []
+    author: String(authStore.user?._id)
   }
 
-  let res = await restStore.create(toSend)
+  let res = await restStore.update(toSend, restFromDb._id)
 
   if (res.status.value == 'success') {
     let _id = res.data.value._id
@@ -189,7 +165,7 @@ watch(locationSearchRequest, async (value) => {
       <v-row>
         <v-col>
           <v-form @submit.prevent="submit">
-            <div class="font-weight-bold text-center" style="font-size: 20px;">Создать ресторан</div>
+            <div class="font-weight-bold text-center" style="font-size: 20px;">Редактировать ресторан</div>
 
             <v-row>
               <v-col cols="12" md="6">
@@ -203,7 +179,7 @@ watch(locationSearchRequest, async (value) => {
                   placeholder="shaurma" variant="outlined" density="compact" class="w-100" />
                 <div v-if="alias.value.value.length > 0" class="label text-right">
                   url ресторана: <i style="text-decoration: underline;">{{ config.public.siteUrl + '/' +
-            alias.value.value
+                    alias.value.value
                     }}</i>
                 </div>
               </v-col>
@@ -245,18 +221,19 @@ watch(locationSearchRequest, async (value) => {
                 </v-autocomplete>
               </v-col>
 
-
-              <v-col :cols="12" style="position: relative; margin-bottom: 80px;"
-                v-if="logoPreview || headerImagePreview">
-                <div style="height:25vh">
+              <v-col :cols="12" style="margin-bottom: 80px;" v-if="logoPreview || headerImagePreview">
+                <div style="height:30vh; position: relative;">
                   <v-img :src="headerImagePreview" max-height="25vh" cover alt="" />
-                </div>
-
-                <div class="logo" v-if="logoPreview">
+                  <div class="logo" v-if="logoPreview">
                     <img :src="logoPreview" alt="">
                   </div>
+                  <!-- <v-avatar v-if="logoPreview" :image="logoPreview" size="200px" class="logo" color="white" style="
+                position: absolute;
+                top: 0px;
+                aspect-ratio: 1;
+              "></v-avatar> -->
+                </div>
               </v-col>
-
 
               <v-col :cols="12" class="d-flex justify-center">
                 <LogoInput @uploadImage="uploadLogo" />
@@ -264,8 +241,7 @@ watch(locationSearchRequest, async (value) => {
               </v-col>
 
               <v-col :cols="12" class="d-flex justify-center">
-                <v-btn class="ma-auto mt-4" variant="tonal" type="submit" >
-                  <!-- :loading="loading" :disabled="!meta.valid" -->
+                <v-btn class="ma-auto mt-4" variant="tonal" type="submit" :loading="loading" :disabled="!meta.valid">
                   Отправить
                 </v-btn>
               </v-col>

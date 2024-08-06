@@ -36,12 +36,12 @@ definePageMeta({
                             <div class="explanation text-center">добавить <br> менеджера</div>
                         </div>
                     </NuxtLink>
-                    <NuxtLink to="/cabinet-admin/orders" class="d-flex">
+                    <!-- <NuxtLink to="/cabinet-admin/orders" class="d-flex">
                         <div class="d-flex flex-column align-center pa-4">
                             <v-icon icon="mdi-cart-check" size="x-large" />
                             <div class="explanation text-center">заказы</div>
                         </div>
-                    </NuxtLink>
+                    </NuxtLink> -->
                     <NuxtLink to="/cabinet-admin/rest-list" class="d-flex">
                         <div class="d-flex flex-column align-center pa-4">
                             <v-icon icon="mdi-silverware-fork-knife" size="x-large" />

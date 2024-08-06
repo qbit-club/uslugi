@@ -26,7 +26,10 @@ let isLoggedIn = computed(() => {
 
 async function logout() {
   let res = await userStore.logout()
-  if (res.status.value == "success") navigationDrawer.value = false
+  if (res.status.value == "success") {
+    navigationDrawer.value = false
+    router.push("/")
+  } 
 }
 </script>
 <template>
@@ -59,16 +62,16 @@ async function logout() {
             </v-row>
             <v-row class="justify-center">
               <v-col cols="12" md="6">
-                <v-list nav>
+                <v-list >
                   <v-list-item prepend-icon="mdi-home-outline" to="/" @click="navigationDrawer = false">
                     <div style="font-size: 0.8rem; font-weight: 500">Выбор ресторана</div>
                   </v-list-item>
                   <v-list-item
                     prepend-icon="mdi-account-outline"
-                    to="/cabinet-user/profile"
+                    to="/cabinet-user/orders"
                     @click="navigationDrawer = false"
                   >
-                    <div style="font-size: 0.8rem; font-weight: 500">Пользователь</div>
+                    <div style="font-size: 0.8rem; font-weight: 500">Мои заказы</div>
                   </v-list-item>
                   <v-list-item
                     prepend-icon="mdi-shield-crown-outline"
