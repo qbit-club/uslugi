@@ -67,8 +67,8 @@ function minusCart() {
 
 
             <div class="d-flex justify-center align-center">
-                <div class="cart-actions">
-                    <v-icon icon="mdi-cart-plus" @click="addToCart" v-if="mealCartCount == 0"></v-icon>
+                <div class="cart-actions" >
+                    <v-icon icon="mdi-cart-plus" @click="addToCart" v-if="mealCartCount == 0" ></v-icon>
                     <div v-else class="cart-plus-minus">
                         <v-icon icon="mdi-minus" class="cursor-pointer" @click="minusCart"></v-icon>
                         <div class="cart-count">

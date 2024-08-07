@@ -50,8 +50,8 @@ async function logout() {
             </v-row>
             <v-row class="justify-center">
               <v-col cols="12" md="6">
-                <v-list>
-                  <v-list-item prepend-icon="mdi-home-outline" to="/" @click="navigationDrawer = false">
+                <v-list :nav="false">
+                  <v-list-item  :nav="false" prepend-icon="mdi-home-outline" to="/" @click="navigationDrawer = false">
                     <div style="font-size: 0.8rem; font-weight: 500">Выбор ресторана</div>
                   </v-list-item>
                   <v-list-item prepend-icon="mdi-account-outline" to="/cabinet-user/orders"
