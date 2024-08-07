@@ -8,11 +8,11 @@ const restStore = useRest()
 
 let managerIn = await userStore.getManagerIn()
 let currentRest = ref<string>(userStore.user?.managingRest || "")
-let isHidden = ref<boolean>(managerIn.find((rest:any)=>rest.id=currentRest).isHidden)
+let isHidden = ref<boolean>(managerIn.find((rest:any)=>rest._id==currentRest.value).isHidden)
 
 async function refreshHide(){
   managerIn = await userStore.getManagerIn()
-  isHidden.value=managerIn.find((rest:any)=>rest.id=currentRest).isHidden
+  isHidden.value=managerIn.find((rest:any)=>rest._id==currentRest.value).isHidden
 }
 async function hideRest(){
   await restStore.hideRest(currentRest.value)
