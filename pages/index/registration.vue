@@ -121,7 +121,7 @@ const submit = handleSubmit(async values => {
             type="submit" 
             :disabled="!meta.valid" 
             :loading="loading"
-            color="accent"
+            color="primary"
           >
             Отправить
           </v-btn>

@@ -65,7 +65,7 @@ const login = handleSubmit(async values => {
             class="w-100"
           />
 
-          <v-btn type="submit" :disabled="!meta.valid" color="accent">Войти</v-btn>
+          <v-btn type="submit" :disabled="!meta.valid" color="primary">Войти</v-btn>
         </v-form>
   
         <div 

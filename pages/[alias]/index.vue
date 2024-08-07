@@ -25,7 +25,7 @@ rest.value = res.data.value
       <v-row class="d-flex justify-center pb-16">
         <v-col :cols="12">
           <v-row>
-            <v-col :cols="12" style="position: relative;">
+            <v-col :cols="12" style="position: relative;" class="pa-0">
               <a :href="`tel:${rest?.phone}`"> <span class="phone"> <v-icon icon="mdi-phone" /> {{ rest?.phone }}
                 </span></a>
               <a :href="rest?.socialMedia" target="_blank">
@@ -127,15 +127,15 @@ rest.value = res.data.value
   padding: 10px;
   border-radius: 5px;
   position: absolute;
-  right: 20px;
-  bottom: 20px;
+  right: 25px;
+  bottom: 10px;
   z-index: 2;
 }
 
 .vk {
   position: absolute;
-  right: 20px;
-  bottom: -20px;
+  right: 25px;
+  bottom: -30px;
   z-index: 2;
 
 }

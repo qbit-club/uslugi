@@ -133,7 +133,7 @@ onMounted(() => {
                         </transition>
                     </ClientOnly>
                     <v-chip-group>
-                        <v-chip color="red" variant="outlined" v-for="(item, index) in groupMeals" :key="index"
+                        <v-chip color="accent" variant="outlined"  v-for="(item, index) in groupMeals" :key="index"
                             @click="selectCategory(item.category)">
                             {{ item.category }}
                         </v-chip>
@@ -150,7 +150,7 @@ onMounted(() => {
                                 variant="solo" hide-details single-line placeholder="поиск"
                                 clear-icon="mdi-close-circle" clearable></v-text-field>
                         </transition>
-                        <v-icon icon="mdi-magnify" size="x-large" @click="showSearch" class="mr-2">
+                        <v-icon icon="mdi-magnify" size="x-large" @click="showSearch"  class="mr-2">
 
                         </v-icon>
                     </div>

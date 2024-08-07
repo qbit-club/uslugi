@@ -40,7 +40,7 @@ let showSearch = () => {
 <template>
   <v-container>
     <v-row class="pb-16">
-      <v-col cols="12">
+      <v-col cols="12" class="pa-0">
         <v-img src="../assets/images/headerImg.jpg" max-height="25vh" cover alt="">
         </v-img>
       </v-col>

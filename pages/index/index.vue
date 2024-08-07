@@ -42,7 +42,7 @@ let showSearch = () => {
         <v-col cols="12" class="d-flex align-center justify-center">
 
 
-            <v-text-field v-model='filter' prepend-inner-icon="mdi-magnify" density="compact" max-width="300px"
+            <v-text-field v-model='filter'  prepend-inner-icon="mdi-magnify" density="compact" max-width="300px"
                 variant="solo" hide-details single-line placeholder="поиск еды" clear-icon="mdi-close-circle"
                 clearable></v-text-field>
 

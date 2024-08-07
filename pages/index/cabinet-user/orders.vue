@@ -24,9 +24,9 @@ function getStatus(status: string) {
         case 'created':
             return {text:'Создан', color: 'accent'}
         case 'inWork':
-            return {text:'В работе', color: 'secondary'}
+            return {text:'В работе', color: 'primary'}
         case 'inDelivery':
-            return  {text:'Доставляется', color: 'primary'}
+            return  {text:'Доставляется', color: 'secondary' }
         case 'delivered':
             return  {text:'Доставлен', color: 'success'}
     }
