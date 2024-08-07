@@ -185,7 +185,7 @@ watch(locationSearchRequest, async (value) => {
 </script>
 <template>
   <ClientOnly>
-    <v-container>
+ 
       <v-row>
         <v-col>
           <v-form @submit.prevent="submit">
@@ -274,7 +274,7 @@ watch(locationSearchRequest, async (value) => {
           </v-form>
         </v-col>
       </v-row>
-    </v-container>
+ 
   </ClientOnly>
 </template>
 <style lang="scss" scoped>

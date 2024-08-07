@@ -55,24 +55,23 @@ onMounted(async () => {
       <h3>Назначить менеджером</h3>
     </v-col>
     <v-col cols="12" md="4">
-      <v-select label="Рестораны" :items="rests" v-model="chosen_rest" item-title="title" item-value="_id"
+      <v-select label="ресторан" :items="rests" v-model="chosen_rest" item-title="title" item-value="_id"
         variant="outlined" density="compact">
       </v-select>
     </v-col>
     <v-col cols="12" md="8">
-      <v-text-field v-model="user_email" placeholder="Электронная почта" type="email" variant="outlined"
+      <v-text-field label="email" v-model="user_email" placeholder="Электронная почта" type="email" variant="outlined"
         density="compact">
       </v-text-field>
     </v-col>
+    <v-col :cols="12" class="d-flex justify-center">
+      <v-btn variant="flat" color="primary" @click="setManager()">Назначить менеджера</v-btn>
+    </v-col>
   </v-row>
-  <v-btn variant="tonal" @click="setManager()" class="mb-16">Cделать менеджером</v-btn>
 
   <v-row>
-    <v-col :cols="12">
-      <h3>Управление менеджерами</h3>
-    </v-col>
     <v-col cols="12" md="3" v-for="rest in rests">
-      <v-card class="pa-4">
+      <v-card class="pa-4 h-100">
         <h4>{{ rest.title }}</h4>
         <!-- <v-divider></v-divider> -->
         <div class="d-flex flex-column">

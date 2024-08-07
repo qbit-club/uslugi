@@ -243,7 +243,7 @@ async function submit() {
     </v-col>
 
     <v-col cols="12" class="d-flex justify-center">
-      <v-btn size="large" variant="tonal" @click="submit" :loading="loading"
+      <v-btn size="large" variant="flat" color="primary" @click="submit" :loading="loading"
         >отправить</v-btn
       >
     </v-col>

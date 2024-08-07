@@ -140,7 +140,7 @@ onMounted(() => {
                     </v-chip-group>
                 </div>
                 <div class=" w-100 d-flex justify-end ga-4">
-                    <v-badge :content="cartLength" color="primary" class="d-flex align-center ml-2" >
+                    <v-badge :content="cartLength" color="accent" class="d-flex align-center ml-2" >
                         <v-icon icon="mdi-cart-outline" size="x-large" @click="cartDialog = true"  style="background: white;">
                         </v-icon>
                     </v-badge>

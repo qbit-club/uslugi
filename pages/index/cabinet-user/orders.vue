@@ -22,11 +22,11 @@ let getDate = (d: string) => {
 function getStatus(status: string) {
     switch (status) {
         case 'created':
-            return {text:'Создан', color: 'primary'}
+            return {text:'Создан', color: 'accent'}
         case 'inWork':
             return {text:'В работе', color: 'secondary'}
         case 'inDelivery':
-            return  {text:'Доставляется', color: 'alert'}
+            return  {text:'Доставляется', color: 'primary'}
         case 'delivered':
             return  {text:'Доставлен', color: 'success'}
     }
@@ -39,9 +39,9 @@ onMounted(async () => {
 </script>
 
 <template>
-    <v-container>
+
         <v-row class="justify-center pb-16">
-            <v-col cols="12" sm="10" md="8" class="pa-0">
+            <v-col :cols="12" :sm="10" :md="8" class="pa-0">
              
                 <div v-for="(item, index) in orders">
                     <div class="text-center text-uppercase  font-weight-bold ma-4 " :id="item.rest">
@@ -50,7 +50,7 @@ onMounted(async () => {
 
                     <div v-for="(order, i) in item.orders">
                         <h3>{{ getDate(order.date) }}</h3>
-                        <v-chip :color="getStatus(order.status)?.color">
+                        <v-chip :color="getStatus(order.status)?.color" variant="flat">
                              {{ getStatus(order.status)?.text }}
                         </v-chip>
                        
@@ -71,5 +71,5 @@ onMounted(async () => {
 
             </v-col>
         </v-row>
-    </v-container>
+
 </template>
