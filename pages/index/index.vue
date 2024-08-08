@@ -23,8 +23,13 @@ let restsWithFilter = computed(() => {
             rest.description.toLowerCase().includes(filter.value.toLowerCase())
         )
     } else {
-
-        return rests.value.filter((rest:any) => rest.isHidden==false)
+        let filterHidden = rests.value.filter((rest:any) => rest.isHidden==false)
+        if (filterHidden==null){
+            return []
+        }
+        else{
+            return filterHidden
+        }
     }
 
 })
