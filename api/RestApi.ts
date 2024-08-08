@@ -120,5 +120,15 @@ export default {
         restId
       }
     })
-  }
+  },
+  deleteEmail(email: string, mailType: string, restId: string) {
+    return useApiFetch('/rest/delete-email', {
+      method: 'PUT',
+      body: {
+        email,
+        mailType,
+        restId
+      }
+    })
+  },
 }
