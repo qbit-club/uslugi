@@ -57,5 +57,10 @@ export default {
     return useApiFetch(`/user/tmp-order?user_id=${userId}`, {
       method: 'GET'
     })
+  },
+  getManagingRestObject(userId: string): Promise<any> {
+    return useApiFetch(`/user/managing-rest-object?user_id=${userId}`, {
+      method: 'GET'
+    });
   }
 }
