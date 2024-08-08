@@ -147,7 +147,7 @@ getRestList();
               <v-dialog v-model="confirmHideDialog" max-width="300" persistent>
                 <v-card>
                   <v-card-title>{{
-                    rest.isHidden ? "Показать?" : "Скрыть?"
+                    dialogContainer.isHidden ? "Показать?" : "Скрыть?"
                   }}</v-card-title>
                   <v-card-actions>
                     <v-btn @click="confirmHideDialog = false">нет</v-btn>
