@@ -113,14 +113,18 @@ getRestList();
                 <v-icon icon="mdi-pencil" size="x-large" class="cursor-pointer" />
                 <div class="explanation text-center">редактировать</div>
               </div>
-              <div class="d-flex flex-column align-center pa-4">
+              <div
+                class="d-flex flex-column align-center pa-4 cursor-pointer"
+                :class="{ 'show-hide': rest.isHidden }"
+                @click="initHideDialog(rest)"
+              >
                 <v-icon
-                  icon="mdi-eye-off-outline"
+                  :icon="rest.isHidden ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
                   size="x-large"
-                  class="cursor-pointer"
-                  @click="initHideDialog(rest)"
                 />
-                <div class="explanation text-center">спрятать</div>
+                <div class="explanation text-center">
+                  {{ rest.isHidden ? "показать" : "скрыть" }}
+                </div>
               </div>
               <div class="d-flex flex-column align-center pa-4">
                 <v-icon
@@ -162,5 +166,8 @@ getRestList();
 <style scoped>
 .out-menu {
   opacity: 0.7;
+}
+.show-hide {
+  color: red;
 }
 </style>
