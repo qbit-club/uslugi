@@ -11,13 +11,26 @@ let { managingRestObject } = storeToRefs(userStore)
 
 let email = ref<string>('')
 let emails = computed(() => {
- // такая магия нужна из-за того, что нельзя получить значение 
+  // такая магия нужна из-за того, что нельзя получить значение 
   // ключа у объекта, если ключ является обычной строкой
   let mailTo = managingRestObject.value?.mailTo ?? {}
   const key = mailType as keyof typeof mailTo;
 
   return mailTo[key]
 })
+let dialog = ref<boolean>(false)
+let emailToDelete: string = '';
+function showDialog(em: string) {
+  emailToDelete = em;
+  dialog.value = true;
+}
+
+async function deleteEmail() {
+  let res = await restStore.deleteEmail(emailToDelete, mailType)
+  if (res.status.value == "success") {
+    dialog.value = false;
+  }
+}
 
 let loading = ref(false)
 async function submit() {
@@ -44,9 +57,19 @@ async function submit() {
       </v-btn>
     </v-col>
     <v-col cols="12">
-      {{ emails }}
+      <v-chip variant="outlined" v-for="(em, index) in emails" :key="index" class="ma-2" @click="showDialog(em)">
+        {{ em }}
+      </v-chip>
     </v-col>
   </v-row>
+  <v-dialog v-model="dialog" width="auto">
+    <v-card max-width="400" title="Удаляем?">
+      <template v-slot:actions>
+        <v-btn class="ms-auto" @click="dialog = false">Нет</v-btn>
+        <v-btn class="ms-auto" @click="deleteEmail">Да</v-btn>
+      </template>
+    </v-card>
+  </v-dialog>
 </template>
 <style scoped lang="scss">
 .caption {

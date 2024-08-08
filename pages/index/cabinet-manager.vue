@@ -8,12 +8,11 @@ const restStore = useRest()
 
 let managerIn = await userStore.getManagerIn()
 let currentRest = ref<string>(userStore.user?.managingRest || "")
-let isHidden = ref<boolean>(managerIn.find((rest: any) => rest.id = currentRest).isHidden)
-let activMenu = ref<string>('2')
+let isHidden = ref<boolean>(managerIn.find((rest:any)=>rest._id==currentRest.value).isHidden)
 
 async function refreshHide() {
   managerIn = await userStore.getManagerIn()
-  isHidden.value = managerIn.find((rest: any) => rest.id = currentRest).isHidden
+  isHidden.value=managerIn.find((rest:any)=>rest._id==currentRest.value).isHidden
 }
 async function hideRest() {
   await restStore.hideRest(currentRest.value)
@@ -38,7 +37,7 @@ watch(currentRest, async (newVal) => {
       </v-col>
       <v-col :cols="12" class="d-flex overflow-x-auto">
 
-        <v-btn-toggle v-model="activMenu" color="secondary" style="height:60px"  class="d-flex overflow-x-auto">
+        <v-btn-toggle color="secondary" style="height:60px"  class="d-flex overflow-x-auto">
 
           <v-btn to="/cabinet-manager/orders" size="x-large" >
             <div class="d-flex flex-column align-center">

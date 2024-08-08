@@ -87,11 +87,27 @@ export const useRest = defineStore('rest', () => {
     }
     return {}
   }
+  /**
+   * этот мед в паре с addEmail
+   * @param email email to delete
+   * @param mailType 
+   */
+  async function deleteEmail(email: string, mailType: string): Promise<any> {
+    const userStore = useAuth()
+    if (userStore.user?.managingRest) {
+      let res = await RestApi.deleteEmail(email, mailType, userStore.user.managingRest)
+      if (res.status.value == 'success') {
+        userStore.managingRestObject = res.data.value
+      }
+      return res
+    }
+    return {}
+  }
 
   return {
     create, update, get, getWithHidden, getRestsName, getByAlias, getById, getByIds, uploadImages, getManagersOfRest,
     sendFoodListItemToMenu, deleteRest, hideRest, createFoodListItem,
-    uploadFoodListItemImages, moveFoodItemToMenu, updateMeal, deleteFromMenu, deleteMeal, addEmail
+    uploadFoodListItemImages, moveFoodItemToMenu, updateMeal, deleteFromMenu, deleteMeal, addEmail, deleteEmail
   }
   //updateFoodListItemImages
 })

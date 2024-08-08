@@ -168,12 +168,28 @@ export const useAuth = defineStore('auth', () => {
     }
   }
 
+  async function sendResetLink(email: string): Promise<any> {
+    try {
+      return await AuthAPI.sendResetLink(email)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function resetPassword(password: string, userId: string, token: string): Promise<any> {
+    try {
+      return await AuthAPI.resetPassword(password, userId, token)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return {
     // variables
     user, managingRestObject,
     // functions
     registration, login, redirectTo, checkAuth, checkAdmin, checkManager, logout,
     updateUser, setManager, deleteManager, getUserRests, chooseManagingRest, getManagerIn,
-    getTemporaryOrder
+    getTemporaryOrder, sendResetLink, resetPassword
   }
 })
