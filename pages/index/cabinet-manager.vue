@@ -1,29 +1,27 @@
 <script setup lang="ts">
 definePageMeta({
-  middleware: 'is-manager'
-})
+  middleware: "is-manager",
+});
 
-const userStore = useAuth()
-const restStore = useRest()
+const userStore = useAuth();
+const restStore = useRest();
 
-let managerIn = await userStore.getManagerIn()
-let currentRest = ref<string>(userStore.user?.managingRest || "")
-let isHidden = ref<boolean>(managerIn.find((rest:any)=>rest._id==currentRest.value).isHidden)
+let managerIn = await userStore.getManagerIn();
+let currentRest = ref<string>(userStore.user?.managingRest || "");
+let isHidden = ref<boolean>(
+  managerIn.find((rest: any) => rest._id == currentRest.value).isHidden
+);
 
 async function refreshHide() {
-  managerIn = await userStore.getManagerIn()
-  isHidden.value=managerIn.find((rest:any)=>rest._id==currentRest.value).isHidden
-}
-async function hideRest() {
-  await restStore.hideRest(currentRest.value)
-  await refreshHide()
+  managerIn = await userStore.getManagerIn();
+  isHidden.value = managerIn.find((rest: any) => rest._id == currentRest.value).isHidden;
 }
 
 watch(currentRest, async (newVal) => {
-  await userStore.chooseManagingRest(String(newVal))
-  currentRest.value = userStore.user?.managingRest || ""
-  await refreshHide()
-})
+  await userStore.chooseManagingRest(String(newVal));
+  currentRest.value = userStore.user?.managingRest || "";
+  await refreshHide();
+});
 </script>
 <template>
   <v-container>
@@ -32,14 +30,22 @@ watch(currentRest, async (newVal) => {
         <h2>Кабинет менеджера</h2>
       </v-col>
       <v-col cols="12" md="6" xl="4" class="d-flex">
-        <v-select v-model="currentRest" :items="managerIn" item-title="title" item-value="_id" variant="outlined"
-          density="compact"></v-select>
+        <v-select
+          v-model="currentRest"
+          :items="managerIn"
+          item-title="title"
+          item-value="_id"
+          variant="outlined"
+          density="compact"
+        ></v-select>
       </v-col>
       <v-col :cols="12" class="d-flex overflow-x-auto">
-
-        <v-btn-toggle color="secondary" style="height:60px"  class="d-flex overflow-x-auto">
-
-          <v-btn to="/cabinet-manager/orders" size="x-large" >
+        <v-btn-toggle
+          color="secondary"
+          style="height: 60px"
+          class="d-flex overflow-x-auto"
+        >
+          <v-btn to="/cabinet-manager/orders" size="x-large">
             <div class="d-flex flex-column align-center">
               <v-icon icon="mdi-cart-check" size="x-large" />
               <div class="explanation text-center">заказы</div>
@@ -103,19 +109,7 @@ watch(currentRest, async (newVal) => {
           </div>
         </NuxtLink> -->
         </v-btn-toggle>
-
-        <!-- <div class="tab pa-4 cursor-pointer" :class="{ 'show-hide': isHidden }" @click="hideRest()">
-          <div class="explanation text-center">
-            ресторан
-          </div>
-          <v-icon :icon="isHidden ? 'mdi-eye-off-outline' : 'mdi-eye-outline'" size="x-large" />
-          <div class="explanation text-center">
-            {{ isHidden ? 'показать' : 'скрыть' }}
-          </div>
-        </div> -->
-
       </v-col>
-
 
       <v-col :cols="12">
         <NuxtPage />
@@ -128,9 +122,5 @@ watch(currentRest, async (newVal) => {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.show-hide {
-  color: red;
 }
 </style>

@@ -24,7 +24,7 @@ let restsWithFilter = computed(() => {
         )
     } else {
 
-        return rests.value
+        return rests.value.filter((rest:any) => rest.isHidden==false)
     }
 
 })
