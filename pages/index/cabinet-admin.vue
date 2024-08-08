@@ -2,7 +2,7 @@
 definePageMeta({
     middleware: 'is-admin'
 })
-let activMenu = ref<string>('0')
+
 </script>
 <template>
     <v-container>
@@ -11,7 +11,7 @@ let activMenu = ref<string>('0')
                 <h2>Администратор</h2>
             </v-col>
             <v-col :cols="12" class="d-flex overflow-x-auto">
-                <v-btn-toggle v-model="activMenu" color="secondary" style="height:60px" class="d-flex overflow-x-auto">
+                <v-btn-toggle color="secondary" style="height:60px" class="d-flex overflow-x-auto">
                     <v-btn to="/cabinet-admin/create-rest" class="d-flex">
                         <div class="d-flex flex-column align-center pa-4">
                             <v-icon icon="mdi-table-chair" size="x-large" />
