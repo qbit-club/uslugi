@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const appStore = useApp()
-import type { FoodCategory } from "../../types/category.intarface"
+import type { FoodCategory } from "@/types/category.intarface"
 
 
 let foodCategory = ref('')
