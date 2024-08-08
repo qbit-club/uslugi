@@ -76,6 +76,7 @@ const login = handleSubmit(async values => {
           регистрация
         </div>
         <div
+          @click="router.push('/forgot-password')" 
           class="text-body-2 w-100 cursor-pointer font-weight-semibold text-center"
         >
           восстановить пароль

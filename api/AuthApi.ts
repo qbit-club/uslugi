@@ -8,23 +8,17 @@ export default {
   refresh(): Promise<any> {
     return useApiFetch('/auth/refresh', { method: 'GET' })
   },
-  resetPassword(password: string, token: string) {
-    return useApiFetch('/auth/reset-password', { method: "POST", body: { password, token } })
-  },
-  forgotPassword(email: string) {
-    return useApiFetch('/auth/forgot-password', { method: 'POST', body: { email } })
-  },
   logout(): Promise<any> {
     return useApiFetch('/auth/logout', { method: 'POST' })
   },
   updateUser(user: any): Promise<any> {
     return useApiFetch('/auth/update', { method: 'POST', body: { user } })
   },
-  setManager(user_email:string,chosen_rest:string): Promise<any>{
-    return useApiFetch('/user/set-manager', { method: 'POST', body: { user_email,chosen_rest } })
+  setManager(user_email: string, chosen_rest: string): Promise<any> {
+    return useApiFetch('/user/set-manager', { method: 'POST', body: { user_email, chosen_rest } })
   },
-  deleteManager(manager_email:string,restId:string): Promise<any>{
-    return useApiFetch('/user/delete-manager', { method: 'POST', body: { manager_email,restId } })
+  deleteManager(manager_email: string, restId: string): Promise<any> {
+    return useApiFetch('/user/delete-manager', { method: 'POST', body: { manager_email, restId } })
   },
   /**
    * 
@@ -62,5 +56,17 @@ export default {
     return useApiFetch(`/user/managing-rest-object?user_id=${userId}`, {
       method: 'GET'
     });
-  }
+  },
+  sendResetLink(email: string) {
+    return useApiFetch('/auth/send-reset-link', {
+      method: 'POST',
+      body: { email }
+    })
+  },
+  resetPassword(password: string, userId: string, token: string) {    
+    return useApiFetch('/auth/reset-password', {
+      method: 'POST',
+      body: { password, userId, token }
+    })
+  },
 }
