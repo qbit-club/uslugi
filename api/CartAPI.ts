@@ -5,8 +5,8 @@ export default {
   getOrdersByOrdersId(ordersId: any): Promise<any> {
     return useApiFetch('/order/order-by-orderId', { method: 'POST', body: { ordersId } })
   },
-  getOrdersByRestId(restId: string): Promise<any> {
-    return useApiFetch(`/order/by-rest-id?rest_id=${restId}`, {
+  getOrdersByRestId(restId: string, page: number): Promise<any> {
+    return useApiFetch(`/order/by-rest-id?rest_id=${restId}&page=${page}`, {
       method: 'GET'
     })
   },
