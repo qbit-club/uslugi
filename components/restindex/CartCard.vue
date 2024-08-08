@@ -87,7 +87,7 @@ watch(address, (newAddress) => {
   <v-card class="py-5 px-6">
     <div class="cart-item" v-if="restItem?.restId">
       <div class="text-right">
-        <v-icon icon="mdi-close" class="cursor-pointer" @click="emit('close')"></v-icon>
+        <v-icon icon="mdi-close" class="cursor-pointer" color="accent"  @click="emit('close')"></v-icon>
       </div>
 
       <v-row class="mb-3">
@@ -166,12 +166,12 @@ watch(address, (newAddress) => {
     </div>
 
     <div v-else class="pb-6 text-center" style="font-weight: 600">
-      <v-icon icon="mdi-close" class="cursor-pointer float-right" @click="emit('close')"></v-icon>
+      <v-icon icon="mdi-close" color="accent" class="cursor-pointer float-right" @click="emit('close')"></v-icon>
       в корзине пусто
     </div>
 
     <div class="d-flex justify-space-between" v-if="restItem?.restId">
-      <v-btn variant="tonal" size="large" @click="order" :loading="loading">заказать</v-btn>
+      <v-btn variant="flat" size="large" color="primary" @click="order" :loading="loading">заказать</v-btn>
       <div class="amount d-flex align-center">{{ amount }}₽</div>
     </div>
   </v-card>

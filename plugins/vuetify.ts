@@ -11,8 +11,25 @@ export default defineNuxtPlugin((nuxtApp) => {
 			global: {
 				ripple: false,
 			},
-		}
+		},
+		theme: {
+			themes: {
+			  light: {
+				dark: false,
+				colors: {
+				  primary:  '#FAB232',
+				  secondary: '#22B4AF',
+				  success:'#54B975',
+				  accent:'#D51829',
+				 
+				}
+			  },
+			},
+		  },
+		
 	})
 
 	nuxtApp.vueApp.use(vuetify)
 })
+
+

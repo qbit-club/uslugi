@@ -29,64 +29,41 @@ async function logout() {
   if (res.status.value == "success") {
     navigationDrawer.value = false
     router.push("/")
-  } 
+  }
 }
 </script>
 <template>
   <v-responsive>
-    <v-app class="overflow-y-auto" style="max-height: 100dvh">
+    <v-app class="overflow-y-auto" style="max-height: 100vh">
       <div>
-        <v-btn
-          icon="mdi-menu"
-          density="comfortable"
-          outlined
-          class="menu-button"
-          @click="navigationDrawer = !navigationDrawer"
-        />
+        <v-btn icon="mdi-menu" density="comfortable" outlined color="primary" class="menu-button"
+          @click="navigationDrawer = !navigationDrawer" />
       </div>
 
       <ClientOnly>
-        <v-navigation-drawer
-          :model-value="navigationDrawer"
-          location="top"
-          :mobile="false"
-          elevation="0"
-          :scrim="false"
-          :temporary="true"
-        >
+        <v-navigation-drawer :model-value="navigationDrawer" location="top" :mobile="false" elevation="0" :scrim="false"
+          :temporary="true">
           <v-container>
             <v-row class="justify-center">
-              <v-col cols="12" md="6" class="d-flex justify-end"
-                ><v-icon icon="mdi-close" class="cursor-pointer" @click="navigationDrawer = false"></v-icon
-              ></v-col>
+              <v-col cols="12" md="6" class="d-flex justify-end"><v-icon icon="mdi-close" color="accent"
+                  class="cursor-pointer" @click="navigationDrawer = false"></v-icon></v-col>
             </v-row>
             <v-row class="justify-center">
               <v-col cols="12" md="6">
-                <v-list >
-                  <v-list-item prepend-icon="mdi-home-outline" to="/" @click="navigationDrawer = false">
+                <v-list :nav="false">
+                  <v-list-item  :nav="false" prepend-icon="mdi-home-outline" to="/" @click="navigationDrawer = false">
                     <div style="font-size: 0.8rem; font-weight: 500">Выбор ресторана</div>
                   </v-list-item>
-                  <v-list-item
-                    prepend-icon="mdi-account-outline"
-                    to="/cabinet-user/orders"
-                    @click="navigationDrawer = false"
-                  >
+                  <v-list-item prepend-icon="mdi-account-outline" to="/cabinet-user/orders"
+                    @click="navigationDrawer = false">
                     <div style="font-size: 0.8rem; font-weight: 500">Мои заказы</div>
                   </v-list-item>
-                  <v-list-item
-                    prepend-icon="mdi-shield-crown-outline"
-                    to="/cabinet-admin/rest-list"
-                    @click="navigationDrawer = false"
-                    v-if="isAdmin"
-                  >
+                  <v-list-item prepend-icon="mdi-shield-crown-outline" to="/cabinet-admin/rest-list"
+                    @click="navigationDrawer = false" v-if="isAdmin">
                     <div style="font-size: 0.8rem; font-weight: 500">Администратор</div>
                   </v-list-item>
-                  <v-list-item
-                    prepend-icon="mdi-account-tie-outline"
-                    to="/cabinet-manager/orders"
-                    @click="navigationDrawer = false"
-                    v-if="isManager"
-                  >
+                  <v-list-item prepend-icon="mdi-account-tie-outline" to="/cabinet-manager/orders"
+                    @click="navigationDrawer = false" v-if="isManager">
                     <div style="font-size: 0.8rem; font-weight: 500">Менеджер</div>
                   </v-list-item>
                   <v-list-item @click="logout" prepend-icon="mdi-logout" v-if="isLoggedIn">
@@ -102,11 +79,20 @@ async function logout() {
         </v-navigation-drawer>
       </ClientOnly>
 
-      <v-main class="main">
+      <v-main class="main" style="min-height: 100%;">
         <!-- pages go here -->
         <NuxtPage />
         <!-- pages go here -->
       </v-main>
+
+      <ClientOnly>
+        <v-footer class="footer d-flex justify-center flex-column">
+          <div>
+            нижнее меню
+          </div>
+          <img src="../assets/images/madewithlove.png" alt="" style="max-width:100px">
+        </v-footer>
+      </ClientOnly>
     </v-app>
   </v-responsive>
 </template>
@@ -132,5 +118,10 @@ async function logout() {
   align-items: center;
 
   background: rgba(255, 255, 255, 0.7);
+}
+
+.footer {
+  background: rgb(84, 185, 117);
+  background: radial-gradient(circle, rgba(84, 185, 117, 1) 0%, rgba(250, 178, 50, 1) 0%, rgba(84, 185, 117, 1) 100%);
 }
 </style>

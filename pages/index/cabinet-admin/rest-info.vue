@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
-import getPossibleLocations from "../../composables/dadata";
-import type { Location } from "../../types/location.interface"
+import getPossibleLocations from "~/composables/dadata";
+import type { Location } from "~/types/location.interface"
 
 // meta
 useHead({
@@ -163,8 +163,8 @@ watch(locationSearchRequest, async (value) => {
 <template>
   <ClientOnly>
     <v-container>
-      <v-row>
-        <v-col>
+    <v-row class="justify-center pb-16">
+      <v-col :cols="12" :sm="10" class="pa-0">
           <v-form @submit.prevent="submit">
             <div class="font-weight-bold text-center" style="font-size: 20px;">Редактировать ресторан</div>
 

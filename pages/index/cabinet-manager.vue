@@ -8,13 +8,14 @@ const restStore = useRest()
 
 let managerIn = await userStore.getManagerIn()
 let currentRest = ref<string>(userStore.user?.managingRest || "")
-let isHidden = ref<boolean>(managerIn.find((rest:any)=>rest.id=currentRest).isHidden)
+let isHidden = ref<boolean>(managerIn.find((rest: any) => rest.id = currentRest).isHidden)
+let activMenu = ref<string>('2')
 
-async function refreshHide(){
+async function refreshHide() {
   managerIn = await userStore.getManagerIn()
-  isHidden.value=managerIn.find((rest:any)=>rest.id=currentRest).isHidden
+  isHidden.value = managerIn.find((rest: any) => rest.id = currentRest).isHidden
 }
-async function hideRest(){
+async function hideRest() {
   await restStore.hideRest(currentRest.value)
   await refreshHide()
 }
@@ -32,16 +33,68 @@ watch(currentRest, async (newVal) => {
         <h2>Кабинет менеджера</h2>
       </v-col>
       <v-col cols="12" md="6" xl="4" class="d-flex">
-        <v-select v-model="currentRest" :items="managerIn" item-title="title" item-value="_id" variant="outlined" density="compact"></v-select>
+        <v-select v-model="currentRest" :items="managerIn" item-title="title" item-value="_id" variant="outlined"
+          density="compact"></v-select>
       </v-col>
       <v-col :cols="12" class="d-flex overflow-x-auto">
-        <NuxtLink to="/cabinet-manager/orders" class="d-flex">
-          <div class="tab pa-4">
-            <v-icon icon="mdi-cart-check" size="x-large" />
-            <div class="explanation text-center">заказы</div>
-          </div>
-        </NuxtLink>
-        <!-- <NuxtLink to="/cabinet-manager/table-reservation" class="d-flex">
+
+        <v-btn-toggle v-model="activMenu" color="secondary" style="height:60px"  class="d-flex overflow-x-auto">
+
+          <v-btn to="/cabinet-manager/orders" size="x-large" >
+            <div class="d-flex flex-column align-center">
+              <v-icon icon="mdi-cart-check" size="x-large" />
+              <div class="explanation text-center">заказы</div>
+            </div>
+          </v-btn>
+
+          <v-btn to="/cabinet-manager/create-meal" size="x-large">
+            <div class="d-flex flex-column align-center">
+              <v-icon icon="mdi-bowl-mix-outline" size="x-large" />
+              <div class="explanation text-center">
+                создать <br />
+                блюдо
+              </div>
+            </div>
+          </v-btn>
+          <v-btn to="/cabinet-manager/manage-menu" size="x-large">
+            <div class="d-flex flex-column align-center">
+              <v-icon icon="mdi-food-outline" size="x-large" />
+              <div class="explanation text-center">
+                управлять <br />
+                меню
+              </div>
+            </div>
+          </v-btn>
+          <v-btn to="/cabinet-manager/rest-info" size="x-large">
+            <div class="d-flex flex-column align-center">
+              <v-icon icon="mdi-tune-variant" size="x-large" />
+              <div class="explanation text-center">
+                информация <br />
+                о ресторане
+              </div>
+            </div>
+          </v-btn>
+
+          <v-btn to="/cabinet-manager/add-manager" size="x-large">
+            <div class="d-flex flex-column align-center">
+              <v-icon icon="mdi-account-plus-outline" size="x-large" />
+              <div class="explanation text-center">
+                добавить <br />
+                менеджера
+              </div>
+            </div>
+          </v-btn>
+          <v-btn to="/cabinet-manager/manage-email-list" size="x-large">
+            <div class="d-flex flex-column align-center">
+              <v-icon icon="mdi-email-fast-outline" size="x-large" />
+              <div class="explanation text-center">
+                email список <br />
+                для уведомлений
+              </div>
+            </div>
+          </v-btn>
+
+          <!-- <NuxtLink to="/cabinet-manager/table-reservation" class="d-flex">
           <div class="tab pa-4">
             <v-icon icon="mdi-table-chair" size="x-large" />
             <div class="explanation text-center">
@@ -50,65 +103,20 @@ watch(currentRest, async (newVal) => {
             </div>
           </div>
         </NuxtLink> -->
-        <NuxtLink to="/cabinet-manager/create-meal" class="d-flex">
-          <div class="tab pa-4">
-            <v-icon icon="mdi-bowl-mix-outline" size="x-large" />
-            <div class="explanation text-center">
-              создать <br />
-              блюдо
-            </div>
-          </div>
-        </NuxtLink>
-        <NuxtLink to="/cabinet-manager/manage-menu" class="d-flex">
-          <div class="tab pa-4">
-            <v-icon icon="mdi-food-outline" size="x-large" />
-            <div class="explanation text-center">
-              управлять <br />
-              меню
-            </div>
-          </div>
-        </NuxtLink>
-        <NuxtLink to="/cabinet-manager/rest-info" class="d-flex">
-          <div class="tab pa-4">
-            <v-icon icon="mdi-tune-variant" size="x-large" />
-            <div class="explanation text-center">
-              информация <br />
-              о ресторане
-            </div>
-          </div>
-        </NuxtLink>
+        </v-btn-toggle>
 
-        <NuxtLink to="/cabinet-manager/add-manager" class="d-flex">
-          <div class="tab pa-4">
-            <v-icon icon="mdi-account-plus-outline" size="x-large" />
-            <div class="explanation text-center">
-              добавить <br />
-              менеджера
-            </div>
+        <!-- <div class="tab pa-4 cursor-pointer" :class="{ 'show-hide': isHidden }" @click="hideRest()">
+          <div class="explanation text-center">
+            ресторан
           </div>
-        </NuxtLink>
-        <NuxtLink to="/cabinet-manager/manage-email-list" class="d-flex">
-          <div class="tab pa-4">
-            <v-icon icon="mdi-email-fast-outline" size="x-large" />
-            <div class="explanation text-center">
-              email список <br />
-              для уведомлений
-            </div>
+          <v-icon :icon="isHidden ? 'mdi-eye-off-outline' : 'mdi-eye-outline'" size="x-large" />
+          <div class="explanation text-center">
+            {{ isHidden ? 'показать' : 'скрыть' }}
           </div>
-        </NuxtLink>
-
-          <div class="tab pa-4 cursor-pointer" :class="{'show-hide': isHidden}" @click="hideRest()">
-            <div class="explanation text-center">
-               ресторан
-            </div>
-            <v-icon :icon="isHidden ?'mdi-eye-off-outline': 'mdi-eye-outline'" size="x-large" />
-            <div class="explanation text-center">
-               {{isHidden ? 'показать' : 'скрыть'}} 
-            </div>
-          </div>
+        </div> -->
 
       </v-col>
-     
+
 
       <v-col :cols="12">
         <NuxtPage />
@@ -117,12 +125,13 @@ watch(currentRest, async (newVal) => {
   </v-container>
 </template>
 <style scoped>
-.tab{
+.tab {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.show-hide{
+
+.show-hide {
   color: red;
 }
 </style>

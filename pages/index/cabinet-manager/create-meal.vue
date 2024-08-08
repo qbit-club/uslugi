@@ -12,8 +12,8 @@ let { user } = storeToRefs(userStore)
 
 let managingRest = ref<string>(String(user.value?.managingRest) ?? '')
 watch(user, (newVal) => {
-    managingRest.value = String(user.value?.managingRest)
-  },
+  managingRest.value = String(user.value?.managingRest)
+},
 )
 
 let form = ref({
@@ -93,106 +93,78 @@ async function submit() {
 }
 </script>
 <template>
-  <v-row class="mb-16">
-    <v-col cols="12">
-      <h3>Создать блюдо</h3>
-    </v-col>
-    <v-col cols="12" class="d-flex justify-space-between align-center">
-      <MenuItemImageInput @upload-menu-item-image="uploadImage" />
-      <v-img v-for="pr of previews" :src="pr" class="img-preview"></v-img>
-    </v-col>
-    <v-col cols="12" md="6">
-      Название
-      <v-text-field hide-details v-model="form.name" density="compact" variant="outlined"></v-text-field>
-    </v-col>
-    <v-col cols="12" md="6">
-      Категория
-      <v-select
-        hide-details
-        v-model="form.category"
-        :items="CATEGORIES"
-        placeholder="пасты"
-        variant="outlined"
-        density="compact"
-        clearable
-      ></v-select>
-    </v-col>
-    <v-col cols="12" md="3" class="d-flex flex-column justify-end">
-      Белки
-      <div>
-        <v-text-field
-          hide-details
-          type="number"
-          v-model="form.health.protein"
-          density="compact"
-          variant="outlined"
-          suffix="г."
-        ></v-text-field>
-      </div>
-    </v-col>
-    <v-col cols="12" md="3" class="d-flex flex-column justify-end">
-      + Жиры
-      <div>
-        <v-text-field
-          hide-details
-          type="number"
-          v-model="form.health.fat"
-          density="compact"
-          variant="outlined"
-          suffix="г."
-        ></v-text-field>
-      </div>
-    </v-col>
-    <v-col cols="12" md="3" class="d-flex flex-column justify-end">
-      + Углеводы
-      <div>
-        <v-text-field
-          hide-details
-          type="number"
-          v-model="form.health.carb"
-          density="compact"
-          variant="outlined"
-          suffix="г."
-        ></v-text-field>
-      </div>
-    </v-col>
-    <v-col cols="12" md="3" class="d-flex flex-column justify-end">
-      = Энергетическая ценность
-      <div>
-        <v-text-field hide-details v-model="form.health.energy" density="compact" variant="outlined"></v-text-field>
-      </div>
-    </v-col>
-    <v-col cols="12" md="6">
-      Цена
-      <v-text-field hide-details v-model="form.price" prefix="₽" density="compact" variant="outlined"></v-text-field>
-    </v-col>
-    <v-col cols="12" md="6">
-      Масса
-      <v-text-field
-        hide-details
-        v-model="form.health.mass"
-        density="compact"
-        variant="outlined"
-        placeholder="500 г"
-      ></v-text-field>
-    </v-col>
-    <v-col cols="12">
-      Состав
-      <v-textarea
-        auto-grow
-        hide-details
-        :rows="1"
-        v-model="form.health.ingredients"
-        density="compact"
-        variant="outlined"
-        placeholder="Из слабосолёного лосося, с тартаром из огурцов, красной икрой, укропом, луком шнитт и шалот"
-      ></v-textarea>
-    </v-col>
+  <v-container>
+    <v-row class="justify-center pb-16">
+      <v-col :cols="12" sm="10" class="pa-0">
+        <v-row>
+          <v-col cols="12">
+            <h3 class="text-center">Создать блюдо</h3>
+          </v-col>
+          <v-col cols="12" class="d-flex justify-space-between align-center">
+            <MenuItemImageInput @upload-menu-item-image="uploadImage" />
+            <v-img v-for="pr of previews" :src="pr" class="img-preview"></v-img>
+          </v-col>
+          <v-col cols="12" md="6">
+            Название
+            <v-text-field hide-details v-model="form.name" density="compact" variant="outlined"></v-text-field>
+          </v-col>
+          <v-col cols="12" md="6">
+            Категория
+            <v-select hide-details v-model="form.category" :items="CATEGORIES" placeholder="пасты" variant="outlined"
+              density="compact" clearable></v-select>
+          </v-col>
+          <v-col cols="12" md="3" class="d-flex flex-column justify-end">
+            Белки
+            <div>
+              <v-text-field hide-details type="number" v-model="form.health.protein" density="compact"
+                variant="outlined" suffix="г."></v-text-field>
+            </div>
+          </v-col>
+          <v-col cols="12" md="3" class="d-flex flex-column justify-end">
+            + Жиры
+            <div>
+              <v-text-field hide-details type="number" v-model="form.health.fat" density="compact" variant="outlined"
+                suffix="г."></v-text-field>
+            </div>
+          </v-col>
+          <v-col cols="12" md="3" class="d-flex flex-column justify-end">
+            + Углеводы
+            <div>
+              <v-text-field hide-details type="number" v-model="form.health.carb" density="compact" variant="outlined"
+                suffix="г."></v-text-field>
+            </div>
+          </v-col>
+          <v-col cols="12" md="3" class="d-flex flex-column justify-end">
+            = Энергетическая ценность
+            <div>
+              <v-text-field hide-details v-model="form.health.energy" density="compact"
+                variant="outlined"></v-text-field>
+            </div>
+          </v-col>
+          <v-col cols="12" md="6">
+            Цена
+            <v-text-field hide-details v-model="form.price" prefix="₽" density="compact"
+              variant="outlined"></v-text-field>
+          </v-col>
+          <v-col cols="12" md="6">
+            Масса
+            <v-text-field hide-details v-model="form.health.mass" density="compact" variant="outlined"
+              placeholder="500 г"></v-text-field>
+          </v-col>
+          <v-col cols="12">
+            Состав
+            <v-textarea auto-grow hide-details :rows="1" v-model="form.health.ingredients" density="compact"
+              variant="outlined"
+              placeholder="Из слабосолёного лосося, с тартаром из огурцов, красной икрой, укропом, луком шнитт и шалот"></v-textarea>
+          </v-col>
 
-    <v-col cols="12" class="d-flex justify-center">
-      <v-btn size="large" variant="tonal" :loading="loading" @click="submit">отправить</v-btn>
-    </v-col>
-  </v-row>
+          <v-col cols="12" class="d-flex justify-center">
+            <v-btn size="large" variant="flat" color="primary" :loading="loading" @click="submit">отправить</v-btn>
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 <style scoped lang="scss">
 .img-preview {

@@ -19,8 +19,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <v-row>
-    <v-col cols="12">
+  <v-container>
+    <v-row class="justify-center pb-16">
+      <v-col :cols="12" sm="10"   class="pa-0">
       <v-text-field
         v-model="userEmail"
         placeholder="Электронная почта"
@@ -30,8 +31,10 @@ onMounted(async () => {
       >
       </v-text-field>
     </v-col>
+    <v-btn variant="flat" color="primary" @click="setManager()">Cделать менеджером</v-btn>
   </v-row>
-  <v-btn variant="tonal" @click="setManager()">Cделать менеджером</v-btn>
+
+  </v-container>
 </template>
 
 <style scoped></style>
