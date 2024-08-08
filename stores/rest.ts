@@ -55,8 +55,8 @@ export const useRest = defineStore('rest', () => {
   async function moveFoodItemToMenu(restId: string, foodListItemId: string): Promise<any> {
     return await RestApi.moveFoodItemToMenu({ restId, foodListItemId })
   }
-  async function updateMeal(restId: string, mealId: string, mealItem :FoodListItemFromDb | FoodListItem): Promise<any> {
-    return await RestApi.updateMeal( restId, mealId, mealItem )
+  async function updateMeal(restId: string, mealId: string, mealItem: FoodListItemFromDb | FoodListItem): Promise<any> {
+    return await RestApi.updateMeal(restId, mealId, mealItem)
   }
   // async function updateFoodListItemImages(restId: string, foodListItemId: string, fd:FormData): Promise<any> {
   //   return await RestApi.updateFoodListItemImages( restId, foodListItemId, fd)
@@ -70,12 +70,28 @@ export const useRest = defineStore('rest', () => {
   async function update(rest: any, restId: string): Promise<any> {
     return await RestApi.update(rest, restId)
   }
-
+  /**
+   * 
+   * @param email который нужно добавить в mangingRest у user'а
+   * @param mailType какие письма будут присылаться пользователю
+   * @returns 
+   */
+  async function addEmail(email: string, mailType: string): Promise<any> {
+    const userStore = useAuth()
+    if (userStore.user?.managingRest) {
+      let res = await RestApi.addEmail(email, mailType, userStore.user.managingRest)
+      if (res.status.value == 'success') {
+        userStore.managingRestObject = res.data.value
+      }
+      return res
+    }
+    return {}
+  }
 
   return {
-    create, update, get, getWithHidden, getRestsName, getByAlias, getById, getByIds, uploadImages,getManagersOfRest,
-    sendFoodListItemToMenu, deleteRest, hideRest,createFoodListItem,
-    uploadFoodListItemImages, moveFoodItemToMenu,updateMeal, deleteFromMenu,deleteMeal
+    create, update, get, getWithHidden, getRestsName, getByAlias, getById, getByIds, uploadImages, getManagersOfRest,
+    sendFoodListItemToMenu, deleteRest, hideRest, createFoodListItem,
+    uploadFoodListItemImages, moveFoodItemToMenu, updateMeal, deleteFromMenu, deleteMeal, addEmail
   }
   //updateFoodListItemImages
 })

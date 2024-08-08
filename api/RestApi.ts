@@ -111,4 +111,14 @@ export default {
       body: { rest },
     })
   },
+  addEmail(email: string, mailType: string, restId: string) {
+    return useApiFetch('/rest/add-email', {
+      method: 'PUT',
+      body: {
+        email,
+        mailType,
+        restId
+      }
+    })
+  }
 }

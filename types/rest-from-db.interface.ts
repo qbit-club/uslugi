@@ -7,4 +7,7 @@ export interface RestFromDb extends Rest {
   menu: string[] & FoodListItemFromDb[]
   isHidden:boolean
   foodList: FoodListItemFromDb[]
+  mailTo: {
+    order: string[],
+  }
 }

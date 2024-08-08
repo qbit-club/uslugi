@@ -1,11 +1,15 @@
 import { defineStore } from "pinia"
 import AuthAPI from "../api/AuthApi"
+import RestApi from "~/api/RestApi"
+
 import type { User } from "../types/user.interface"
 import { ref } from "vue"
+import type { RestFromDb } from "~/types/rest-from-db.interface"
 
 export const useAuth = defineStore('auth', () => {
   let user = ref<User | null>()
   let redirectTo = ref<string>('/')
+  let managingRestObject = ref<any>()
 
   async function registration(data: any): Promise<boolean> {
     try {
@@ -84,7 +88,7 @@ export const useAuth = defineStore('auth', () => {
 
   async function logout(): Promise<any> {
     try {
-     let res = await AuthAPI.logout()
+      let res = await AuthAPI.logout()
 
       user.value = null
 
@@ -127,17 +131,26 @@ export const useAuth = defineStore('auth', () => {
     try {
       let res = await AuthAPI.chooseManagingRest(String(user.value?._id), restId)
       if (res.status.value == 'success') {
-        user.value = res.data.value
+        user.value = res.data.value.user
+        managingRestObject.value = res.data.value.rest
       }
       return res
     } catch (error) {
       console.log(error);
     }
   }
-
+  /**
+   * делать этот запрос всегда на заход в кабинет менежера
+   * @returns 
+   */
   async function getManagerIn(): Promise<any> {
     try {
       if (user.value?._id) {
+        let restResponse = await RestApi.getById(user.value?.managingRest)
+        if (restResponse.status.value == 'success') {
+          managingRestObject.value = restResponse.data.value;
+        }
+
         let res = await AuthAPI.getManagerInArray(user.value?._id)
         return res.data.value
       }
@@ -157,7 +170,7 @@ export const useAuth = defineStore('auth', () => {
 
   return {
     // variables
-    user,
+    user, managingRestObject,
     // functions
     registration, login, redirectTo, checkAuth, checkAdmin, checkManager, logout,
     updateUser, setManager, deleteManager, getUserRests, chooseManagingRest, getManagerIn,
