@@ -47,7 +47,7 @@ rest.value = res.data.value
             </v-col>
             <v-col :cols="12" class="pb-0">
        
-                <v-btn-toggle v-model="activMenu" class="d-flex overflow-x-auto">
+                <v-btn-toggle v-model="activMenu" color="secondary" style="height:60px" class="d-flex overflow-x-auto">
                   <v-btn @click="currentTab = Menu" size="x-large">
                     <div class="d-flex flex-column align-center">
                       <v-icon icon="mdi-silverware-fork-knife" size="x-large" />

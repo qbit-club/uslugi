@@ -162,8 +162,8 @@ watch(locationSearchRequest, async (value) => {
 <template>
   <ClientOnly>
     <v-container>
-      <v-row>
-        <v-col>
+    <v-row class="justify-center pb-16">
+      <v-col :cols="12" sm="10"   class="pa-0">
           <v-form @submit.prevent="submit">
             <div class="font-weight-bold text-center" style="font-size: 20px;">Редактировать ресторан</div>
 
@@ -241,7 +241,7 @@ watch(locationSearchRequest, async (value) => {
               </v-col>
 
               <v-col :cols="12" class="d-flex justify-center">
-                <v-btn class="ma-auto mt-4" variant="tonal" type="submit" :loading="loading" :disabled="!meta.valid">
+                <v-btn class="ma-auto mt-4" variant="flat" color="primary" type="submit" :loading="loading" :disabled="!meta.valid">
                   Отправить
                 </v-btn>
               </v-col>
