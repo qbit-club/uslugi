@@ -50,9 +50,9 @@ let deleteRest = async (id: string) => {
   await getRestList();
   confirmDeleteDialog.value = false;
 };
-let hideRest = async (rest:RestFromDb) => {
-  rest.isHidden= !rest.isHidden
-  await restStore.update(rest,rest._id);
+let hideRest = async (rest: RestFromDb) => {
+  rest.isHidden = !rest.isHidden;
+  await restStore.update(rest, rest._id);
   await getRestList();
   confirmHideDialog.value = false;
 };

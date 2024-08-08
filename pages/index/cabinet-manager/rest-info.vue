@@ -26,7 +26,7 @@ let restFromDb = response.data.value;
 let loading = ref(false);
 let schedule = ref(restFromDb.schedule);
 let description = ref(restFromDb.description);
-let isHidden = ref<boolean>(restFromDb.isHidden)
+let isHidden = ref<boolean>(restFromDb.isHidden);
 
 const { meta, handleSubmit, validate } = useForm({
   initialValues: {
@@ -300,7 +300,7 @@ watch(locationSearchRequest, async (value) => {
                 <div
                   class="tab pa-4 cursor-pointer file-input-label"
                   :class="{ 'show-hide': isHidden }"
-                  @click="isHidden=!isHidden"
+                  @click="isHidden = !isHidden"
                 >
                   <v-icon
                     :icon="isHidden ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"

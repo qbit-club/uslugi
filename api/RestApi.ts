@@ -15,9 +15,6 @@ export default {
   get(): Promise<any> {
     return useApiFetch('/rest/all', { method: 'GET' })
   },
-  getWithHidden(): Promise<any> {
-    return useApiFetch('/rest/all-with-hidden', { method: 'GET' })
-  },
   getRestsName(): Promise<any> {
     return useApiFetch('/rest/rests-name', { method: 'GET' })
   },
