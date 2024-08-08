@@ -87,7 +87,7 @@ function closeCartDialogAndClearState() {
     cartStore.cart = []
     localStorage.removeItem('cart')
 }
-function closeDialog () {
+function closeDialog() {
     cartDialog.value = false
 }
 
@@ -104,6 +104,19 @@ let cartLength = computed(() => {
     }
     return res
 })
+
+let cartAmount = computed(() => {
+    let res = 0.0
+  for (let restItem of cartStore?.cart) {
+    if (restItem.restInfo.alias == route.params.alias) {
+      for (let item of restItem.items) {
+        res += item.count * item.price
+      }
+    }
+  }
+  return res.toFixed(2)
+})
+
 watch(logoY, () => {
     logoY.value >= 400 ? logo.value.style.display = 'none' : logo.value.style.display = 'block'
 })
@@ -133,24 +146,34 @@ onMounted(() => {
                         </transition>
                     </ClientOnly>
                     <v-chip-group>
-                        <v-chip color="accent" variant="outlined"  v-for="(item, index) in groupMeals" :key="index"
+                        <v-chip color="accent" variant="outlined" v-for="(item, index) in groupMeals" :key="index"
                             @click="selectCategory(item.category)">
                             {{ item.category }}
                         </v-chip>
                     </v-chip-group>
                 </div>
-                <div class=" w-100 d-flex justify-end ga-4">
-                    <v-badge :content="cartLength" color="accent" class="d-flex align-center ml-2" >
-                        <v-icon icon="mdi-cart-outline" size="x-large" @click="cartDialog = true"  style="background: white;">
-                        </v-icon>
-                    </v-badge>
-                    <div class="d-flex align-center"  style="background: white;">
+                <div class=" w-100 d-flex justify-end align-start ga-4">
+
+                    <div class="d-flex flex-column align-center">
+                        <v-badge :content="cartLength" color="accent" class="d-flex align-center ml-2">
+                            <v-icon icon="mdi-cart-outline" size="x-large" @click="cartDialog = true"
+                                style="background: white;">
+                            </v-icon>
+                        </v-badge>
+                        <div class="explanation text-center">
+                            {{cartAmount}} 
+                        </div>
+                    </div>
+
+
+
+                    <div class="d-flex align-center" style="background: white;">
                         <transition name="fade">
                             <v-text-field min-width="200" v-model="filter" v-if="isShow" density="compact"
                                 variant="solo" hide-details single-line placeholder="поиск"
                                 clear-icon="mdi-close-circle" clearable></v-text-field>
                         </transition>
-                        <v-icon icon="mdi-magnify" size="x-large" @click="showSearch"  class="mr-2">
+                        <v-icon icon="mdi-magnify" size="x-large" @click="showSearch" class="mr-2">
 
                         </v-icon>
                     </div>
@@ -167,7 +190,7 @@ onMounted(() => {
                         {{ item.category }}
                     </div>
                     <v-row>
-                        <v-col cols="12" md="6"  v-for="(meal, index) in item.meals">
+                        <v-col cols="12" md="6" v-for="(meal, index) in item.meals">
                             <MenuCard :meal="meal" :rest="rest"></MenuCard>
                         </v-col>
                     </v-row>

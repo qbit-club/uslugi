@@ -41,7 +41,7 @@ function minusCart() {
 </script>
 <template>
     <div class="font-weight-bold mb-2">{{ meal.name }}</div>
-    <div class="text-caption">жиры {{ meal.health.fat }}г белки {{ meal.health.protein }}г углеводы
+    <div v-if="meal.health.fat|| meal.health.protein || meal.health.carb" class="text-caption">жиры {{ meal.health.fat }}г белки {{ meal.health.protein }}г углеводы
         {{ meal.health.carb }}г </div>
     <v-card class="w-100 meal-card d-flex">
         <div class="w-100 ">
@@ -52,8 +52,8 @@ function minusCart() {
 
         <div class="w-100 pa-2 d-flex flex-column justify-space-between">
             <div>
-                <div class="text-caption text-right font-weight-medium">{{ meal.health.energy }}/100г</div>
-                <div class="text-caption text-right font-weight-medium">{{ meal.health.mass }}</div>
+                <div v-if="meal.health.energy !== '0 ккал'" class="text-caption text-right font-weight-medium">{{ meal.health.energy }}/100г</div>
+                <div v-if="meal.health.mass" class="text-caption text-right font-weight-medium">{{ meal.health.mass }}</div>
             </div>
 
 

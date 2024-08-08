@@ -40,28 +40,34 @@ async function submit() {
 }
 </script>
 <template>
-  <v-row>
-    <v-col cols="12">
-      <h3>
-        <slot name="title"></slot>
-      </h3>
-      <div class="caption">
-        <slot name="caption"></slot>
-      </div>
-    </v-col>
-    <v-col cols="12" md="6" class="d-flex align-center">
-      <v-text-field placeholder="manager-email@gmail.com" variant="outlined" density="compact" :hide-details="true"
-        v-model="email"></v-text-field>
-      <v-btn variant="tonal" class="ml-4" @click="submit" :loading="loading">
-        добавить
-      </v-btn>
-    </v-col>
-    <v-col cols="12">
-      <v-chip variant="outlined" v-for="(em, index) in emails" :key="index" class="ma-2" @click="showDialog(em)">
-        {{ em }}
-      </v-chip>
-    </v-col>
-  </v-row>
+  <v-container>
+    <v-row class="justify-center pb-16">
+      <v-col :cols="12" sm="10" class="pa-0">
+
+        <h3 class="text-center">
+          <slot name="title"></slot>
+        </h3>
+        <div class="caption text-center">
+          <slot name="caption"></slot>
+        </div>
+
+        <v-col cols="12">
+          <v-text-field placeholder="manager-email@gmail.com" variant="outlined" density="compact" :hide-details="true"
+            v-model="email"></v-text-field>
+        </v-col>
+        <v-col cols="12" class="d-flex justify-center">
+          <v-btn variant="flat" color="primary" class="ml-4" @click="submit" :loading="loading">
+            добавить
+          </v-btn>
+        </v-col>
+        <v-col cols="12">
+          <v-chip variant="outlined" v-for="(em, index) in emails" :key="index" class="ma-2" @click="showDialog(em)">
+            {{ em }}
+          </v-chip>
+        </v-col>
+      </v-col>
+    </v-row>
+  </v-container>
   <v-dialog v-model="dialog" width="auto">
     <v-card max-width="400" title="Удаляем?">
       <template v-slot:actions>
