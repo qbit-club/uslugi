@@ -7,7 +7,6 @@ export const useAuth = defineStore('auth', () => {
   let user = ref<User | null>()
   let redirectTo = ref<string>('/')
 
-  let tokenCookie = useCookie('token')
   async function registration(data: any): Promise<boolean> {
     try {
       const response = await AuthAPI.registration(data)
@@ -37,7 +36,6 @@ export const useAuth = defineStore('auth', () => {
       const response = await AuthAPI.refresh()
 
       if (response.data.value?._id) {
-        // tokenCookie.value = response.data.value.accessToken
         user.value = response.data.value
         return true
       } else {
