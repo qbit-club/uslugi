@@ -14,10 +14,6 @@ async function refreshHide() {
   managerIn = await userStore.getManagerIn()
   isHidden.value=managerIn.find((rest:any)=>rest._id==currentRest.value).isHidden
 }
-async function hideRest() {
-  await restStore.hideRest(currentRest.value)
-  await refreshHide()
-}
 
 watch(currentRest, async (newVal) => {
   await userStore.chooseManagingRest(String(newVal))
@@ -104,15 +100,6 @@ watch(currentRest, async (newVal) => {
         </NuxtLink> -->
         </v-btn-toggle>
 
-        <!-- <div class="tab pa-4 cursor-pointer" :class="{ 'show-hide': isHidden }" @click="hideRest()">
-          <div class="explanation text-center">
-            ресторан
-          </div>
-          <v-icon :icon="isHidden ? 'mdi-eye-off-outline' : 'mdi-eye-outline'" size="x-large" />
-          <div class="explanation text-center">
-            {{ isHidden ? 'показать' : 'скрыть' }}
-          </div>
-        </div> -->
 
       </v-col>
 
@@ -128,9 +115,5 @@ watch(currentRest, async (newVal) => {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.show-hide {
-  color: red;
 }
 </style>
