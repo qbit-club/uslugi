@@ -40,7 +40,7 @@ watch(currentRest, async (newVal) => {
 
         <v-btn-toggle v-model="activMenu" color="secondary" style="height:60px"  class="d-flex overflow-x-auto">
 
-          <v-btn to="/cabinet-manager/orders" size="x-large" class="pa-2" variant="flat">
+          <v-btn to="/cabinet-manager/orders" size="x-large" >
             <div class="d-flex flex-column align-center">
               <v-icon icon="mdi-cart-check" size="x-large" />
               <div class="explanation text-center">заказы</div>

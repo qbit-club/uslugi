@@ -98,7 +98,7 @@ async function submit() {
       <v-col :cols="12" sm="10" class="pa-0">
         <v-row>
           <v-col cols="12">
-            <h3>Создать блюдо</h3>
+            <h3 class="text-center">Создать блюдо</h3>
           </v-col>
           <v-col cols="12" class="d-flex justify-space-between align-center">
             <MenuItemImageInput @upload-menu-item-image="uploadImage" />

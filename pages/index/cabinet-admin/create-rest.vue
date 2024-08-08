@@ -35,8 +35,8 @@ const { meta, handleSubmit, validate } = useForm({
     alias: '',
     phone: '',
     socialMedia: '',
-    menu:[],
-    foodList:[]
+    menu: [],
+    foodList: []
     // description: '',
     // schedule: ''
     // price: '',
@@ -142,7 +142,7 @@ function uploadHallImage(file: File, index: Number) {
 }
 const submit = handleSubmit(async values => {
   if (!logoPreview.value || !headerImagePreview.value) {
-    
+
     toast('Добавьте фото!', { type: 'warning' })
     return
   }
@@ -150,7 +150,7 @@ const submit = handleSubmit(async values => {
   loading.value = true
 
   let toSend = {
-    ...values, 
+    ...values,
     location: locationToSend.value,
     description: description.value,
     schedule: schedule.value,
@@ -185,9 +185,10 @@ watch(locationSearchRequest, async (value) => {
 </script>
 <template>
   <ClientOnly>
- 
-      <v-row>
-        <v-col>
+
+    <v-container>
+      <v-row class="justify-center pb-16">
+        <v-col :cols="12" :sm="10" class="pa-0">
           <v-form @submit.prevent="submit">
             <div class="font-weight-bold text-center" style="font-size: 20px;">Создать ресторан</div>
 
@@ -203,7 +204,7 @@ watch(locationSearchRequest, async (value) => {
                   placeholder="shaurma" variant="outlined" density="compact" class="w-100" />
                 <div v-if="alias.value.value.length > 0" class="label text-right">
                   url ресторана: <i style="text-decoration: underline;">{{ config.public.siteUrl + '/' +
-            alias.value.value
+          alias.value.value
                     }}</i>
                 </div>
               </v-col>
@@ -253,8 +254,8 @@ watch(locationSearchRequest, async (value) => {
                 </div>
 
                 <div class="logo" v-if="logoPreview">
-                    <img :src="logoPreview" alt="">
-                  </div>
+                  <img :src="logoPreview" alt="">
+                </div>
               </v-col>
 
 
@@ -264,7 +265,7 @@ watch(locationSearchRequest, async (value) => {
               </v-col>
 
               <v-col :cols="12" class="d-flex justify-center">
-                <v-btn class="ma-auto mt-4" variant="tonal" type="submit" >
+                <v-btn class="ma-auto mt-4" variant="flat" color="primary" type="submit">
                   <!-- :loading="loading" :disabled="!meta.valid" -->
                   Отправить
                 </v-btn>
@@ -274,7 +275,8 @@ watch(locationSearchRequest, async (value) => {
           </v-form>
         </v-col>
       </v-row>
- 
+     </v-container>
+
   </ClientOnly>
 </template>
 <style lang="scss" scoped>

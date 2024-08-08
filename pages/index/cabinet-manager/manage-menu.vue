@@ -58,9 +58,9 @@ watch(user, () => {
     <v-row class="justify-center pb-16">
       <v-col :cols="12" sm="10"   class="pa-0">
 
-        <h3 class="text-center ma-4">Список блюд</h3>
+        <h3 class="text-center">Список блюд</h3>
 
-        <div v-if="Number(rest?.foodList?.length) > 0" v-for="item of rest?.foodList" class="w-100">
+        <div v-if="Number(rest?.foodList?.length) > 0" v-for="item of rest?.foodList" :key="item._id" class="w-100">
           <ManagerFoodListItemCard :item="item" :inMenu="inMenu(item._id)" @move-to-menu="moveToMenu"
             @delete-from-menu="deleteFromMenu" @delete-meal="deleteMeal"/>
         </div>
