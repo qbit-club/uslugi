@@ -51,10 +51,13 @@ let deleteRest = async (id: string) => {
   confirmDeleteDialog.value = false;
 };
 let hideRest = async (rest: RestFromDb) => {
-  rest.isHidden = !rest.isHidden;
-  await restStore.update(rest, rest._id);
-  await getRestList();
   confirmHideDialog.value = false;
+  let restCopy:any = {};
+  Object.assign(restCopy,rest);
+  restCopy.isHidden = !restCopy.isHidden;
+
+  await restStore.update(restCopy, restCopy._id);
+  await getRestList();
 };
 
 let showSearch = () => {
@@ -147,7 +150,7 @@ getRestList();
               <v-dialog v-model="confirmHideDialog" max-width="300" persistent>
                 <v-card>
                   <v-card-title>{{
-                    rest.isHidden ? "Показать?" : "Скрыть?"
+                    dialogContainer.isHidden ? "Показать?" : "Скрыть?"
                   }}</v-card-title>
                   <v-card-actions>
                     <v-btn @click="confirmHideDialog = false">нет</v-btn>
