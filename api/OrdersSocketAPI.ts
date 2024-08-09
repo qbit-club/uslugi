@@ -20,9 +20,7 @@ export class OrdersSocketAPI {
       console.log('orders connected');
     })
 
-    this.ordersSocket.on("create-order-to-client", (data) => {
-      console.log(data);
-      
+    this.ordersSocket.on("create-order-to-client", (data) => {     
       const orderStore = useOrder()
       orderStore.pushOrder(data)
     })

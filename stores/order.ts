@@ -25,8 +25,9 @@ export const useOrder = defineStore("order", () => {
     return res;
   }
 
-  function pushOrder(order: OrderFromDb) {
-    orders.value.push({ ...order, new: true });
+  function pushOrder(order: any) {
+    // добавляем в начало массива
+    orders.value.unshift({ ...order, new: true });    
   }
 
   async function changeStatus(orderId: string, status: string) {
