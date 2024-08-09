@@ -6,7 +6,6 @@ const router = useRouter()
 let userStore = useAuth()
 
 let navigationDrawer = ref<boolean>(false)
-let selectedTab=ref<any>()
 
 let { user } = storeToRefs(userStore)
 

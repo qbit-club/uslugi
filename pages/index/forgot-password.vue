@@ -11,6 +11,9 @@ async function sendResetLink() {
   let res = await authStore.sendResetLink(forgotEmail.value)
   if (res.status.value == "success") {
     forgotEmail.value = ''
+    toast('Пароль изменён!', { type: "success" })
+    await authStore.checkAuth()
+    router.push('/')
   }
 }
 
