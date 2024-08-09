@@ -6,11 +6,10 @@ import Menu from '~/components/restindex/Menu.vue';
 import Reservation from '~/components/restindex/Reservation.vue'
 import type { RestFromDb } from "../../types/rest-from-db.interface.ts"
 
+const rest = ref<RestFromDb>()
 const restStore = useRest()
 
 let route = useRoute()
-let rest = ref<RestFromDb>()
-
 let currentTab = shallowRef<any>(Menu)
 
 let alias = String(route.params.alias) ?? ""
