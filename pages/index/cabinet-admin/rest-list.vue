@@ -31,7 +31,7 @@ let restsWithFilter = computed(() => {
   }
 });
 let getRestList = async () => {
-  let { data } = await restStore.get();
+  let { data } = await restStore.getWithHidden();
   rests.value = data.value;
 };
 
