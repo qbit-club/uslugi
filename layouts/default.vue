@@ -50,25 +50,32 @@ async function logout() {
             </v-row>
             <v-row class="justify-center">
               <v-col cols="12" md="6">
-                <v-list :nav="false">
-                  <v-list-item  :nav="false" prepend-icon="mdi-home-outline" to="/" @click="navigationDrawer = false">
+                <v-list
+                >
+
+                  <v-list-item prepend-icon="mdi-home-outline" to="/" @click="navigationDrawer = false" :active="router.currentRoute.value.path=='/' ? true : false">
                     <div style="font-size: 0.8rem; font-weight: 500">Выбор ресторана</div>
                   </v-list-item>
+
                   <v-list-item prepend-icon="mdi-account-outline" to="/cabinet-user/orders"
                     @click="navigationDrawer = false">
                     <div style="font-size: 0.8rem; font-weight: 500">Мои заказы</div>
                   </v-list-item>
+
                   <v-list-item prepend-icon="mdi-shield-crown-outline" to="/cabinet-admin/rest-list"
                     @click="navigationDrawer = false" v-if="isAdmin">
                     <div style="font-size: 0.8rem; font-weight: 500">Администратор</div>
                   </v-list-item>
+
                   <v-list-item prepend-icon="mdi-account-tie-outline" to="/cabinet-manager/orders"
                     @click="navigationDrawer = false" v-if="isManager">
                     <div style="font-size: 0.8rem; font-weight: 500">Менеджер</div>
                   </v-list-item>
+
                   <v-list-item @click="logout" prepend-icon="mdi-logout" v-if="isLoggedIn">
                     <div style="font-size: 0.8rem; font-weight: 500">Выйти</div>
                   </v-list-item>
+
                   <v-list-item @click="router.push('/login')" prepend-icon="mdi-login" v-else>
                     <div style="font-size: 0.8rem; font-weight: 500">Войти</div>
                   </v-list-item>
