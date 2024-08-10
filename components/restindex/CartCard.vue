@@ -48,6 +48,24 @@ let restItem = computed<any>(() => {
 
 let loading = ref(false)
 async function order() {
+  if (name.value.length == 0) {
+    toast("Введите имя", {
+      type: "warning",
+    })
+    return
+  }
+  if (phone.value.length == 0) {
+    toast("Введите телефон", {
+      type: "warning",
+    })
+    return
+  }
+  if (address.value.length == 0) {
+    toast("Введите адрес", {
+      type: "warning",
+    })
+    return
+  }
   loading.value = true
   let response = await cartStore.order(String(route.params.alias), {
     name: name.value,
