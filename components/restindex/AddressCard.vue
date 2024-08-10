@@ -1,4 +1,7 @@
 <script setup lang="ts">
+useHead({
+  title: 'Глазов - есть!'
+})
 import type { RestFromDb } from '~/types/rest-from-db.interface';
 const props = defineProps<{
   rest: RestFromDb

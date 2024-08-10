@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import _ from "lodash"
+
 useHead({
   title: 'Глазов - есть!'
 })

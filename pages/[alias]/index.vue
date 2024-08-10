@@ -1,4 +1,7 @@
 <script setup lang="ts">
+useHead({
+  title: 'Глазов - есть!'
+})
 import InfoCard from '../../components/restindex/InfoCard.vue'
 import DeliveryCard from '../../components/restindex/DeliveryCard.vue'
 import AddressCard from '../../components/restindex/AddressCard.vue'

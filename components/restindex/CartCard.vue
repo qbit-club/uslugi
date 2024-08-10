@@ -1,4 +1,7 @@
 <script setup lang="ts">
+useHead({
+  title: 'Глазов - есть!'
+})
 import { toast } from "vue3-toastify"
 
 const emit = defineEmits(["buy", "close"])

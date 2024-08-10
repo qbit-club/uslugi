@@ -42,6 +42,14 @@ export default defineNuxtConfig({
     // ... options
   },
   pwa: {
+    workbox: {
+      globPatterns: ['**/*.{js,css,html,png,jpg,svg}'],  // Removed **/_payload.json
+      globIgnores: [
+        '**/node_modules/**/*',
+        'sw.js',
+        'workbox-*.js',
+      ],
+    },
     registerType: 'autoUpdate',
     includeAssets: ['favicon.svg', 'favicon.ico', 'robots.txt', 'images/apple-touch-icon.png'],
     manifest: {
@@ -89,6 +97,7 @@ export default defineNuxtConfig({
   devServer: {
     port: 3041,
   },
+  
 
   compatibilityDate: "2024-07-27",
 });
