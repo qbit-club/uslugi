@@ -166,11 +166,11 @@ const submit = handleSubmit(async values => {
     let uplRes = await restStore.uploadImages(imagesFormData, _id)
 
     if (uplRes.status.value == 'success') {
-      loading.value = false
       router.push('/')
     } else {
       console.log(uplRes);
     }
+    loading.value = false
   } else {
     console.log(res);
   }
@@ -265,7 +265,7 @@ watch(locationSearchRequest, async (value) => {
               </v-col>
 
               <v-col :cols="12" class="d-flex justify-center">
-                <v-btn class="ma-auto mt-4" variant="flat" color="primary" type="submit">
+                <v-btn class="ma-auto mt-4" variant="flat" color="primary" type="submit" :loading="loading">
                   <!-- :loading="loading" :disabled="!meta.valid" -->
                   Отправить
                 </v-btn>
