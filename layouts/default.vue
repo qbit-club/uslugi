@@ -94,10 +94,14 @@ async function logout() {
 
       <ClientOnly>
         <v-footer class="footer d-flex justify-center flex-column">
-          <div>
-            нижнее меню
+          <div class="mb-2">
+            <span class="description" @click="router.push('/about-site/description-and-restrictions')">
+              Описание и ограничения
+            </span>
           </div>
-          <img src="../assets/images/madewithlove.png" alt="" style="max-width:100px">
+          <a href="https://vk.com/qbitclub" target="_blank">
+            <img src="../assets/images/madewithlove.png" alt="" style="max-width:100px">
+          </a>
         </v-footer>
       </ClientOnly>
     </v-app>
@@ -105,6 +109,11 @@ async function logout() {
 </template>
 
 <style scoped lang="scss">
+.description {
+  font-weight: 600;
+  font-size: clamp(0.8125rem, 0.7131rem + 0.2841vw, 0.9375rem);
+  cursor: pointer;
+}
 .menu-button {
   position: fixed;
   top: 20px;

@@ -19,6 +19,7 @@ export default defineNuxtConfig({
   },
 
   modules: [
+    '@nuxt/content',
     (_options, nuxt) => {
       nuxt.hooks.hook("vite:extendConfig", (config) => {
         // @ts-expect-error
@@ -35,8 +36,11 @@ export default defineNuxtConfig({
     ],
     "@pinia/nuxt",
     '@vite-pwa/nuxt',
-   
   ],
+  // nuxt content
+  content: {
+    // ... options
+  },
   pwa: {
     registerType: 'autoUpdate',
     includeAssets: ['favicon.svg', 'favicon.ico', 'robots.txt', 'images/apple-touch-icon.png'],
