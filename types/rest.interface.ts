@@ -15,4 +15,5 @@ export interface Rest {
   managers?: []
   menu: string[] & FoodListItemFromDb[]
   foodList: FoodListItemFromDb[]
+  deleted: boolean
 }
