@@ -87,7 +87,12 @@ async function submit() {
     let uploadRes = await restStore.uploadFoodListItemImages(restId, itemId, imagesFormData)
     if (uploadRes.status.value == "success") {
       loading.value = false
-      router.push('/cabinet-manager/manage-menu')
+      toast("Блюдо создано!", {
+        type: 'success',
+      })
+      setTimeout(() => {
+        router.push('/cabinet-manager/manage-menu')
+      }, 1700)
     }
   }
 }
