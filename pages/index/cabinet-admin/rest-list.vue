@@ -138,32 +138,32 @@ getRestList();
                 />
                 <div class="explanation text-center">удалить</div>
               </div>
-              <v-dialog v-model="confirmDeleteDialog" max-width="300" persistent>
-                <v-card>
-                  <v-card-title>Удалить?</v-card-title>
-                  <v-card-actions>
-                    <v-btn @click="confirmDeleteDialog = false">нет</v-btn>
-                    <v-btn @click="deleteRest(dialogContainer)" color="error">да</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-              <v-dialog v-model="confirmHideDialog" max-width="300" persistent>
-                <v-card>
-                  <v-card-title>{{
-                    dialogContainer.isHidden ? "Показать?" : "Скрыть?"
-                  }}</v-card-title>
-                  <v-card-actions>
-                    <v-btn @click="confirmHideDialog = false">нет</v-btn>
-                    <v-btn @click="hideRest(dialogContainer)" color="error">да</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
             </div>
           </div>
           <v-divider></v-divider>
         </v-col>
       </v-col>
     </v-row>
+    <v-dialog v-model="confirmDeleteDialog" max-width="300" persistent>
+      <v-card>
+        <v-card-title>Удалить?</v-card-title>
+        <v-card-actions>
+          <v-btn @click="confirmDeleteDialog = false">нет</v-btn>
+          <v-btn @click="deleteRest(dialogContainer)" color="error">да</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="confirmHideDialog" max-width="300" persistent>
+      <v-card>
+        <v-card-title>{{
+          dialogContainer.isHidden ? "Показать?" : "Скрыть?"
+        }}</v-card-title>
+        <v-card-actions>
+          <v-btn @click="confirmHideDialog = false">нет</v-btn>
+          <v-btn @click="hideRest(dialogContainer)" color="error">да</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 <style scoped>
