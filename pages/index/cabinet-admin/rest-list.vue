@@ -52,8 +52,8 @@ let deleteRest = async (id: string) => {
 };
 let hideRest = async (rest: RestFromDb) => {
   confirmHideDialog.value = false;
-  let restCopy:any = {};
-  Object.assign(restCopy,rest);
+  let restCopy: any = {};
+  Object.assign(restCopy, rest);
   restCopy.isHidden = !restCopy.isHidden;
 
   await restStore.update(restCopy, restCopy._id);
@@ -77,65 +77,36 @@ getRestList();
         <v-col cols="12" class="d-flex align-center">
           <v-icon icon="mdi-magnify" class="ma-2" @click="showSearch" />
           <transition name="fade">
-            <v-text-field
-              v-model="filter"
-              v-if="isShow"
-              density="compact"
-              variant="solo"
-              hide-details
-              single-line
-              placeholder="поиск ресторана"
-              clear-icon="mdi-close-circle"
-              clearable
-            ></v-text-field>
+            <v-text-field v-model="filter" v-if="isShow" density="compact" variant="solo" hide-details single-line
+              placeholder="поиск ресторана" clear-icon="mdi-close-circle" clearable></v-text-field>
           </transition>
         </v-col>
 
-        <v-col
-          cols="12"
-          v-for="(rest, index) in restsWithFilter"
-          :key="index"
-          :class="[rest.isHidden ? 'out-menu' : '']"
-        >
-          <div class="d-flex justify-space-between">
-            <div
-              class="d-flex align-center cursor-pointer"
-              @click="router.push(`/${rest.alias}`)"
-            >
+        <v-col cols="12" v-for="(rest, index) in restsWithFilter" :key="index"
+          :class="[rest.isHidden ? 'out-menu' : '']">
+          <v-row class="d-flex justify-space-between flex-wrap">
+            <v-col cols="12" md="6" class="d-flex align-center cursor-pointer" @click="router.push(`/${rest.alias}`)">
               <div style="width: 50px">
                 <v-img :src="rest.images.logo"></v-img>
               </div>
-
-              <h4 class="ma-4">{{ rest.title }}</h4>
-            </div>
-            <div class="d-flex">
-              <div
-                class="d-flex flex-column align-center pa-4"
-                @click="router.push(`/cabinet-admin/rest-info?rest_id=${rest._id}`)"
-              >
+              <h4 class="ml-4">{{ rest.title }}</h4>
+            </v-col>
+            <v-col cols="12" md="6"  class="d-flex justify-center justify-md-end">
+              <div class="d-flex flex-column align-center" 
+                @click="router.push(`/cabinet-admin/rest-info?rest_id=${rest._id}`)">
                 <v-icon icon="mdi-pencil" size="x-large" class="cursor-pointer" />
                 <div class="explanation text-center">редактировать</div>
               </div>
-              <div
-                class="d-flex flex-column align-center pa-4 cursor-pointer"
-                :class="{ 'show-hide': rest.isHidden }"
-                @click="initHideDialog(rest)"
-              >
-                <v-icon
-                  :icon="rest.isHidden ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
-                  size="x-large"
-                />
+              <div class="d-flex flex-column align-center pl-4 cursor-pointer" :class="{ 'show-hide': rest.isHidden }"
+                @click="initHideDialog(rest)">
+                <v-icon :icon="rest.isHidden ? 'mdi-eye-off-outline' : 'mdi-eye-outline'" size="x-large" />
                 <div class="explanation text-center">
                   {{ rest.isHidden ? "показать" : "скрыть" }}
                 </div>
               </div>
-              <div class="d-flex flex-column align-center pa-4">
-                <v-icon
-                  icon="mdi-trash-can-outline"
-                  size="x-large"
-                  class="cursor-pointer"
-                  @click="initDeleteDialog(rest._id)"
-                />
+              <div class="d-flex flex-column align-center pl-4 ">
+                <v-icon icon="mdi-trash-can-outline" size="x-large" class="cursor-pointer"
+                  @click="initDeleteDialog(rest._id)" />
                 <div class="explanation text-center">удалить</div>
               </div>
               <v-dialog v-model="confirmDeleteDialog" max-width="300" persistent>
@@ -150,16 +121,16 @@ getRestList();
               <v-dialog v-model="confirmHideDialog" max-width="300" persistent>
                 <v-card>
                   <v-card-title>{{
-                    dialogContainer.isHidden ? "Показать?" : "Скрыть?"
-                  }}</v-card-title>
+        dialogContainer.isHidden ? "Показать?" : "Скрыть?"
+      }}</v-card-title>
                   <v-card-actions>
                     <v-btn @click="confirmHideDialog = false">нет</v-btn>
                     <v-btn @click="hideRest(dialogContainer)" color="error">да</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
-            </div>
-          </div>
+            </v-col>
+          </v-row>
           <v-divider></v-divider>
         </v-col>
       </v-col>
@@ -170,6 +141,7 @@ getRestList();
 .out-menu {
   opacity: 0.7;
 }
+
 .show-hide {
   color: red;
 }

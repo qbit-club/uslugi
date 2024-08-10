@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import _ from "lodash"
 useHead({
-  title: 'Рестик'
+  title: 'Глазов - есть!'
 })
 
 const restStore = useRest()
@@ -9,6 +9,8 @@ const router = useRouter()
 
 let { data } = await restStore.get()
 let rests = ref(data.value)
+
+
 
 let isShow = ref(false)
 let filter = ref<string>('')

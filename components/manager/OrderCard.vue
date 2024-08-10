@@ -26,16 +26,16 @@ watch(orderStatus, async (newStatus) => {
 </script>
 <template>
   <v-badge floating dot color="success" v-if="order.new">
-    <h3>{{ getDate(order.date) }}</h3>
+    <h3 class="h3-clamp">{{ getDate(order.date) }}</h3>
   </v-badge>
-  <h3 v-else>{{ getDate(order.date) }}</h3>
-  <v-radio-group inline v-model="orderStatus" :hide-details="true" :disabled="loading">
-    <v-radio  label="Создан" value="created" color="accent"></v-radio>
+  <h3 class="h3-clamp" v-else>{{ getDate(order.date) }}</h3>
+  <v-radio-group inline v-model="orderStatus" :hide-details="true" :disabled="loading" >
+    <v-radio  label="Создан" value="created" color="accent" ></v-radio>
     <v-radio  label="В работе" value="inWork" color="primary"></v-radio>
     <v-radio  label="В пути" value="inDelivery" color="secondary"></v-radio>
     <v-radio  label="Доставлен" value="delivered" color="success"></v-radio>
   </v-radio-group>
-  <v-card class="pa-4 ma-4 p-clamp">
+  <v-card class="pa-4 mt-4 mb-4 p-clamp">
     <div class="user-info">
       <div><v-icon icon="mdi-account-outline" class="mr-2"></v-icon>{{ order.user.name }}</div>
       <div>

@@ -8,6 +8,7 @@ const cartStore = useCart()
 
 let { user } = storeToRefs(authStore)
 let orders = ref<any[]>()
+let loading = ref<boolean>(true)
 
 let getDate = (d: string) => {
     let t = new Date(d)
@@ -35,6 +36,7 @@ function getStatus(status: string) {
 onMounted(async () => {
     let res = await cartStore.getOrdersByOrdersId(user.value?.orders)
     orders.value = res.data.value
+    loading.value = false
 })
 </script>
 
@@ -42,26 +44,28 @@ onMounted(async () => {
     <v-container>
         <v-row class="justify-center pb-16">
             <v-col :cols="12" :sm="10" :md="8" class="pa-0">
-
-                <div v-for="(item, index) in orders">
-                    <div class="text-center text-uppercase  font-weight-bold ma-4 " :id="item.rest">
+                <v-col cols="12" class="d-flex justify-center" v-if="loading">
+                    <img src="~/assets/icons/kvak.gif" alt="">
+                </v-col>
+                <div v-else v-for="(item, index) in orders">
+                    <div class="text-center text-uppercase  font-weight-bold ma-4 p-clamp" :id="item.rest">
                         {{ item.rest }}
                     </div>
 
                     <div v-for="(order, i) in item.orders">
-                        <h3>{{ getDate(order.date) }}</h3>
-                        <v-chip :color="getStatus(order.status)?.color" variant="flat">
+                        <h3 class="h3-clamp">{{ getDate(order.date) }}</h3>
+                        <v-chip :color="getStatus(order.status)?.color" variant="flat" class="p-clamp">
                             {{ getStatus(order.status)?.text }}
                         </v-chip>
 
-                        <div v-for="item, j in order.items" class="d-flex justify-space-between">
+                        <div v-for="item, j in order.items" class="d-flex justify-space-between p-clamp">
                             <span>{{ item.menuItem }}</span> <span>{{ item.count }} * {{ item.price }} = {{ (item.count
                 * item.price).toFixed(2) }}
                             </span>
 
                         </div>
                         <v-divider></v-divider>
-                        <div class="text-end"><i> <b> Итого: {{ order.items.reduce((accumulator: number,
+                        <div class="text-end p-clamp"><i> <b> Итого: {{ order.items.reduce((accumulator: number,
                 current: any) => accumulator + current.count * current.price, 0).toFixed(2) }}₽
                                 </b></i>
                         </div>

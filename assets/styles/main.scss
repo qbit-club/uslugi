@@ -19,3 +19,6 @@ a {
 .p-clamp {
   font-size: clamp(0.75rem, 0.55rem + 0.8vw, 1rem);
 }
+.h3-clamp {
+  font-size: clamp(0.875rem, 0.675rem + 0.8vw, 1.125rem);
+}

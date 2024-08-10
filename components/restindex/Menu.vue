@@ -21,7 +21,7 @@ const { y: logoY }
 
 const cartStore = useCart()
 const route = useRoute()
-
+let loading = ref(true)
 let cartDialog = ref<boolean>(false)
 
 let groupMeals = ref<CategoryMeals[]>()
@@ -107,14 +107,14 @@ let cartLength = computed(() => {
 
 let cartAmount = computed(() => {
     let res = 0.0
-  for (let restItem of cartStore?.cart) {
-    if (restItem.restInfo.alias == route.params.alias) {
-      for (let item of restItem.items) {
-        res += item.count * item.price
-      }
+    for (let restItem of cartStore?.cart) {
+        if (restItem.restInfo.alias == route.params.alias) {
+            for (let item of restItem.items) {
+                res += item.count * item.price
+            }
+        }
     }
-  }
-  return res.toFixed(2)
+    return res.toFixed(2)
 })
 
 watch(logoY, () => {
@@ -161,7 +161,7 @@ onMounted(() => {
                             </v-icon>
                         </v-badge>
                         <div class="explanation text-center">
-                            {{cartAmount}} 
+                            {{ cartAmount }}
                         </div>
                     </div>
 
@@ -183,7 +183,6 @@ onMounted(() => {
 
 
             </v-col>
-
             <v-col :cols="12" class="pt-0">
                 <div v-for="(item, index) in groupMeals">
                     <div class="text-center text-uppercase  font-weight-bold ma-4 " :id="item.category">
@@ -193,6 +192,7 @@ onMounted(() => {
                         <v-col cols="12" md="6" v-for="(meal, index) in item.meals">
                             <MenuCard :meal="meal" :rest="rest"></MenuCard>
                         </v-col>
+
                     </v-row>
                 </div>
             </v-col>

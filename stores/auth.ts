@@ -104,13 +104,16 @@ export const useAuth = defineStore('auth', () => {
   }
   async function setManager(user_email: string, chosen_rest: string) {
     try {
+      console.log( user_email, chosen_rest)
       user.value = (await AuthAPI.setManager(user_email, chosen_rest)).data
     } catch { }
   }
 
 
   async function deleteManager(manager_email: string, restId: string) {
+  
     try {
+      console.log( manager_email, restId)
       user.value = (await AuthAPI.deleteManager(manager_email, restId)).data
     } catch { }
   }
@@ -129,7 +132,7 @@ export const useAuth = defineStore('auth', () => {
   }
   async function chooseManagingRest(restId: string) {
     try {
-      let res = await AuthAPI.chooseManagingRest(String(user.value?._id), restId)
+      let res = await AuthAPI.chooseManagingRest(user.value?._id, restId)
       if (res.status.value == 'success') {
         user.value = res.data.value.user
         managingRestObject.value = res.data.value.rest
@@ -150,7 +153,6 @@ export const useAuth = defineStore('auth', () => {
         if (restResponse.status.value == 'success') {
           managingRestObject.value = restResponse.data.value;
         }
-
         let res = await AuthAPI.getManagerInArray(user.value?._id)
         return res.data.value
       }

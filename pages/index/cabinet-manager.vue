@@ -2,16 +2,20 @@
 definePageMeta({
   middleware: "is-manager",
 });
+useHead({
+  title: 'Глазов - есть!'
+})
 
 const userStore = useAuth();
 const restStore = useRest();
 
 let managerIn = await userStore.getManagerIn();
-let currentRest = ref<string>(userStore.user?.managingRest || "");
+const currentRest = ref<string>(userStore.user?.managingRest || "");
 
 watch(currentRest, async (newVal) => {
   await userStore.chooseManagingRest(String(newVal));
   currentRest.value = userStore.user?.managingRest || "";
+  
 });
 </script>
 <template>
