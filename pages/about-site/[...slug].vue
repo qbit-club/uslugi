@@ -1,6 +1,16 @@
 <script setup lang="ts"></script>
 <template>
+
   <v-container>
-    <ContentDoc />
+    <v-row class="justify-center">
+      <v-col cols="12" sm="10" md="8">
+        <BackButton />
+      </v-col>
+
+      <v-col cols="12" sm="10" md="8">
+        <ContentDoc />
+      </v-col>
+    </v-row>
+
   </v-container>
 </template>
