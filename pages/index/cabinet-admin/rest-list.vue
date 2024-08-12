@@ -51,13 +51,11 @@ let deleteRest = async (id: string) => {
   confirmDeleteDialog.value = false;
 };
 let hideRest = async (rest: RestFromDb) => {
+  let res = await restStore.hideRest(rest._id, !rest.isHidden);
+  if (res.status.value == 'success') {
+    await getRestList();
+  }
   confirmHideDialog.value = false;
-  let restCopy: any = {};
-  Object.assign(restCopy, rest);
-  restCopy.isHidden = !restCopy.isHidden;
-
-  await restStore.update(restCopy, restCopy._id);
-  await getRestList();
 };
 
 let showSearch = () => {

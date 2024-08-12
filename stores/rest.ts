@@ -28,8 +28,8 @@ export const useRest = defineStore('rest', () => {
   async function deleteRest(rest_id: string) {
     return await RestApi.deleteRest(rest_id)
   }
-  async function hideRest(rest_id: string) {
-    return await RestApi.hideRest(rest_id)
+  async function hideRest(restId: string, isHiddenToSet: boolean) {
+    return await RestApi.hideRest(restId, isHiddenToSet)
   }
   async function getByAlias(alias: string) {
     return await RestApi.getByAlias(alias)

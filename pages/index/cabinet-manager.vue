@@ -12,10 +12,18 @@ const restStore = useRest();
 let managerIn = await userStore.getManagerIn();
 const currentRest = ref<string>(userStore.user?.managingRest || "");
 
+let { managingRestObject } = storeToRefs(userStore)
+
+let hideRest = async () => {
+  let res = await restStore.hideRest(managingRestObject.value._id, !managingRestObject.value.isHidden);
+  if (res.status.value == 'success') {    
+    managingRestObject.value.isHidden = res.data.value.isHidden
+  }
+};
+
 watch(currentRest, async (newVal) => {
   await userStore.chooseManagingRest(String(newVal));
   currentRest.value = userStore.user?.managingRest || "";
-  
 });
 </script>
 <template>
@@ -25,21 +33,11 @@ watch(currentRest, async (newVal) => {
         <h2>Кабинет менеджера</h2>
       </v-col>
       <v-col cols="12" md="6" xl="4" class="d-flex">
-        <v-select
-          v-model="currentRest"
-          :items="managerIn"
-          item-title="title"
-          item-value="_id"
-          variant="outlined"
-          density="compact"
-        ></v-select>
+        <v-select v-model="currentRest" :items="managerIn" item-title="title" item-value="_id" variant="outlined"
+          density="compact"></v-select>
       </v-col>
       <v-col :cols="12" class="d-flex overflow-x-auto">
-        <v-btn-toggle
-          color="secondary"
-          style="height: 60px"
-          class="d-flex overflow-x-auto"
-        >
+        <v-btn-toggle color="secondary" style="height: 60px" class="d-flex overflow-x-auto">
           <v-btn to="/cabinet-manager/orders" size="x-large">
             <div class="d-flex flex-column align-center">
               <v-icon icon="mdi-cart-check" size="x-large" />
@@ -93,17 +91,25 @@ watch(currentRest, async (newVal) => {
               </div>
             </div>
           </v-btn>
-
+          
           <!-- <NuxtLink to="/cabinet-manager/table-reservation" class="d-flex">
-          <div class="tab pa-4">
-            <v-icon icon="mdi-table-chair" size="x-large" />
+            <div class="tab pa-4">
+              <v-icon icon="mdi-table-chair" size="x-large" />
+              <div class="explanation text-center">
+                бронирование <br />
+                столиков
+              </div>
+            </div>
+          </NuxtLink> -->
+        </v-btn-toggle>
+        <v-btn size="x-large" @click="hideRest" variant="text">
+          <div class="d-flex flex-column align-center">
+            <v-icon :icon="managingRestObject?.isHidden ? 'mdi-eye-off-outline' : 'mdi-eye-outline'" size="x-large" />
             <div class="explanation text-center">
-              бронирование <br />
-              столиков
+              {{ managingRestObject?.isHidden ? 'показать' : 'спрятать' }}
             </div>
           </div>
-        </NuxtLink> -->
-        </v-btn-toggle>
+        </v-btn>
       </v-col>
 
       <v-col :cols="12">

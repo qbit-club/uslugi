@@ -28,8 +28,14 @@ export default {
   deleteRest(_id: string): Promise<any> {
     return useApiFetch(`/rest/delete?rest_id=${_id}`, { method: 'GET' })
   },
-  hideRest(_id: string): Promise<any> {
-    return useApiFetch(`/rest/change-hide?rest_id=${_id}`, { method: 'PUT' })
+  hideRest(_id: string, isHiddenToSet: boolean): Promise<any> {
+    return useApiFetch(`/rest/hide`, {
+      method: 'PUT',
+      body: {
+        _id,
+        isHiddenToSet
+      }
+    })
   },
   getByAlias(alias: string): Promise<any> {
     return useApiFetch('/rest/one-by-alias', { method: 'POST', body: { alias } })
@@ -88,7 +94,7 @@ export default {
   ) {
     return useApiFetch(`/rest/update-meal?rest_id=${restId}&meal_id=${mealId}`, {
       method: 'PUT',
-      body: {meal}
+      body: { meal }
     })
   },
   // updateFoodListItemImages(restId: string, foodListItemId: string, fd: FormData): Promise<any> {
