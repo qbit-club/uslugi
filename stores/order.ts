@@ -14,20 +14,22 @@ export const useOrder = defineStore("order", () => {
 
     if (res.status.value == "success") {
       // 30 - это лимит пагинации на сервере 
-     if(page == 1)  {
-      hasMoreOrders.value = true;
-      orders.value = res.data.value
-     } else {
-      orders.value.push(...res.data.value)
-     }
-     res.data.value.length < 30 ? (hasMoreOrders.value = false) : "";
+      if (page == 1) {
+        hasMoreOrders.value = true;
+        orders.value = res.data.value
+      } else {
+        orders.value.push(...res.data.value)
+      }
+      res.data.value.length < 30 ? (hasMoreOrders.value = false) : "";
     }
     return res;
   }
 
   function pushOrder(order: any) {
-    // добавляем в начало массива
-    orders.value.unshift({ ...order, new: true });    
+    if (orders.value[0]._id != order._id) {
+      // добавляем в начало массива
+      orders.value.unshift({ ...order, new: true });
+    }
   }
 
   async function changeStatus(orderId: string, status: string) {
