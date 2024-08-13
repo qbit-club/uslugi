@@ -5,9 +5,9 @@ import CartAPI from "~/api/CartAPI";
 import { OrdersSocketAPI } from "~/api/OrdersSocketAPI";
 
 // types
-import type { FoodListItemFromDb } from "~/types/food-list-item-from-db.interface"
-import type { RestFromDb } from './../types/rest-from-db.interface';
-import type { OrderFromDb } from '../types/order-from-db.interface'
+import type { FoodListItemFromDb } from "~/types/food-list-item-from-db.interface";
+import type { RestFromDb } from "./../types/rest-from-db.interface";
+import type { OrderFromDb } from "../types/order-from-db.interface";
 
 interface CartItem {
   items: [
@@ -16,7 +16,7 @@ interface CartItem {
       count: number;
       name: string;
       images: string[];
-      health: any,
+      health: any;
       menuItemId: string;
     }
   ];
@@ -55,7 +55,7 @@ export const useCart = defineStore("cart", () => {
       health: meal.health,
       menuItemId: meal._id,
     };
-    
+
     // если нет такого ресторана в корзине, то создаем его
     // иначе добавляем в список товаров текущий товар
     if (!cart.value.find((o) => o.restId == rest._id)) {
@@ -152,20 +152,22 @@ export const useCart = defineStore("cart", () => {
         }
         const userStore = useAuth();
         if (userStore.user?._id) {
-          userInfo._id = String(userStore.user?._id)
+          userInfo._id = String(userStore.user?._id);
         }
         let response = await CartAPI.order({
           items: itemsToSend,
           rest: item.restId,
           date: new Date(),
           user: userInfo,
-          status: 'created'
+          status: "created",
         });
 
-        if (response.status.value == 'success') {
-          userStore.user = response.data.value.user
+        if (response.status.value == "success") {
+          userStore.user = response.data.value.user;
 
-          OrdersSocketAPI.ordersSocket?.emit("create-order-to-server", { order: response.data.value.order })
+          OrdersSocketAPI.ordersSocket?.emit("create-order-to-server", {
+            order: response.data.value.order,
+          });
         }
         return response;
       }
@@ -177,6 +179,9 @@ export const useCart = defineStore("cart", () => {
   ): Promise<any> {
     return CartAPI.getOrdersByOrdersId(ordersId);
   }
+  async function getUserOrders(userId: string, page: number): Promise<any> {
+    return await CartAPI.getUserOrders(userId, page);
+  }
 
   return {
     // variables:
@@ -187,6 +192,7 @@ export const useCart = defineStore("cart", () => {
     minusCart,
     clearRestCart,
     order,
+    getUserOrders,
     getOrdersByOrdersId,
   };
 });

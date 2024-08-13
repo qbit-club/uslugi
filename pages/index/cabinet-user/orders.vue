@@ -7,8 +7,10 @@ const authStore = useAuth()
 const cartStore = useCart()
 
 let { user } = storeToRefs(authStore)
-let orders = ref<any[]>()
+let orders = ref<any[]>([])
 let loading = ref<boolean>(true)
+let hasMoreOrders = ref<boolean>(false)
+let page = 1
 
 let getDate = (d: string) => {
     let t = new Date(d)
@@ -33,11 +35,18 @@ function getStatus(status: string) {
     }
 }
 
-onMounted(async () => {
-    let res = await cartStore.getOrdersByOrdersId(user.value?.orders)
-    orders.value = res.data.value
+async function getOrders() {
+    if (user.value?._id) {
+        let res = await cartStore.getUserOrders(user.value._id, page)
+        if (res.status.value == 'success') {
+            orders.value = res.data.value.orders
+            hasMoreOrders.value = res.data.value.hasMoreOrders
+            page++
+        }
+    }
     loading.value = false
-})
+}
+getOrders()
 </script>
 
 <template>
@@ -47,7 +56,7 @@ onMounted(async () => {
                 <v-col cols="12" class="d-flex justify-center" v-if="loading">
                     <img src="~/assets/icons/kvak.gif" alt="">
                 </v-col>
-                <div v-else v-for="(item, index) in orders">
+                <div v-else v-for="(item, index) in orders" :key="index">
                     <div class="text-center text-uppercase  font-weight-bold ma-4 p-clamp" :id="item.rest">
                         {{ item.rest }}
                     </div>
@@ -60,19 +69,22 @@ onMounted(async () => {
 
                         <div v-for="item, j in order.items" class="d-flex justify-space-between p-clamp">
                             <span>{{ item.menuItem }}</span> <span>{{ item.count }} * {{ item.price }} = {{ (item.count
-                * item.price).toFixed(2) }}
+                                * item.price).toFixed(2) }}
                             </span>
 
                         </div>
                         <v-divider></v-divider>
                         <div class="text-end p-clamp"><i> <b> Итого: {{ order.items.reduce((accumulator: number,
-                current: any) => accumulator + current.count * current.price, 0).toFixed(2) }}₽
+                            current: any) => accumulator + current.count * current.price, 0).toFixed(2) }}₽
                                 </b></i>
                         </div>
                     </div>
-
                 </div>
 
+                <v-col cols="12" class="d-flex justify-center">
+                    <v-btn size="large" variant="flat" color="primary" @click="getOrders"
+                        v-if="hasMoreOrders">ещё</v-btn>
+                </v-col>
             </v-col>
         </v-row>
     </v-container>
