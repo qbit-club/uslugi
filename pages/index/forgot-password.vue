@@ -11,9 +11,7 @@ async function sendResetLink() {
   let res = await authStore.sendResetLink(forgotEmail.value)
   if (res.status.value == "success") {
     forgotEmail.value = ''
-    toast('Пароль изменён!', { type: "success" })
-    await authStore.checkAuth()
-    router.push('/')
+    toast('Пароль изменён!', { type: "success", onClose: () => router.push('/') })
   }
 }
 
@@ -21,9 +19,7 @@ let newPassword = ref<string>('')
 async function resetPassword() {
   let res = await authStore.resetPassword(newPassword.value, String(route.query.user_id), String(route.query.token))
   if (res.status.value == "success") {
-    toast('Пароль изменён!', { type: "success" })
-    await authStore.checkAuth()
-    router.push('/')
+    toast('Пароль изменён!', { type: "success", onClose: () => router.push('/') })
   }
 }
 </script>

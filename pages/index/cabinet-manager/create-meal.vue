@@ -89,10 +89,8 @@ async function submit() {
       loading.value = false
       toast("Блюдо создано!", {
         type: 'success',
+        onClose: () => router.push('/cabinet-manager/manage-menu')
       })
-      setTimeout(() => {
-        router.push('/cabinet-manager/manage-menu')
-      }, 1700)
     }
   }
 }
