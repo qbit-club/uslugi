@@ -14,7 +14,7 @@ const userStore = useAuth();
 const router = useRouter();
 let appStore = useApp();
 
-const CATEGORIES = appStore.appState?.foodCategory || [];
+const CATEGORIES = appStore.appState?.foodCategory.sort() || [];
 
 let { user } = storeToRefs(userStore);
 

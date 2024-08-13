@@ -2,7 +2,7 @@
 import { toast } from "vue3-toastify"
 
 let appStore = useApp()
-const CATEGORIES = appStore.appState?.foodCategory || []
+const CATEGORIES = appStore.appState?.foodCategory.sort() || []
 
 const userStore = useAuth()
 const router = useRouter();
