@@ -42,19 +42,29 @@ async function logout() {
 
       <ClientOnly>
         <v-navigation-drawer :model-value="navigationDrawer" location="top" :mobile="false" elevation="0" :scrim="false"
-          :temporary="true">
+          temporary class="w-100" style="min-height: 100dvh">
           <v-container>
             <v-row class="justify-center">
-              <v-col cols="12" md="6" class="d-flex justify-end"><v-icon icon="mdi-close" color="accent"
-                  class="cursor-pointer" @click="navigationDrawer = false"></v-icon></v-col>
+              <v-col cols="12" md="6" class="d-flex justify-space-between align-center">
+                <div>
+                  <v-img src="../assets/images/logo.svg" width="40"></v-img>
+
+                </div>
+
+                <h3 style="font-family: 'Sensei', sans-serif;">Глазов-есть!</h3>
+
+
+                <v-icon icon="mdi-close" color="accent" class="cursor-pointer"
+                  @click="navigationDrawer = false"></v-icon>
+              </v-col>
             </v-row>
             <v-row class="justify-center">
               <v-col cols="12" md="6">
-                <v-list
-                >
+                <v-list>
 
-                  <v-list-item prepend-icon="mdi-home-outline" to="/" @click="navigationDrawer = false" :active="router.currentRoute.value.path=='/' ? true : false">
-                    <div style="font-size: 0.8rem; font-weight: 500">Выбор ресторана</div>
+                  <v-list-item prepend-icon="mdi-home-outline" to="/" @click="navigationDrawer = false"
+                    :active="router.currentRoute.value.path == '/' ? true : false">
+                    <div style="font-size: 0.8rem; font-weight: 500">Кафе/магазины</div>
                   </v-list-item>
 
                   <v-list-item prepend-icon="mdi-account-outline" to="/cabinet-user/orders"
@@ -80,6 +90,9 @@ async function logout() {
                     <div style="font-size: 0.8rem; font-weight: 500">Войти</div>
                   </v-list-item>
                 </v-list>
+              </v-col>
+              <v-col cols="12" class="d-flex justify-center">
+                <img src="~/assets/icons/kvak.gif" alt="">
               </v-col>
             </v-row>
           </v-container>
@@ -114,6 +127,7 @@ async function logout() {
   font-size: clamp(0.8125rem, 0.7131rem + 0.2841vw, 0.9375rem);
   cursor: pointer;
 }
+
 .menu-button {
   position: fixed;
   top: 20px;

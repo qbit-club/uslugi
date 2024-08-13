@@ -31,6 +31,7 @@ let isHidden = ref<boolean>(restFromDb.isHidden);
 const { meta, handleSubmit, validate } = useForm({
   initialValues: {
     title: restFromDb.title,
+    type: restFromDb.type,
     alias: restFromDb.alias,
     phone: restFromDb.phone,
     socialMedia: restFromDb.socialMedia,
@@ -50,6 +51,12 @@ const { meta, handleSubmit, validate } = useForm({
       if (value?.length > 32) return "слишком длинный заголовок";
 
       return true;
+    },
+    type(value: string) {
+      if (value?.trim().length < 2) return 'слишком короткий заголовок'
+      if (value?.length > 32) return 'слишком длинный заголовок'
+
+      return true
     },
     alias(value: String) {
       if (value?.trim().length < 4) return "слишком короткий псевдоним";
@@ -76,6 +83,7 @@ const { meta, handleSubmit, validate } = useForm({
 });
 
 let title = useField<string>("title");
+let type = useField<string>('type')
 let alias = useField<string>("alias");
 let phone = useField<string>("phone");
 let socialMedia = useField<string>("socialMedia");
@@ -173,16 +181,15 @@ watch(locationSearchRequest, async (value) => {
               Редактировать ресторан
             </div>
             <v-row>
+              <v-col cols="12">
+                <div class="label">Название</div>
+                <v-text-field v-model="title.value.value" :error-messages="title.errorMessage.value"
+                  placeholder="Шаурма" variant="outlined" density="compact" class="w-100" />
+              </v-col>
               <v-col cols="12" md="6">
-                <div class="label">Название ресторана</div>
-                <v-text-field
-                  v-model="title.value.value"
-                  :error-messages="title.errorMessage.value"
-                  placeholder="Шаурма"
-                  variant="outlined"
-                  density="compact"
-                  class="w-100"
-                />
+                <div class="label">Тип</div>
+                <v-text-field v-model="type.value.value" :error-messages="type.errorMessage.value"
+                  placeholder="кафе, магазин, доставка, ресторан" variant="outlined" density="compact" class="w-100" />
               </v-col>
               <v-col cols="12" md="6">
                 <div class="label">Псевдоним</div>
@@ -297,7 +304,7 @@ watch(locationSearchRequest, async (value) => {
               <v-col :cols="12" class="d-flex justify-center">
                 <LogoInput @uploadImage="uploadLogo" />
                 <HeaderImageInput @uploadHeaderImage="uploadHeaderImage" />
-                <div
+                <!-- <div
                   class="tab pa-4 cursor-pointer file-input-label"
                   :class="{ 'show-hide': isHidden }"
                   @click="isHidden = !isHidden"
@@ -309,7 +316,7 @@ watch(locationSearchRequest, async (value) => {
                   <div class="explanation text-center">
                     {{ isHidden ? "показать ресторан" : "скрыть ресторан" }}
                   </div>
-                </div>
+                </div> -->
               </v-col>
 
               <v-col :cols="12" class="d-flex justify-center">

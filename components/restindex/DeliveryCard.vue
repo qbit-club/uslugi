@@ -9,12 +9,12 @@ defineProps<{
   <v-container>
     <v-row>
       <v-col>
-      
+        <v-card class="pa-8" width="fit-content" min-width="300">
           <p>
-            Расписание : <span v-html="rest.schedule"></span>
+           <span v-html="rest.schedule"></span>
           </p>
 
-
+        </v-card>
       </v-col>
     </v-row>
   </v-container>

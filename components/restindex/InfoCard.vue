@@ -10,11 +10,11 @@ defineProps<{
   <v-container>
     <v-row>
       <v-col>
-      
+        <v-card class="pa-8" width="fit-content" min-width="300">
         <p>
           <span v-html="rest.description"></span>
         </p>
-
+        </v-card>
       </v-col>
     </v-row>
   </v-container>

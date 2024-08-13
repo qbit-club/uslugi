@@ -16,7 +16,7 @@ let { managingRestObject } = storeToRefs(userStore)
 
 let hideRest = async () => {
   let res = await restStore.hideRest(managingRestObject.value._id, !managingRestObject.value.isHidden);
-  if (res.status.value == 'success') {    
+  if (res.status.value == 'success') {
     managingRestObject.value.isHidden = res.data.value.isHidden
   }
 };
@@ -32,9 +32,20 @@ watch(currentRest, async (newVal) => {
       <v-col :cols="12">
         <h2>Кабинет менеджера</h2>
       </v-col>
-      <v-col cols="12" md="6" xl="4" class="d-flex">
+      <v-col cols="12" md="6" xl="4" class="d-flex align-start">
         <v-select v-model="currentRest" :items="managerIn" item-title="title" item-value="_id" variant="outlined"
           density="compact"></v-select>
+        <div>
+          <v-btn size="x-large" @click="hideRest" variant="text">
+            <div class="d-flex flex-column align-center">
+              <v-icon :icon="managingRestObject?.isHidden ? 'mdi-eye-off-outline' : 'mdi-eye-outline'" size="x-large" />
+              <div class="explanation text-center">
+                {{ managingRestObject?.isHidden ? 'показать' : 'спрятать' }}
+              </div>
+            </div>
+          </v-btn>
+        </div>
+
       </v-col>
       <v-col :cols="12" class="d-flex overflow-x-auto">
         <v-btn-toggle color="secondary" style="height: 60px" class="d-flex overflow-x-auto">
@@ -50,7 +61,7 @@ watch(currentRest, async (newVal) => {
               <v-icon icon="mdi-bowl-mix-outline" size="x-large" />
               <div class="explanation text-center">
                 создать <br />
-                блюдо
+                товар/блюдо 
               </div>
             </div>
           </v-btn>
@@ -59,7 +70,7 @@ watch(currentRest, async (newVal) => {
               <v-icon icon="mdi-food-outline" size="x-large" />
               <div class="explanation text-center">
                 управлять <br />
-                меню
+                витриной
               </div>
             </div>
           </v-btn>
@@ -68,7 +79,7 @@ watch(currentRest, async (newVal) => {
               <v-icon icon="mdi-tune-variant" size="x-large" />
               <div class="explanation text-center">
                 информация <br />
-                о ресторане
+                о нас
               </div>
             </div>
           </v-btn>
@@ -91,7 +102,7 @@ watch(currentRest, async (newVal) => {
               </div>
             </div>
           </v-btn>
-          
+
           <!-- <NuxtLink to="/cabinet-manager/table-reservation" class="d-flex">
             <div class="tab pa-4">
               <v-icon icon="mdi-table-chair" size="x-large" />
@@ -102,14 +113,7 @@ watch(currentRest, async (newVal) => {
             </div>
           </NuxtLink> -->
         </v-btn-toggle>
-        <v-btn size="x-large" @click="hideRest" variant="text">
-          <div class="d-flex flex-column align-center">
-            <v-icon :icon="managingRestObject?.isHidden ? 'mdi-eye-off-outline' : 'mdi-eye-outline'" size="x-large" />
-            <div class="explanation text-center">
-              {{ managingRestObject?.isHidden ? 'показать' : 'спрятать' }}
-            </div>
-          </div>
-        </v-btn>
+
       </v-col>
 
       <v-col :cols="12">

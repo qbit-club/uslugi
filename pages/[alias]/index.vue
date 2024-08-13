@@ -53,7 +53,7 @@ rest.value = res.data.value
                   <v-btn @click="currentTab = Menu" size="x-large">
                     <div class="d-flex flex-column align-center">
                       <v-icon icon="mdi-silverware-fork-knife" size="x-large" />
-                      <div class="explanation">меню</div>
+                      <div class="explanation">меню/витрина</div>
                     </div>
                   </v-btn>
 
@@ -67,7 +67,7 @@ rest.value = res.data.value
                   <v-btn @click="currentTab = DeliveryCard" size="x-large">
                     <div class="d-flex flex-column align-center">
                       <v-icon icon="mdi-truck-fast-outline" size="x-large" />
-                      <div class="explanation">доставка</div>
+                      <div class="explanation">время <br> работы</div>
                     </div>
                   </v-btn>
                   <v-btn @click="currentTab = AddressCard" size="x-large">

@@ -4,6 +4,7 @@ import type { FoodListItemFromDb } from "./food-list-item-from-db.interface"
 
 export interface Rest {
   title: string
+  type: string
   alias: string
   phone: string
   socialMedia: string

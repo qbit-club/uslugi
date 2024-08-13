@@ -32,11 +32,13 @@ let description = ref('')
 const { meta, handleSubmit, validate } = useForm({
   initialValues: {
     title: '',
+    type: '',
     alias: '',
     phone: '',
     socialMedia: '',
     menu: [],
-    foodList: []
+    foodList: [],
+    deleted: false
     // description: '',
     // schedule: ''
     // price: '',
@@ -49,7 +51,13 @@ const { meta, handleSubmit, validate } = useForm({
   },
   validationSchema: {
     title(value: string) {
-      if (value?.trim().length < 4) return 'слишком короткий заголовок'
+      if (value?.trim().length < 2) return 'слишком короткий заголовок'
+      if (value?.length > 32) return 'слишком длинный заголовок'
+
+      return true
+    },
+    type(value: string) {
+      if (value?.trim().length < 2) return 'слишком короткий заголовок'
       if (value?.length > 32) return 'слишком длинный заголовок'
 
       return true
@@ -80,6 +88,7 @@ const { meta, handleSubmit, validate } = useForm({
 })
 
 let title = useField<string>('title')
+  let type = useField<string>('type')
 let alias = useField<string>('alias')
 let phone = useField<string>('phone')
 let socialMedia = useField<string>('socialMedia')
@@ -193,10 +202,15 @@ watch(locationSearchRequest, async (value) => {
             <div class="font-weight-bold text-center" style="font-size: 20px;">Создать ресторан</div>
 
             <v-row>
-              <v-col cols="12" md="6">
-                <div class="label">Название ресторана</div>
+              <v-col cols="12">
+                <div class="label">Название</div>
                 <v-text-field v-model="title.value.value" :error-messages="title.errorMessage.value"
                   placeholder="Шаурма" variant="outlined" density="compact" class="w-100" />
+              </v-col>
+              <v-col cols="12" md="6">
+                <div class="label">Тип</div>
+                <v-text-field v-model="type.value.value" :error-messages="type.errorMessage.value"
+                  placeholder="кафе, магазин, доставка, ресторан" variant="outlined" density="compact" class="w-100" />
               </v-col>
               <v-col cols="12" md="6">
                 <div class="label">Псевдоним</div>

@@ -26,7 +26,8 @@ let restsWithFilter = computed(() => {
     if (filter.value.length > 2) {
         return rests.value.filter((rest: any) =>
             rest.title.toLowerCase().includes(filter.value.toLowerCase()) ||
-            rest.description.toLowerCase().includes(filter.value.toLowerCase())
+            rest.description.toLowerCase().includes(filter.value.toLowerCase()) ||
+            rest.type.toLowerCase().includes(filter.value.toLowerCase())
         )
     } else {
 
@@ -49,31 +50,33 @@ getRests()
     <v-col cols="12" class="d-flex align-center justify-center">
         <ClientOnly>
             <v-text-field v-model='filter' prepend-inner-icon="mdi-magnify" density="compact" max-width="300px"
-                variant="solo" hide-details single-line placeholder="поиск еды" clear-icon="mdi-close-circle"
+                variant="solo" hide-details single-line placeholder="найти" clear-icon="mdi-close-circle"
                 clearable></v-text-field>
         </ClientOnly>
         <!-- <v-icon icon="mdi-magnify" class="ma-2" @click="showSearch" /> -->
     </v-col>
     <v-col cols="12" class="loading" v-if="loading">
-        <img src="../../assets/icons/kvak.gif"  alt="" >
+        <img src="../../assets/icons/kvak.gif" alt="">
     </v-col>
     <v-col v-else cols="6" md="4" lg="3" v-for="rest, index in restsWithFilter" :key="index">
         <NuxtLink :to="`/${rest?.alias}`">
             <div class="h-100 d-flex flex-column justify-space-between">
-                <h3 class="text-center">{{ rest.title }}</h3>
+                <p v-if="rest.type" class="text-center p-clamp font-weight-light">{{ rest.type.toLowerCase() }}</p>
+                <v-divider v-if="rest.type" width="50%" style="margin-left: auto; margin-right: auto;"></v-divider>
+                <h3 class="text-center h3-clamp">{{ rest.title }}</h3>       
                 <v-img :src="rest.images?.logo" class="w-100 rounded-lg"></v-img>
             </div>
         </NuxtLink>
     </v-col>
-    
+
 
 
 </template>
 <style scoped>
-.loading{
-    display:flex;
-    justify-content:center;
-    align-items:center;
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     transform: translateY(150px);
 }
 </style>

@@ -1,11 +1,20 @@
 @import "./animations.scss";
+
+@font-face {
+  font-family: 'Sensei';
+  src: url('~/assets/fonts/Sensei.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 button.v-btn[disabled] {
   .v-btn__overlay {
     opacity: 0.2;
   }
 }
 * {
-  font-family: Montserrat !important;
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto; 
 }
 a {
   outline: none;
