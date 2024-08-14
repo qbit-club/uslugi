@@ -138,31 +138,31 @@ onMounted(() => {
         <v-row>
 
             <v-col ref="logo" cols="12" class="position-sticky pt-0 pb-0" style="z-index:2; top:0px; ">
-                <div class="d-flex align-center" style="background: white;">
+                <div class="d-flex align-center" style="background: white; height:65px">
 
                     <ClientOnly>
                         <transition name="fade">
                             <img v-if="logoY < 100" :src="rest.images.logo" style="width: 50px;" class="ma-2"></img>
                         </transition>
                     </ClientOnly>
-                    <v-chip-group>
+                    <v-chip-group >
                         <v-chip color="accent" variant="outlined" v-for="(item, index) in groupMeals" :key="index"
                             @click="selectCategory(item.category)">
                             {{ item.category }}
                         </v-chip>
                     </v-chip-group>
                 </div>
-                <div class=" w-100 d-flex justify-end align-start ga-4">
+                <div class=" w-100 d-flex justify-end align-start">
 
-                    <div class="d-flex flex-column align-end">
-                        <v-badge :content="cartLength" color="accent" class="ml-2">
-                            <v-btn icon="mdi-cart-outline" density="comfortable" @click="cartDialog = true"
+                    <div class="d-flex flex-column align-center mr-1" @click="cartDialog = true">
+                        <v-badge :content="cartLength" color="accent" >
+                            <v-btn icon="mdi-cart-outline" density="comfortable" 
                                 style="background: white;">
                             </v-btn>
                         </v-badge>
-                        <div class="explanation">
-                            {{ cartAmount }}
-                        </div>
+                    
+                          <v-chip class="mt-1" variant="elevated" density="comfortable" color="success" size="x-small"> {{ cartAmount }}</v-chip> 
+                        
                     </div>
 
 
@@ -173,7 +173,7 @@ onMounted(() => {
                                 variant="solo" hide-details single-line placeholder="поиск"
                                 clear-icon="mdi-close-circle" clearable></v-text-field>
                         </transition>
-                        <v-btn icon="mdi-magnify" density="comfortable"  @click="showSearch" class="ml-2">
+                        <v-btn icon="mdi-magnify" density="comfortable"  @click="showSearch" class="ml-1">
 
                         </v-btn>
                     </div>
