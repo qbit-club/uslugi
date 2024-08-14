@@ -33,57 +33,60 @@ rest.value = res.data.value
               <a :href="rest?.socialMedia" target="_blank">
                 <img src="../../assets/icons/vk.svg" class="vk" />
               </a>
-              <v-img :src="rest?.images.headerimage" max-height="25vh"  cover alt="">
+              <div style="height:25dvh">
+                <v-img :src="rest?.images.headerimage" height="100%" cover alt="">
 
-              </v-img>
-            
+                </v-img>
+              </div>
 
-             <div class="logo">
-                  <v-img :src="rest?.images.logo" alt="" cover aspect-ratio="1"></v-img>
-                </div>
 
-           
+
+              <div class="logo">
+                <v-img :src="rest?.images.logo" alt="" cover aspect-ratio="1"></v-img>
+              </div>
+
+
             </v-col>
             <v-col :cols="12" class="ma-0 pa-0">
               <div class="title">{{ rest?.title }}</div>
             </v-col>
             <v-col :cols="12" class="pb-0">
-       
-                <v-btn-toggle v-model="activMenu" color="secondary" style="height:60px" class="d-flex overflow-x-auto">
-                  <v-btn @click="currentTab = Menu" size="x-large">
-                    <div class="d-flex flex-column align-center">
-                      <v-icon icon="mdi-silverware-fork-knife" size="x-large" />
-                      <div class="explanation">меню/витрина</div>
-                    </div>
-                  </v-btn>
 
-                  <v-btn @click="currentTab = InfoCard" size="x-large">
-                    <div class="d-flex flex-column align-center">
-                      <v-icon icon="mdi-information-outline" size="x-large" />
-                      <div class="explanation">инфо</div>
-                    </div>
-                  </v-btn>
+              <v-btn-toggle v-model="activMenu" color="secondary" style="height:60px" class="d-flex overflow-x-auto">
+                <v-btn @click="currentTab = Menu" size="x-large">
+                  <div class="d-flex flex-column align-center">
+                    <v-icon icon="mdi-silverware-fork-knife" size="x-large" />
+                    <div class="explanation">меню/витрина</div>
+                  </div>
+                </v-btn>
 
-                  <v-btn @click="currentTab = DeliveryCard" size="x-large">
-                    <div class="d-flex flex-column align-center">
-                      <v-icon icon="mdi-truck-fast-outline" size="x-large" />
-                      <div class="explanation">время <br> работы</div>
-                    </div>
-                  </v-btn>
-                  <v-btn @click="currentTab = AddressCard" size="x-large">
-                    <div class="d-flex flex-column align-center">
-                      <v-icon icon="mdi-map-marker-outline" size="x-large" />
-                      <div class="explanation">адрес</div>
-                    </div>
-                  </v-btn>
-                  <!-- <v-btn @click="" size="x-large" style="opacity: 0.5;">
+                <v-btn @click="currentTab = InfoCard" size="x-large">
+                  <div class="d-flex flex-column align-center">
+                    <v-icon icon="mdi-information-outline" size="x-large" />
+                    <div class="explanation">инфо</div>
+                  </div>
+                </v-btn>
+
+                <v-btn @click="currentTab = DeliveryCard" size="x-large">
+                  <div class="d-flex flex-column align-center">
+                    <v-icon icon="mdi-truck-fast-outline" size="x-large" />
+                    <div class="explanation">время <br> работы</div>
+                  </div>
+                </v-btn>
+                <v-btn @click="currentTab = AddressCard" size="x-large">
+                  <div class="d-flex flex-column align-center">
+                    <v-icon icon="mdi-map-marker-outline" size="x-large" />
+                    <div class="explanation">адрес</div>
+                  </div>
+                </v-btn>
+                <!-- <v-btn @click="" size="x-large" style="opacity: 0.5;">
                     <div class="d-flex flex-column align-center">
                       <v-icon icon="mdi-table-chair" size="x-large" />
                       <div class="explanation text-center">столики</div>
                     </div>
                   </v-btn> -->
-                </v-btn-toggle>
-       
+              </v-btn-toggle>
+
             </v-col>
             <component :is="currentTab" :rest="rest"></component>
           </v-row>
