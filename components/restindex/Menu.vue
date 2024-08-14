@@ -92,6 +92,9 @@ function closeDialog() {
 }
 
 watch(filter, () => {
+    if (!filter.value) {
+        isShow.value = false
+    }
     menuWithFilter()
 })
 
@@ -138,14 +141,16 @@ onMounted(() => {
         <v-row>
 
             <v-col ref="logo" cols="12" class="position-sticky pt-0 pb-0" style="z-index:2; top:0px; ">
-                <div class="d-flex align-center" style="background: white; height:65px">
+                <div class="d-flex align-center pr-8" style="background: white; height:65px">
 
                     <ClientOnly>
-                        <transition name="fade">
-                            <img v-if="logoY < 100" :src="rest.images.logo" style="width: 50px;" class="ma-2"></img>
-                        </transition>
+                        <NuxtLink to="/">
+                            <transition name="fade">
+                                <img v-if="logoY < 100" :src="rest.images.logo" style="width: 50px;" class="ma-2"></img>
+                            </transition>
+                        </NuxtLink>
                     </ClientOnly>
-                    <v-chip-group >
+                    <v-chip-group>
                         <v-chip color="accent" variant="outlined" v-for="(item, index) in groupMeals" :key="index"
                             @click="selectCategory(item.category)">
                             {{ item.category }}
@@ -154,26 +159,25 @@ onMounted(() => {
                 </div>
                 <div class=" w-100 d-flex justify-end align-start">
 
-                    <div class="d-flex flex-column align-center mr-1" @click="cartDialog = true">
-                        <v-badge :content="cartLength" color="accent" >
-                            <v-btn icon="mdi-cart-outline" density="comfortable" 
-                                style="background: white;">
+                    <div class="d-flex flex-column align-center" style="min-width:60px" @click="cartDialog = true">
+                        <v-badge :content="cartLength" color="accent">
+                            <v-btn icon="mdi-cart-outline" density="comfortable">
                             </v-btn>
                         </v-badge>
-                    
-                          <v-chip class="mt-1" variant="elevated" density="comfortable" color="success" size="x-small"> {{ cartAmount }}</v-chip> 
-                        
+
+                        <v-chip class="mt-1" variant="elevated" density="comfortable" color="success" size="x-small">
+                            {{ cartAmount }}</v-chip>
                     </div>
 
 
 
-                    <div class="d-flex align-center" style="background: white;">
+                    <div class="d-flex align-center">
                         <transition name="fade">
                             <v-text-field min-width="200" v-model="filter" v-if="isShow" density="compact"
                                 variant="solo" hide-details single-line placeholder="поиск"
                                 clear-icon="mdi-close-circle" clearable></v-text-field>
                         </transition>
-                        <v-btn icon="mdi-magnify" density="comfortable"  @click="showSearch" class="ml-1">
+                        <v-btn icon="mdi-magnify" density="comfortable" @click="showSearch" class="ml-2">
 
                         </v-btn>
                     </div>

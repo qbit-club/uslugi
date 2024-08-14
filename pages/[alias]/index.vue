@@ -40,12 +40,11 @@ rest.value = res.data.value
               </div>
 
 
-
-              <div class="logo">
-                <v-img :src="rest?.images.logo" alt="" cover aspect-ratio="1"></v-img>
-              </div>
-
-
+              <NuxtLink to="/">
+                <div class="logo">
+                  <v-img :src="rest?.images.logo" alt="" cover aspect-ratio="1"></v-img>
+                </div>
+              </NuxtLink>
             </v-col>
             <v-col :cols="12" class="ma-0 pa-0">
               <div class="title">{{ rest?.title }}</div>
