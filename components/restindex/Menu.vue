@@ -154,13 +154,13 @@ onMounted(() => {
                 </div>
                 <div class=" w-100 d-flex justify-end align-start ga-4">
 
-                    <div class="d-flex flex-column align-center">
-                        <v-badge :content="cartLength" color="accent" class="d-flex align-center ml-2">
-                            <v-icon icon="mdi-cart-outline" size="x-large" @click="cartDialog = true"
+                    <div class="d-flex flex-column align-end">
+                        <v-badge :content="cartLength" color="accent" class="ml-2">
+                            <v-btn icon="mdi-cart-outline" density="comfortable" @click="cartDialog = true"
                                 style="background: white;">
-                            </v-icon>
+                            </v-btn>
                         </v-badge>
-                        <div class="explanation text-center">
+                        <div class="explanation">
                             {{ cartAmount }}
                         </div>
                     </div>
@@ -173,9 +173,9 @@ onMounted(() => {
                                 variant="solo" hide-details single-line placeholder="поиск"
                                 clear-icon="mdi-close-circle" clearable></v-text-field>
                         </transition>
-                        <v-icon icon="mdi-magnify" size="x-large" @click="showSearch" class="mr-2">
+                        <v-btn icon="mdi-magnify" density="comfortable"  @click="showSearch" class="ml-2">
 
-                        </v-icon>
+                        </v-btn>
                     </div>
 
 

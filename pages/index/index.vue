@@ -42,6 +42,30 @@ let showSearch = () => {
     }
 }
 
+
+
+
+onMounted(() => {
+    // Для появления картинок вместе, а не друг за другом
+  let imagePromises: Promise<void>[] = [];
+
+  document.querySelectorAll('img').forEach((img) => {
+    let imgPromise = new Promise<void>((resolve) => {
+      if (img.complete) {
+        resolve();
+      } else {
+        img.onload = () => resolve();
+        img.onerror = () => resolve();
+      }
+    });
+    imagePromises.push(imgPromise);
+  });
+
+  Promise.all(imagePromises).then(() => {
+    loading.value = false;
+  });
+});
+
 getRests() 
 </script>
 
