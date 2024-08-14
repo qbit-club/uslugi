@@ -104,10 +104,15 @@ export const useRest = defineStore('rest', () => {
     return {}
   }
 
+  async function setRating(rating: number, restId: string, userId: string) {
+    return await RestApi.setRating(rating, restId, userId)
+  }
+
   return {
     create, update, get, getWithHidden, getRestsName, getByAlias, getById, getByIds, uploadImages, getManagersOfRest,
     sendFoodListItemToMenu, deleteRest, hideRest, createFoodListItem,
-    uploadFoodListItemImages, moveFoodItemToMenu, updateMeal, deleteFromMenu, deleteMeal, addEmail, deleteEmail
+    uploadFoodListItemImages, moveFoodItemToMenu, updateMeal, deleteFromMenu, deleteMeal, addEmail, deleteEmail,
+    setRating,
   }
   //updateFoodListItemImages
 })

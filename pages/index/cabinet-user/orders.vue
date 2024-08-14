@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import { toast } from 'vue3-toastify';
+
 definePageMeta({
     middleware: 'auth'
 })
 
 const authStore = useAuth()
 const cartStore = useCart()
+const restStore = useRest()
 
 let { user } = storeToRefs(authStore)
 let orders = ref<any[]>([])
@@ -35,6 +38,17 @@ function getStatus(status: string) {
     }
 }
 
+async function setRating(newRating: number, restId: string) {
+    if (authStore.user?._id) {        
+        let res = await restStore.setRating(newRating, restId, authStore.user._id)
+        if (res.status.value == 'success') {
+            toast('Оценка поставлена', {
+                type: 'success'
+            })
+        }
+    }
+}
+
 async function getOrders() {
     if (user.value?._id) {
         let res = await cartStore.getUserOrders(user.value._id, page)
@@ -57,8 +71,18 @@ getOrders()
                     <img src="~/assets/icons/kvak.gif" alt="">
                 </v-col>
                 <div v-else v-for="(item, index) in orders" :key="index">
-                    <div class="text-center text-uppercase  font-weight-bold ma-4 p-clamp" :id="item.rest">
-                        {{ item.rest }}
+                    <div class="ma-4" :id="item.rest">
+                        <div class="text-center text-uppercase font-weight-bold p-clamp">
+                            {{ item.rest }}
+                        </div>
+                        <div class="d-flex align-center justify-center">
+                            <v-rating
+                                density="compact"
+                                color="primary"
+                                v-model="item.rating"
+                                @update:modelValue="setRating(item.rating, item.restId)"
+                            ></v-rating>
+                        </div>
                     </div>
 
                     <div v-for="(order, i) in item.orders">

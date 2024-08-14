@@ -137,4 +137,14 @@ export default {
       }
     })
   },
+  setRating(rating: number, restId: string, userId: string) {
+    return useApiFetch('/rest/set-rating', {
+      method: 'POST',
+      body: {
+        restId,
+        userId,
+        rating,
+      },
+    })
+  }
 }
