@@ -87,17 +87,13 @@ getRests()
             <div class="h-100 d-flex flex-column justify-space-between">
                 <p v-if="rest.type" class="text-center p-clamp font-weight-light">{{ rest.type.toLowerCase() }}</p>
                 <v-divider v-if="rest.type" width="50%" style="margin-left: auto; margin-right: auto;"></v-divider>
+            
                 <h3 class="text-center h3-clamp">{{ rest.title }}</h3>
-
-                <div class="w-full d-flex justify-center align-end mb-4" v-if="rest.rating > 0">
-                    <v-rating v-model="rest.rating" color="yellow-accent-4" size="18" half-increments
-                        :readonly="true"></v-rating>
-                    <div class="rating">
-                        ({{ rest.rating }})
-                    </div>
-                </div>
-
                 <v-img :src="rest.images?.logo" class="w-100 rounded-lg"></v-img>
+                <div class="d-flex justify-center">
+                    <v-rating v-model="rest.rating" color="yellow-accent-4" size="12" style="font-size:10px;"
+                        half-increments :readonly="true" v-if="rest.rating"></v-rating>
+                </div>
             </div>
         </NuxtLink>
     </v-col>
