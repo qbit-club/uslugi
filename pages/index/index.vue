@@ -47,23 +47,23 @@ let showSearch = () => {
 
 onMounted(() => {
     // Для появления картинок вместе, а не друг за другом
-  let imagePromises: Promise<void>[] = [];
+    let imagePromises: Promise<void>[] = [];
 
-  document.querySelectorAll('img').forEach((img) => {
-    let imgPromise = new Promise<void>((resolve) => {
-      if (img.complete) {
-        resolve();
-      } else {
-        img.onload = () => resolve();
-        img.onerror = () => resolve();
-      }
+    document.querySelectorAll('img').forEach((img) => {
+        let imgPromise = new Promise<void>((resolve) => {
+            if (img.complete) {
+                resolve();
+            } else {
+                img.onload = () => resolve();
+                img.onerror = () => resolve();
+            }
+        });
+        imagePromises.push(imgPromise);
     });
-    imagePromises.push(imgPromise);
-  });
 
-  Promise.all(imagePromises).then(() => {
-    loading.value = false;
-  });
+    Promise.all(imagePromises).then(() => {
+        loading.value = false;
+    });
 });
 
 getRests() 
@@ -87,14 +87,20 @@ getRests()
             <div class="h-100 d-flex flex-column justify-space-between">
                 <p v-if="rest.type" class="text-center p-clamp font-weight-light">{{ rest.type.toLowerCase() }}</p>
                 <v-divider v-if="rest.type" width="50%" style="margin-left: auto; margin-right: auto;"></v-divider>
-                <h3 class="text-center h3-clamp">{{ rest.title }}</h3>       
+                <h3 class="text-center h3-clamp">{{ rest.title }}</h3>
+
+                <div class="w-full d-flex justify-center align-end mb-4" v-if="rest.rating > 0">
+                    <v-rating v-model="rest.rating" color="yellow-accent-4" size="18" half-increments
+                        :readonly="true"></v-rating>
+                    <div class="rating">
+                        ({{ rest.rating }})
+                    </div>
+                </div>
+
                 <v-img :src="rest.images?.logo" class="w-100 rounded-lg"></v-img>
             </div>
         </NuxtLink>
     </v-col>
-
-
-
 </template>
 <style scoped>
 .loading {
@@ -102,5 +108,10 @@ getRests()
     justify-content: center;
     align-items: center;
     transform: translateY(150px);
+}
+
+.rating {
+    line-height: 1;
+    font-size: 14px;
 }
 </style>
