@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { toast } from 'vue3-toastify';
+import type { Order } from '~/types/order.interface';
 
 definePageMeta({
     middleware: 'auth'
@@ -39,7 +40,7 @@ function getStatus(status: string) {
 }
 
 async function setRating(newRating: number, restId: string) {
-    if (authStore.user?._id) {        
+    if (authStore.user?._id) {
         let res = await restStore.setRating(newRating, restId, authStore.user._id)
         if (res.status.value == 'success') {
             toast('Оценка поставлена', {
@@ -60,6 +61,14 @@ async function getOrders() {
     }
     loading.value = false
 }
+
+let checkDelivered = (item: any) => {
+    if (item.orders.find((order: Order) => order.status.toString() == "delivered")) {
+        return true;
+    }
+    return false;
+}
+
 getOrders()
 </script>
 
@@ -76,12 +85,9 @@ getOrders()
                             {{ item.rest }}
                         </div>
                         <div class="d-flex align-center justify-center">
-                            <v-rating
-                                density="compact"
-                                color="primary"
+                            <v-rating v-if="checkDelivered(item)" density="compact" color="primary"
                                 v-model="item.rating"
-                                @update:modelValue="setRating(item.rating, item.restId)"
-                            ></v-rating>
+                                @update:modelValue="setRating(item.rating, item.restId)"></v-rating>
                         </div>
                     </div>
 
