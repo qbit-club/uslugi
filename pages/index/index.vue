@@ -16,7 +16,7 @@ let filter = ref<string>('')
 async function getRests() {
     let { data } = await restStore.get()
     rests.value = data.value
-    loading.value = false
+    // loading.value = false
 }
 
 let restsWithFilter = computed(() => {
