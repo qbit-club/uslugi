@@ -6,6 +6,7 @@ import type { App } from "../types/app.interface"
 
 
 export const useApp = defineStore('app', () => {
+  let restFilter = ref ('')
   let appState = ref<App>()
 
   async function createFoodCategory(category: string[]) {
@@ -26,7 +27,7 @@ export const useApp = defineStore('app', () => {
 
   return {
     // functions
-    createFoodCategory, getFoodCategory, deleteFoodCategory, getAppState,
+    createFoodCategory, getFoodCategory, deleteFoodCategory, getAppState, restFilter,
     // variables
     appState
   }
