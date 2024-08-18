@@ -1,13 +1,13 @@
 <script setup lang="ts">
-useHead({
-  title: 'Глазов - есть!'
-})
+
+import { useShare } from '@vueuse/core'
 import InfoCard from '../../components/restindex/InfoCard.vue'
 import DeliveryCard from '../../components/restindex/DeliveryCard.vue'
 import AddressCard from '../../components/restindex/AddressCard.vue'
 import Menu from '~/components/restindex/Menu.vue';
 import Reservation from '~/components/restindex/Reservation.vue'
 import type { RestFromDb } from "../../types/rest-from-db.interface.ts"
+const runtimeConfig = useRuntimeConfig()
 
 const rest = ref<RestFromDb>()
 const restStore = useRest()
@@ -19,20 +19,57 @@ let alias = String(route.params.alias) ?? ""
 let activMenu = ref<string>('0')
 let res = await restStore.getByAlias(alias)
 
+let restUrl = computed(() => {
+  return runtimeConfig.public.siteUrl + '/' + rest.value?.alias
+})
+
+const options = ref({
+  url: restUrl.value,
+})
+
+const { isSupported } = useShare(options)
+
+function startShare() {
+  options.value.url = restUrl.value
+
+  const { share } = useShare(options)
+
+  return share().catch(err => {
+    console.log(err);
+  })
+}
+
+
 rest.value = res.data.value
 </script>
 <template>
   <ClientOnly>
     <v-container>
+
+      <Head>
+        <Title>{{ rest?.title }}</Title>
+        <Meta name="og:title" :content="rest?.title" />
+        <Meta name="og:image" :content="rest?.images.logo" />
+        <meta property="vk:image" :content="rest?.images.logo" />
+        <Meta name="description" :content="rest?.description" />
+        <meta property="og:site_name" content="Глазов-есть!" />
+        <Meta name="og:url" :content="restUrl" />
+      </Head>
       <v-row class="d-flex justify-center pb-16">
         <v-col :cols="12">
           <v-row>
             <v-col :cols="12" style="position: relative;" class="pa-0">
               <a :href="`tel:${rest?.phone}`"> <span class="phone"> <v-icon icon="mdi-phone" /> {{ rest?.phone }}
                 </span></a>
-              <a :href="rest?.socialMedia" target="_blank">
-                <img src="../../assets/icons/vk.svg" class="vk" />
-              </a>
+              <div class="vk">
+                <span style="cursor: pointer; opacity: 0.8;" class="mdi mdi-24px mdi-share-variant-outline mr-4"
+                @click="startShare()">
+              </span>
+                <a :href="rest?.socialMedia" target="_blank">
+                  <img src="../../assets/icons/vk.svg" />
+                </a>
+              </div>
+
               <div style="height:25dvh">
                 <v-img :src="rest?.images.headerimage" height="100%" cover alt="">
 
@@ -48,6 +85,7 @@ rest.value = res.data.value
             </v-col>
             <v-col :cols="12" class="ma-0 pa-0">
               <div class="title">{{ rest?.title }}</div>
+
             </v-col>
             <v-col :cols="12" class="pb-0">
 
@@ -139,8 +177,9 @@ rest.value = res.data.value
 .vk {
   position: absolute;
   right: 25px;
-  bottom: -30px;
+  bottom: -40px;
   z-index: 2;
+
 
 }
 </style>

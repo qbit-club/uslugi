@@ -178,7 +178,7 @@ watch(locationSearchRequest, async (value) => {
         <v-col :cols="12" sm="10" class="pa-0">
           <v-form @submit.prevent="submit">
             <div class="font-weight-bold text-center" style="font-size: 20px">
-              Редактировать ресторан
+              Редактировать кафе/магазин
             </div>
             <v-row>
               <v-col cols="12">
