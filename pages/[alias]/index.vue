@@ -22,7 +22,9 @@ let res = await restStore.getByAlias(alias)
 let restUrl = computed(() => {
   return runtimeConfig.public.siteUrl + '/' + rest.value?.alias
 })
-
+let stripHtml = computed(() => {
+      return rest.value?.description.replace(/<[^>]*>/g, ''); // Удаляет все HTML-теги из строки  
+  })
 const options = ref({
   url: restUrl.value,
 })
@@ -43,20 +45,20 @@ function startShare() {
 rest.value = res.data.value
 </script>
 <template>
+
+  <Head>
+    <Title>{{ rest?.title }}</Title>
+    <Meta name="og:title" :content="rest?.title" />
+    <Meta name="og:image" :content="rest?.images.logo" />
+    <Meta name="image" :content="rest?.images.logo" />
+    <Meta property="vk:image" :content="rest?.images.logo" />
+    <Meta name="description" :content="rest?.description" />
+    <Meta name="og:description" :content="stripHtml" />
+    <Meta property="og:site_name" :content="rest?.title" />
+    <Meta name="og:url" :content="restUrl" />
+  </Head>
   <ClientOnly>
     <v-container>
-
-      <Head>
-        <Title>{{ rest?.title }}</Title>
-        <Meta name="og:title" :content="rest?.title" />
-        <Meta name="og:image" :content="rest?.images.logo" />
-        <Meta name="image" :content="rest?.images.logo" />
-        <Meta property="vk:image" :content="rest?.images.logo" />
-        <Meta name="description" :content="rest?.description" />
-        <Meta name="og:description" :content="rest?.description" />
-        <Meta property="og:site_name" :content="rest?.title" />
-        <Meta name="og:url" :content="restUrl" />
-      </Head>
       <v-row class="d-flex justify-center pb-16">
         <v-col :cols="12">
           <v-row>
@@ -71,12 +73,13 @@ rest.value = res.data.value
 
               <div style="height:25dvh">
                 <v-img :src="rest?.images.headerimage" height="100%" cover alt="">
-                  <v-btn v-if="isSupported" size="small" icon="mdi-share-variant-outline" style="float: left;" class="mt-4 ml-md-6 ml-4" @click="startShare()" >
+                  <v-btn v-if="isSupported" size="small" icon="mdi-share-variant-outline" style="float: left;"
+                    class="mt-4 ml-md-6 ml-4" @click="startShare()">
 
                   </v-btn>
-                 
-                
-           
+
+
+
                 </v-img>
               </div>
 
