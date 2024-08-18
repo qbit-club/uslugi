@@ -50,9 +50,11 @@ rest.value = res.data.value
         <Title>{{ rest?.title }}</Title>
         <Meta name="og:title" :content="rest?.title" />
         <Meta name="og:image" :content="rest?.images.logo" />
-        <meta property="vk:image" :content="rest?.images.logo" />
+        <Meta name="image" :content="rest?.images.logo" />
+        <Meta property="vk:image" :content="rest?.images.logo" />
         <Meta name="description" :content="rest?.description" />
-        <meta property="og:site_name" content="Глазов-есть!" />
+        <Meta name="og:description" :content="rest?.description" />
+        <Meta property="og:site_name" :content="rest?.title" />
         <Meta name="og:url" :content="restUrl" />
       </Head>
       <v-row class="d-flex justify-center pb-16">
@@ -62,9 +64,6 @@ rest.value = res.data.value
               <a :href="`tel:${rest?.phone}`"> <span class="phone"> <v-icon icon="mdi-phone" /> {{ rest?.phone }}
                 </span></a>
               <div class="vk">
-                <span style="cursor: pointer; opacity: 0.8;" class="mdi mdi-24px mdi-share-variant-outline mr-4"
-                @click="startShare()">
-              </span>
                 <a :href="rest?.socialMedia" target="_blank">
                   <img src="../../assets/icons/vk.svg" />
                 </a>
@@ -72,7 +71,12 @@ rest.value = res.data.value
 
               <div style="height:25dvh">
                 <v-img :src="rest?.images.headerimage" height="100%" cover alt="">
+                  <v-btn v-if="isSupported" size="small" icon="mdi-share-variant-outline" style="float: left;" class="mt-4 ml-md-6 ml-4" @click="startShare()" >
 
+                  </v-btn>
+                 
+                
+           
                 </v-img>
               </div>
 
