@@ -38,7 +38,6 @@ setManagingRest()
     <v-row>
       <v-col :cols="12">
         <h2>Кабинет менеджера</h2>
-        {{ currentRest }}
       </v-col>
       <v-col cols="12" md="6" xl="4" class="d-flex align-start">
         <v-select v-model="currentRest" :items="managerIn" item-title="title" item-value="_id" variant="outlined"
