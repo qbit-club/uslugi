@@ -14,19 +14,24 @@ const authStore = useAuth();
 
 
 let { user } = storeToRefs(authStore);
-// let restFromDb = ref<RestFromDb>()
+let restFromDb = ref<RestFromDb>()
 
 let managingRest = ref<any>();
 managingRest.value = authStore.user?.managingRest;
 
 let res = await restStore.getById(authStore.user?.managingRest || "")
-let restFromDb = res.data.value
+restFromDb.value = res.data.value
+async function getRest() {
+  let res = await restStore.getById(authStore.user?.managingRest || "")
+  restFromDb.value = res.data.value
+}
+// getRest()
 
 
-// watch(user, (newVal) => {
-//   managingRest.value = newVal?.managingRest;
-//   getRest()
-// });
+watch(user, (newVal) => {
+  managingRest.value = newVal?.managingRest;
+  getRest()
+});
 
 // other imports
 // console.log(restFromDb.value)
