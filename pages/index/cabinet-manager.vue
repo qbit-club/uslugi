@@ -25,12 +25,20 @@ watch(currentRest, async (newVal) => {
   await userStore.chooseManagingRest(String(newVal));
   currentRest.value = userStore.user?.managingRest || "";
 });
+let setManagingRest = async () => {
+  if (currentRest.value == "") {
+    await userStore.chooseManagingRest(managerIn[0]);
+    currentRest.value = userStore.user?.managingRest || "";
+  }
+}
+setManagingRest()
 </script>
 <template>
   <v-container>
     <v-row>
       <v-col :cols="12">
         <h2>Кабинет менеджера</h2>
+        {{ currentRest }}
       </v-col>
       <v-col cols="12" md="6" xl="4" class="d-flex align-start">
         <v-select v-model="currentRest" :items="managerIn" item-title="title" item-value="_id" variant="outlined"
