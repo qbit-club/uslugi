@@ -46,7 +46,6 @@ let showSearch = () => {
         <v-img src="../assets/images/headerImg.jpg" height="100%"  cover alt="">
         </v-img>
       </v-col>
-      <NuxtPage></NuxtPage>
     </v-row>
   </v-container>
 </template>

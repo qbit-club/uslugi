@@ -101,7 +101,7 @@ async function logout() {
 
       <v-main class="main" style="min-height: 100%;">
         <!-- pages go here -->
-        <NuxtPage />
+        <slot />
         <!-- pages go here -->
       </v-main>
 
