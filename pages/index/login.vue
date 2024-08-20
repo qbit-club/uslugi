@@ -25,10 +25,14 @@ let loading = ref(false)
 
 const login = handleSubmit(async values => {
   loading.value = true
-  await auth.login(values.email, values.password)
-  loading.value = false
+
+  let res = await auth.login(values.email, values.password)
+  console.log(res);
   
-  router.push('/')
+  if (res.status.value == 'success') {
+    router.push('/')
+  }
+  loading.value = false
 })
 </script>
 

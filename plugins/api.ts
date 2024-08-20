@@ -14,7 +14,8 @@ export default defineNuxtPlugin(() => {
     },
     onResponseError({ response }) {
       if (response._data.message) {
-        toast(response._data.message, { type: 'error' })
+        if (process.client)
+          toast(response._data.message, { type: 'error' })
       }
       if (response.status === 401) {
         useState('authRedirect').value = useRoute().path
