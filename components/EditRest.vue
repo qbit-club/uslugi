@@ -174,7 +174,7 @@ const submit = handleSubmit(async (values) => {
   }
 })
 
-watch(locationSearchRequest, async (value) => {
+watch(locationSearchRequest, async (value: any) => {
   const locations: any = await getPossibleLocations(value) // any - костыль надо переписать dadata.ts
   possibleLocations.value = locations ?? [] // Если locations undefined, присваиваем пустой массив
 })
@@ -308,7 +308,6 @@ watch(locationSearchRequest, async (value) => {
               <v-col :cols="12" class="d-flex justify-center">
                 <LogoInput @uploadImage="uploadLogo" />
                 <HeaderImageInput @uploadHeaderImage="uploadHeaderImage" />
-                {{ rest.title }}
                 <!-- <div
                   class="tab pa-4 cursor-pointer file-input-label"
                   :class="{ 'show-hide': isHidden }"
