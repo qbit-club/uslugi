@@ -1,13 +1,13 @@
 <script setup lang="ts">
-useHead({
-  title: 'Глазов - есть!'
-})
+
+import { useShare } from '@vueuse/core'
 import InfoCard from '../../components/restindex/InfoCard.vue'
 import DeliveryCard from '../../components/restindex/DeliveryCard.vue'
 import AddressCard from '../../components/restindex/AddressCard.vue'
 import Menu from '~/components/restindex/Menu.vue';
 import Reservation from '~/components/restindex/Reservation.vue'
 import type { RestFromDb } from "../../types/rest-from-db.interface.ts"
+const runtimeConfig = useRuntimeConfig()
 
 const rest = ref<RestFromDb>()
 const restStore = useRest()
@@ -19,9 +19,44 @@ let alias = String(route.params.alias) ?? ""
 let activMenu = ref<string>('0')
 let res = await restStore.getByAlias(alias)
 
+let restUrl = computed(() => {
+  return runtimeConfig.public.siteUrl + '/' + rest.value?.alias
+})
+let stripHtml = computed(() => {
+      return rest.value?.description.replace(/<[^>]*>/g, ''); // Удаляет все HTML-теги из строки  
+  })
+const options = ref({
+  url: restUrl.value,
+})
+
+const { isSupported } = useShare(options)
+
+function startShare() {
+  options.value.url = restUrl.value
+
+  const { share } = useShare(options)
+
+  return share().catch(err => {
+    console.log(err);
+  })
+}
+
+
 rest.value = res.data.value
 </script>
 <template>
+
+  <Head>
+    <Title>{{ rest?.title }}</Title>
+    <Meta name="og:title" :content="rest?.title" />
+    <Meta name="og:image" :content="rest?.images.logo" />
+    <Meta name="image" :content="rest?.images.logo" />
+    <Meta property="vk:image" :content="rest?.images.logo" />
+    <Meta name="description" :content="rest?.description" />
+    <Meta name="og:description" :content="stripHtml" />
+    <Meta property="og:site_name" :content="rest?.title" />
+    <Meta name="og:url" :content="restUrl" />
+  </Head>
   <ClientOnly>
     <v-container>
       <v-row class="d-flex justify-center pb-16">
@@ -30,11 +65,20 @@ rest.value = res.data.value
             <v-col :cols="12" style="position: relative;" class="pa-0">
               <a :href="`tel:${rest?.phone}`"> <span class="phone"> <v-icon icon="mdi-phone" /> {{ rest?.phone }}
                 </span></a>
-              <a :href="rest?.socialMedia" target="_blank">
-                <img src="../../assets/icons/vk.svg" class="vk" />
-              </a>
+              <div class="vk">
+                <a :href="rest?.socialMedia" target="_blank">
+                  <img src="../../assets/icons/vk.svg" />
+                </a>
+              </div>
+
               <div style="height:25dvh">
                 <v-img :src="rest?.images.headerimage" height="100%" cover alt="">
+                  <v-btn v-if="isSupported" size="small" icon="mdi-share-variant-outline" style="float: left;"
+                    class="mt-4 ml-md-6 ml-4" @click="startShare()">
+
+                  </v-btn>
+
+
 
                 </v-img>
               </div>
@@ -48,6 +92,7 @@ rest.value = res.data.value
             </v-col>
             <v-col :cols="12" class="ma-0 pa-0">
               <div class="title">{{ rest?.title }}</div>
+
             </v-col>
             <v-col :cols="12" class="pb-0">
 
@@ -139,8 +184,9 @@ rest.value = res.data.value
 .vk {
   position: absolute;
   right: 25px;
-  bottom: -30px;
+  bottom: -40px;
   z-index: 2;
+
 
 }
 </style>

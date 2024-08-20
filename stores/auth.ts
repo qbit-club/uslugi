@@ -23,13 +23,13 @@ export const useAuth = defineStore('auth', () => {
     }
   }
 
-  async function login(email: string, password: string): Promise<string | false> {
+  async function login(email: string, password: string) {
     try {
       const response = await AuthAPI.login(email, password)
       if (response.data.value) {
         user.value = response.data.value.user
       }
-      return redirectTo.value
+      return response
     } catch {
       return false
     }

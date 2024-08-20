@@ -25,6 +25,13 @@ watch(currentRest, async (newVal) => {
   await userStore.chooseManagingRest(String(newVal));
   currentRest.value = userStore.user?.managingRest || "";
 });
+let setManagingRest = async () => {
+  if (currentRest.value == "") {
+    await userStore.chooseManagingRest(managerIn[0]);
+    currentRest.value = userStore.user?.managingRest || "";
+  }
+}
+setManagingRest()
 </script>
 <template>
   <v-container>

@@ -4,6 +4,7 @@ useHead({
     title: 'Глазов - есть!'
 })
 const restStore = useRest()
+const appState = useApp()
 const router = useRouter()
 
 
@@ -22,9 +23,11 @@ async function getRests() {
 let restsWithFilter = computed(() => {
     if (filter.value == null) {
         filter.value = ''
+        appState.restFilter  = ''
     }
     if (filter.value.length > 2) {
-        return rests.value.filter((rest: any) =>
+        appState.restFilter  = filter.value
+        return rests.value?.filter((rest: any) =>
             rest.title.toLowerCase().includes(filter.value.toLowerCase()) ||
             rest.description.toLowerCase().includes(filter.value.toLowerCase()) ||
             rest.type.toLowerCase().includes(filter.value.toLowerCase())
@@ -35,13 +38,6 @@ let restsWithFilter = computed(() => {
     }
 
 })
-
-let showSearch = () => {
-    if (filter.value == '') {
-        isShow.value = !isShow.value
-    }
-}
-
 
 
 
@@ -64,9 +60,11 @@ onMounted(() => {
     Promise.all(imagePromises).then(() => {
         loading.value = false;
     });
-});
 
-getRests() 
+    
+});
+ appState.restFilter? filter.value = appState.restFilter: ''
+getRests()
 </script>
 
 <template>
