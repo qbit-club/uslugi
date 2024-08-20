@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 
 useHead({
-    title: 'Глазов - есть!'
+    title: 'Услуги'
 })
 const restStore = useRest()
 const appState = useApp()

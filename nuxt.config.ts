@@ -53,8 +53,8 @@ export default defineNuxtConfig({
     registerType: 'autoUpdate',
     includeAssets: ['favicon.svg', 'favicon.ico', 'robots.txt', 'images/apple-touch-icon.png'],
     manifest: {
-      name: 'Глазов-есть!',
-      short_name: 'Глазов-есть!',
+      name: 'Услуги!',
+      short_name: 'Услуги!',
       description: 'Кафе, рестораны, доставки, qr-меню, бронирование столиков',
       theme_color: '#ffffff',
       background_color: "#ffffff",

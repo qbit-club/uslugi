@@ -51,7 +51,7 @@ async function logout() {
 
                 </div>
 
-                <h3 style="font-family: 'Sensei', sans-serif;">Глазов-есть!</h3>
+                <h3 style="font-family: 'Sensei', sans-serif;">Услуги</h3>
 
 
                 <v-icon icon="mdi-close" color="accent" class="cursor-pointer"
