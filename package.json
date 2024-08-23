@@ -18,6 +18,7 @@
     "@vite-pwa/nuxt": "^0.9.1",
     "@vueup/vue-quill": "^1.2.0",
     "@vueuse/core": "^10.11.0",
+    "gsap": "^3.12.5",
     "lodash": "^4.17.21",
     "nuxt": "^3.11.2",
     "pinia": "^2.1.7",
