@@ -1,4 +1,8 @@
 <script setup lang="ts">
+useHead({
+  title: "Создать студию"
+})
+
 import { useField, useForm } from "vee-validate"
 import gsap from "gsap"
 
@@ -66,6 +70,10 @@ onUnmounted(() => {
                   density="compact"
                   class="w-100"
                 />
+              </v-col>
+              <v-col cols="12">
+                Расписание
+                
               </v-col>
               <v-col cols="12" class="d-flex justify-center">
                 <v-btn
