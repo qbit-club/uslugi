@@ -1,4 +1,4 @@
-import type { RestFromDb } from "./rest-from-db.interface"
+import type { RestFromDb } from "./studio-from-db.interface"
 import type { OrderFromDb } from "./order-from-db.interface"
 
 export interface User {

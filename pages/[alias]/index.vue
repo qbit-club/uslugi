@@ -6,7 +6,7 @@ import DeliveryCard from '../../components/restindex/DeliveryCard.vue'
 import AddressCard from '../../components/restindex/AddressCard.vue'
 import Menu from '~/components/restindex/Menu.vue';
 import Reservation from '~/components/restindex/Reservation.vue'
-import type { RestFromDb } from "../../types/rest-from-db.interface.ts"
+import type { RestFromDb } from "../../types/studio-from-db.interface"
 const runtimeConfig = useRuntimeConfig()
 
 const rest = ref<RestFromDb>()

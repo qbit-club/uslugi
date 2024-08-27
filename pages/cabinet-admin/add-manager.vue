@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Rest } from '~/types/rest.interface';
+import type { Rest } from '~/types/studio.interface';
 import type { User } from '~/types/user.interface';
 
 const restStore = useRest()

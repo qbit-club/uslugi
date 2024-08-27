@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Rest } from '../types/rest.interface';
+import type { Rest } from '../types/studio.interface';
 
 defineProps<{
   rest: Rest

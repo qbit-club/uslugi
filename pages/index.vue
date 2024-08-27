@@ -4,39 +4,7 @@ useHead({
   title: 'Услуги'
 })
 
-const restStore = useRest()
 const router = useRouter()
-
-let { data } = await restStore.get()
-let rests = ref(data.value)
-
-
-
-let isShow = ref(false)
-let filter = ref<string>('')
-
-let restsWithFilter = computed(() => {
-  if (filter.value == null) {
-    filter.value = ''
-  }
-  if (filter.value.length > 2) {
-    return rests.value.filter((rest: any) =>
-      rest.title.toLowerCase().includes(filter.value.toLowerCase()) ||
-      rest.description.toLowerCase().includes(filter.value.toLowerCase())
-    )
-  } else {
-
-    return rests.value
-  }
-
-})
-
-let showSearch = () => {
-  if (filter.value == '') {
-    isShow.value = !isShow.value
-  }
-}
-
 </script>
 
 <template>

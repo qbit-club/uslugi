@@ -1,10 +1,9 @@
 import { defineStore } from "pinia"
 import AuthAPI from "../api/AuthApi"
-import RestApi from "~/api/RestApi"
+import RestApi from "~/api/StudioApi"
 
 import type { User } from "../types/user.interface"
 import { ref } from "vue"
-import type { RestFromDb } from "~/types/rest-from-db.interface"
 
 export const useAuth = defineStore('auth', () => {
   let user = ref<User | null>()

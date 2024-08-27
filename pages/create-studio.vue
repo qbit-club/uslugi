@@ -5,6 +5,10 @@ useHead({
 
 import { useField, useForm } from "vee-validate"
 import gsap from "gsap"
+import { toast } from "vue3-toastify";
+
+const studioStore = useStudio()
+const router = useRouter()
 
 const { meta, handleSubmit, setValues, validate } = useForm({
   initialValues: {
@@ -19,6 +23,51 @@ const { meta, handleSubmit, setValues, validate } = useForm({
     },
   },
 })
+
+let weekdays = ref([
+  {
+    weekday: 'Понедельник',
+    from: '',
+    to: '',
+    holiday: false
+  },
+  {
+    weekday: 'Вторник',
+    from: '',
+    to: '',
+    holiday: false
+  },
+  {
+    weekday: 'Среда',
+    from: '',
+    to: '',
+    holiday: false
+  },
+  {
+    weekday: 'Четверг',
+    from: '',
+    to: '',
+    holiday: false
+  },
+  {
+    weekday: 'Пятница',
+    from: '',
+    to: '',
+    holiday: false
+  },
+  {
+    weekday: 'Суббота',
+    from: '',
+    to: '',
+    holiday: false
+  },
+  {
+    weekday: 'Воскресенье',
+    from: '',
+    to: '',
+    holiday: false
+  },
+])
 
 let title = useField<string>("title")
 
@@ -39,9 +88,21 @@ function setTitle() {
   currentTitleIndex += 1
 }
 
-async function submit() {
-  
-}
+const submit = handleSubmit(async values => {
+  let toSend = {
+    ...values,
+    weekdays: weekdays.value,
+  }
+  let res = await studioStore.create(toSend)
+  if (res.status.value == "success") {
+    toast("Успешно!", {
+      type: "success",
+      onClose: () => {
+        router.push('/')
+      }
+    })
+  }
+})
 
 onMounted(() => {
   // обязательно очистить интервал
@@ -71,9 +132,15 @@ onUnmounted(() => {
                   class="w-100"
                 />
               </v-col>
-              <v-col cols="12">
-                Расписание
-                
+              <v-col cols="12" md="6" v-for="(wd, index) of weekdays" :key="index">
+                <b>
+                  {{ wd.weekday }}
+                </b>
+                <div class="mt-2 w-100 d-flex justify-start">
+                  <v-text-field v-model="wd.from" label="Начало работы" variant="outlined" max-width="200" density="compact" :hide-details="true"></v-text-field>
+                  <v-text-field v-model="wd.to" class="ml-6" label="Конец работы" variant="outlined" max-width="200" density="compact" :hide-details="true"></v-text-field>
+                </div>
+                <v-checkbox label="Выходной" v-model="wd.holiday"></v-checkbox>
               </v-col>
               <v-col cols="12" class="d-flex justify-center">
                 <v-btn

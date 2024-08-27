@@ -6,7 +6,7 @@ import { OrdersSocketAPI } from "~/api/OrdersSocketAPI";
 
 // types
 import type { FoodListItemFromDb } from "~/types/food-list-item-from-db.interface";
-import type { RestFromDb } from "./../types/rest-from-db.interface";
+import type { RestFromDb } from "../types/studio-from-db.interface";
 import type { OrderFromDb } from "../types/order-from-db.interface";
 
 interface CartItem {
