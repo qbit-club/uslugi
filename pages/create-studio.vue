@@ -1,6 +1,6 @@
 <script setup lang="ts">
 useHead({
-  title: "Создать студию"
+  title: "Создать"
 })
 
 import { useField, useForm } from "vee-validate"
